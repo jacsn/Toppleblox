@@ -6,7 +6,7 @@
 
 body
 {
-	background:#eee;
+	background:#f5f8fa;
 	padding:40px 50px 20px;
 	margin-top:10px;
 }
@@ -34,7 +34,6 @@ h1
 #wrapper
 {
 	/*display:none;*/
-	background:#eee;
 	margin:0 auto;
 	max-width:1280px;
 	padding-bottom:10px;
@@ -83,6 +82,7 @@ h1
 {
 	background:#fff;
 	border-radius:10px;
+	border:1px solid #e1e8ed;
 	margin:0px;
 }
 
@@ -105,12 +105,14 @@ h1
 {
 	background:#fff;
 	border-radius:10px;
+	border:1px solid #e1e8ed;
 }
 
 #usertools
 {
 	background:#fff;
 	border-radius:10px;
+	border:1px solid #e1e8ed;
 	padding:20px;
 }
 
