@@ -7,8 +7,33 @@
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<button onclick="addUsername()">New Name</button>
-<ul id="userlist">
-</ul>
+<div id="topbar">
+<h1>LookAtMe</h1>
+</div>
+<div id="wrapper">
+	<div id="userbar">
+		<div id="usertools">
+			<div id="userhead"><img src="usericon.svg" /><h2>Username</h2></div>
+			<ul>
+				<li><a href="myposts.php" onclick="return false;">My Posts</a></li>
+				<li><a class="last" href="logout.php" onclick="return false;">Logout</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="maincontent">
+		<div id="post">
+			<div id="test">
+				<button onclick="addUsername()">New Name</button>
+				<ul id="userlist">
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div id="suggestions">
+		<div id="suggestbox">
+			<p>You might also like:</p>
+		</div>
+	</div>
+</div>
 </body>
 </html>
