@@ -177,7 +177,7 @@ h1
 	transition:200ms linear;
 }
 */
-#usertools a:before {
+#usertools li a:before {
   content: "";
   position: absolute;
   z-index:-1;
@@ -192,7 +192,7 @@ h1
   transition: transform .2s ease-out;
 }
 
-#usertools a:hover:before
+#usertools li a:hover:before
 {
 	transform: scaleX(1);
 }

@@ -24,10 +24,140 @@ var MouseDownY = 0;
 var LastX = 0;
 var LastY = 0;
 
+var EditMode = true;
+var EditTool = Tools.Box;
+
+var undostack = [];
+var redostack = [];
+
+var erasehack = [];
+
+var boxes = [];
 
 
 
 
+var btnBegin = new Button("Begin", SCREEN_WIDTH / 2 - 120, 430, 240, 80, btnBegin_Click, ButtonImage);
+var btnDone = new Button("Done", SCREEN_WIDTH / 2 - 120, 410, 240, 80, btnMain_Click, ButtonImage);
+var btnShare = new Button("Share", SCREEN_WIDTH / 2 - 120, 310, 240, 80, btnMain_Click, ButtonImage);
+var btnGo = new Button("GO", SCREEN_WIDTH - 160, SCREEN_HEIGHT - 140, 140, 120, btnGo_Click);
+var btnBoxTool = new ImgButton("", SCREEN_WIDTH - 160, 20, 140, 140, btnBoxTool_Click, BoxToolButtonImage);
+var btnEraseTool = new ImgButton("", SCREEN_WIDTH - 160, 180, 140, 140, btnEraseTool_Click, EraseToolButtonImage);
+var btnUndo = new ImgButton("", SCREEN_WIDTH - 160, 340, 60, 60, Undo, UndoButtonImage);
+var btnRedo = new ImgButton("", SCREEN_WIDTH - 80, 340, 60, 60, Redo, RedoButtonImage);
+var btnClear = new ImgButton("", SCREEN_WIDTH - 160, 420, 140, 60, btnClear_Click, ClearButtonImage);
+var btnFlip = new ImgButton("", SCREEN_WIDTH - 202, 15, 30, 50, btnFlip_Click, FlipButtonImage);
+
+function btnBegin_Click()
+{
+	ChangeMenu(Menus.None);
+	boxes = [];
+	LoadLevel();
+}
+
+function btnGo_Click()
+{
+	AddBoxes();
+	EditMode = false;
+	Controls = [];
+}
+
+function btnMain_Click()
+{
+	redostack = [];
+	undostack = [];
+	EditTool = Tools.Box;
+	ChangeMenu(Menus.Main);
+}
+
+function btnBoxTool_Click()
+{
+	EditTool = Tools.Box;
+}
+
+function btnEraseTool_Click()
+{
+	EditTool = Tools.Erase;
+}
+
+function btnClear_Click()
+{
+	if(boxes.length > 0)
+	{
+		undostack.push(boxes.slice(0));
+		redostack = [];
+		boxes = [];
+	}
+}
+
+function btnFlip_Click()
+{
+	if(btnGo.x > 20)
+	{
+		btnBoxTool.x = 20;
+		btnEraseTool.x = 20;
+		btnUndo.x = 20;
+		btnRedo.x = 100;
+		btnClear.x = 20;
+		btnGo.x = 20;
+		btnFlip.x = 168;
+	}
+	else
+	{
+		btnBoxTool.x = SCREEN_WIDTH - 160;
+		btnEraseTool.x = SCREEN_WIDTH - 160;
+		btnUndo.x = SCREEN_WIDTH - 160;
+		btnRedo.x = SCREEN_WIDTH - 80;
+		btnClear.x = SCREEN_WIDTH - 160;
+		btnGo.x = SCREEN_WIDTH - 160;
+		btnFlip.x = SCREEN_WIDTH - 202;
+	}
+}
+
+
+
+
+
+
+//////////////////////////////////////////////////////////
+// module aliases
+var Engine = Matter.Engine,
+    Render = Matter.Render,
+    World = Matter.World,
+    Bodies = Matter.Bodies;
+
+// create an engine
+var engine = Engine.create({enableSleeping:true});
+
+// create a renderer
+var render = Render.create({
+    canvas: canvas,
+    engine: engine,
+	options: {
+		width:SCREEN_WIDTH,
+		height:SCREEN_HEIGHT,
+		wireframes:false,
+		background:"#9af",
+		showSleeping:false
+	}
+});
+
+// create two boxes and a ground
+//var boxA = Bodies.rectangle(b.x, b.y, 60, 60, {render:{fillStyle:"#666", strokeStyle:"#000"}, chamfer:{radius:10}, friction:0.08, frictionAir:0, frictionStatic:0.3, restitution:0.2});
+var ball = Bodies.circle(200, 549, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+var ground = Bodies.rectangle(400, 610, 1024, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+var wall = Bodies.rectangle(0, SCREEN_HEIGHT / 2 - 60, 100, SCREEN_HEIGHT, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+var stopblock = Bodies.rectangle(880, 570, 30, 40, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+
+// add all of the bodies to the world
+World.add(engine.world, [ball, ground, wall]);//, stopblock]);
+
+// run the engine
+//Engine.run(engine);
+
+// run the renderer
+//Render.run(render);
+//////////////////////////////////////////////////////////
 
 
 
@@ -39,7 +169,7 @@ var preloader = setInterval(preloadloop, 10);
 var gameloop;
 function preloadloop()
 {
-	if(true) //load assets
+	if(ButtonImage.ready && DialogImage.ready && OutlineImage.ready && ToolboxImage.ready && BoxToolButtonImage.ready && EraseToolButtonImage.ready && CheckMarkImage.ready && UndoButtonImage.ready && RedoButtonImage.ready && ClearButtonImage.ready && FlipButtonImage.ready) //load assets
 	{
 		clearInterval(preloader);
 		
@@ -58,13 +188,9 @@ function preloadloop()
 				ChangeMenu(Menus.Main);
 			}
 			
-			if(!MenuShowing)
+			if(!MenuShowing && !EditMode)
 			{
-				if(delta > 50)
-				{
-					delta = 50;
-				}
-				//updateGame();
+				updateGame();
 			}
 			drawScreen();
 		};
@@ -128,7 +254,12 @@ function ChangeMenu(menu)
 	
 	if(menu == Menus.Main)
 	{
-		//TODO: add buttons
+		Controls.push(btnBegin);
+	}
+	else if(menu == Menus.Victory)
+	{
+		Controls.push(btnShare);
+		Controls.push(btnDone);
 	}
 	else if(menu == Menus.None)
 	{
@@ -146,24 +277,166 @@ function ChangeMenu(menu)
 
 function drawScreen()
 {
-	clearScreen();
-	
 	if(MenuShowing)
 	{
+		clearScreen();
 		drawMenu();
 	}
 	else
 	{
+		Render.world(render);
+		drawOutlines();
+		drawToolbox();
 	}
 	
 	drawControls();
+	drawCheckMark();
 }
 
 function drawMenu()
 {
 	if(MenuID == Menus.Main)
 	{
-		//TODO: draw stuff
+		FillWrapText("Toppleblox", 80, "center", SCREEN_WIDTH, SCREEN_WIDTH / 2, 180);
+	}
+	else if(MenuID == Menus.Victory)
+	{
+		Render.world(render);
+		screen.fillStyle = "rgba(255, 255, 255, 0.5)";
+		screen.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+		screen.drawImage(DialogImage, SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT / 2 - 200);
+		
+		FillWrapText("You Win!", 60, "center", SCREEN_WIDTH, SCREEN_WIDTH / 2, 220);
+	}
+}
+
+function drawOutlines()
+{
+	if(EditMode)
+	{
+		for(var i = 0; i < boxes.length; i++)
+		{
+			var b = boxes[i];
+			screen.drawImage(OutlineImage, b.x - 30, b.y - 30);
+		}
+	}
+}
+
+function drawToolbox()
+{
+	if(EditMode)
+	{
+		if(btnGo.x > 20)
+		{
+			screen.drawImage(ToolboxImage, SCREEN_WIDTH - 200, 0);
+		}
+		else
+		{
+			screen.drawImage(ToolboxImage, -200, 0);
+		}
+	}
+}
+
+function updateGame()
+{
+	Engine.update(engine, 16.666);
+	
+	var pos = ball.position;
+	if(pos.y > SCREEN_HEIGHT + 50)
+	{
+		ChangeMenu(Menus.Victory);
+	}
+	else
+	{
+		var sleepcount = 0;
+		var bodies = Matter.Composite.allBodies(engine.world);
+		for(var i = 0; i < bodies.length; i++)
+		{
+			if(bodies[i].isSleeping)
+			{
+				sleepcount++;
+			}
+			else if(bodies[i].position.y > SCREEN_HEIGHT + 50)
+			{
+				sleepcount++;
+			}
+		}
+		
+		if(sleepcount == bodies.length)
+		{
+			LoadLevel();
+		}
+	}
+}
+
+function LoadLevel()
+{
+	ball = Bodies.circle(200, 549, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+	var ground = Bodies.rectangle(400, 610, 1024, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+	var wall = Bodies.rectangle(0, SCREEN_HEIGHT / 2 - 60, 100, SCREEN_HEIGHT, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+
+	// add all of the bodies to the world
+	engine.world = World.create();
+	World.add(engine.world, [ball, ground, wall]);
+	
+	EditMode = true;
+	Controls.push(btnGo);
+	Controls.push(btnBoxTool);
+	Controls.push(btnEraseTool);
+	Controls.push(btnUndo);
+	Controls.push(btnRedo);
+	Controls.push(btnClear);
+	Controls.push(btnFlip);
+}
+
+function AddBoxes()
+{
+	var bodies = [];
+	for(var i = 0; i < boxes.length; i++)
+	{
+		var b = boxes[i];
+		bodies.push(Bodies.rectangle(b.x, b.y, 60, 60, {render:{fillStyle:"#666", strokeStyle:"#000"}, chamfer:{radius:10}, friction:0.08, frictionAir:0, frictionStatic:0.3, restitution:0.2}));
+	}
+	
+	World.add(engine.world, bodies);
+}
+
+function EraseBoxes(x, y)
+{
+	var erased = [];
+	for(var i = 0; i < boxes.length; i++)
+	{
+		var b = boxes[i];
+		var diffx = b.x - x;
+		var diffy = b.y - y;
+		
+		if(diffx * diffx + diffy * diffy < 900) //30 * 30
+		{
+			erased.push(i);
+		}
+	}
+	
+	for(var i = erased.length - 1; i >= 0; i--)
+	{
+		boxes.splice(erased[i], 1);
+	}
+}
+
+function Undo()
+{
+	if(undostack.length > 0)
+	{
+		redostack.push(boxes.slice(0));
+		boxes = undostack.pop();
+	}
+}
+
+function Redo()
+{
+	if(redostack.length > 0)
+	{
+		undostack.push(boxes.slice(0));
+		boxes = redostack.pop();
 	}
 }
 
@@ -171,9 +444,20 @@ function drawMenu()
 
 
 
-
-
-
+function drawCheckMark()
+{
+	if(!MenuShowing && EditMode)
+	{
+		if(EditTool == Tools.Box)
+		{
+			screen.drawImage(CheckMarkImage, btnBoxTool.x + 90, btnBoxTool.y + 5);
+		}
+		else if(EditTool == Tools.Erase)
+		{
+			screen.drawImage(CheckMarkImage, btnEraseTool.x + 90, btnEraseTool.y + 5);
+		}
+	}
+}
 
 function drawControls()
 {
@@ -190,6 +474,14 @@ window.addEventListener("mousemove", function (event) {
 	var y = event.clientY - canvas.offsetTop + top;
 	LastX = x;
 	LastY = y;
+	
+	if(!MenuShowing && EditMode)
+	{
+		if(MouseDown && EditTool == Tools.Erase)
+		{
+			EraseBoxes(x, y);
+		}
+	}
 	
 	//pick controls
 	for(var c = 0; c < Controls.length; c++)
@@ -210,6 +502,15 @@ window.addEventListener("mousedown", function (event)
 	MouseDownX = x;
 	MouseDownY = y;
 	
+	if(!MenuShowing && EditMode)
+	{
+		if(EditTool == Tools.Erase)
+		{
+			erasehack = boxes.slice(0);
+			EraseBoxes(x, y);
+		}
+	}
+	
 	//pick controls
 	for(var c = 0; c < Controls.length; c++)
 	{
@@ -226,6 +527,32 @@ window.addEventListener("mouseup", function (event)
 	var y = event.clientY - canvas.offsetTop + top;
 	
 	MouseDown = false;
+	
+	if(!MenuShowing && EditMode)
+	{
+		if(EditTool == Tools.Box)
+		{
+			if((btnGo.x > 20 && x < SCREEN_WIDTH - 200) || (btnGo.x < 50 && x > 200))
+			{
+				undostack.push(boxes.slice(0));
+				redostack = [];
+				boxes.push(new Point(x, y));
+			}
+		}
+		else if(EditTool == Tools.Erase)
+		{
+			if(erasehack.length != boxes.length)
+			{
+				undostack.push(erasehack.slice(0));
+				redostack = [];
+			}
+			EraseBoxes(x, y);
+		}
+	}
+	else if(!MenuShowing && !EditMode)
+	{
+		LoadLevel();
+	}
 	
 	//pick controls
 	for(var c = 0; c < Controls.length; c++)
