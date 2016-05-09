@@ -7,9 +7,41 @@
 <script src="constants.js"></script>
 <script src="button.js"></script>
 <script src="game.js"></script>
+<link rel="stylesheet" href="styles.css" />
 </head>
-<body bgcolor="#000000">
-<noscript style="color:#FFFFFF;">This game requires JavaScript. Please enable javascript in your browser, or contact your network administrator.</noscript>
-<canvas id="canvas"><p style="color:#FFFFFF;">This game only supports modern browsers. I would recommend using <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank">Firefox</a> or <a href="https://www.google.com/chrome/" target="_blank">Chrome</a>.</p></canvas>
+<body class="toppleblox">
+<div id="toppleblox">
+	<noscript style="color:#FFFFFF;">This game requires JavaScript. Please enable javascript in your browser, or contact your network administrator.</noscript>
+	<canvas id="canvas"><p style="color:#FFFFFF;">This game only supports modern browsers. I would recommend using <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank">Firefox</a> or <a href="https://www.google.com/chrome/" target="_blank">Chrome</a>.</p></canvas>
+</div>
+<div id="lookatme" style="display:none;">
+	<div id="topbar">
+	<h1>LookAtMe</h1>
+	</div>
+	<div id="wrapper">
+		<div id="userbar">
+			<div id="usertools">
+				<div id="userhead"><img src="usericon.svg" /><h2>Username</h2></div>
+				<ul>
+					<li><a id="myposts" href="myposts.php" onclick="return false;">My Posts</a></li>
+					<li><a id="logout" class="last" href="logout.php" onclick="return false;">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+		<div id="maincontent">
+			<div id="post">
+				<div id="postcontent">
+				</div>
+				<ul id="userlist">
+				</ul>
+			</div>
+		</div>
+		<div id="suggestions">
+			<div id="suggestbox">
+				<p>You might also like:</p>
+			</div>
+		</div>
+	</div>
+</div>
 </body>
 </html>

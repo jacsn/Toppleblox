@@ -8,6 +8,9 @@ canvas.height = SCREEN_HEIGHT + "";
 canvas.style.display = "block";
 canvas.style.margin = "0 auto";
 
+//handle lookatme button events
+document.getElementById("logout").addEventListener("click", ToggleSite);
+
 var curframe = null;
 var lastframe = null;
 var delta = 0;
@@ -27,6 +30,8 @@ var LastY = 0;
 var EditMode = true;
 var EditTool = Tools.Box;
 
+var Replaying = false;
+
 var undostack = [];
 var redostack = [];
 
@@ -34,12 +39,17 @@ var erasehack = [];
 
 var boxes = [];
 
+var Level = 2;
+
+var Posts = [];
+
 
 
 
 var btnBegin = new Button("Begin", SCREEN_WIDTH / 2 - 120, 430, 240, 80, btnBegin_Click, ButtonImage);
-var btnDone = new Button("Done", SCREEN_WIDTH / 2 - 120, 410, 240, 80, btnMain_Click, ButtonImage);
-var btnShare = new Button("Share", SCREEN_WIDTH / 2 - 120, 310, 240, 80, btnMain_Click, ButtonImage);
+var btnDone = new Button("Done", SCREEN_WIDTH / 2 - 120, 410, 240, 80, btnDone_Click, ButtonImage);
+var btnDoneShared = new Button("Done", SCREEN_WIDTH / 2 - 120, 350, 240, 80, btnDone_Click, ButtonImage);
+var btnShare = new Button("Share", SCREEN_WIDTH / 2 - 120, 310, 240, 80, btnShare_Click, ButtonImage);
 var btnGo = new Button("GO", SCREEN_WIDTH - 160, SCREEN_HEIGHT - 140, 140, 120, btnGo_Click);
 var btnBoxTool = new ImgButton("", SCREEN_WIDTH - 160, 20, 140, 140, btnBoxTool_Click, BoxToolButtonImage);
 var btnEraseTool = new ImgButton("", SCREEN_WIDTH - 160, 180, 140, 140, btnEraseTool_Click, EraseToolButtonImage);
@@ -47,11 +57,31 @@ var btnUndo = new ImgButton("", SCREEN_WIDTH - 160, 340, 60, 60, Undo, UndoButto
 var btnRedo = new ImgButton("", SCREEN_WIDTH - 80, 340, 60, 60, Redo, RedoButtonImage);
 var btnClear = new ImgButton("", SCREEN_WIDTH - 160, 420, 140, 60, btnClear_Click, ClearButtonImage);
 var btnFlip = new ImgButton("", SCREEN_WIDTH - 202, 15, 30, 50, btnFlip_Click, FlipButtonImage);
+var btnLevel1 = new ImgButton("", 52, 185, 280, 175, btnLevel1_Click, Level1Image);
+var btnLevel2 = new ImgButton("", 372, 185, 280, 175, btnLevel2_Click, Level2Image);
+var btnLevel3 = new ImgButton("", 692, 185, 280, 175, btnLevel2_Click, Level2Image);
+var btnLevel4 = new ImgButton("", 52, 405, 280, 175, btnLevel2_Click, Level2Image);
+var btnLevel5 = new ImgButton("", 372, 405, 280, 175, btnLevel2_Click, Level2Image);
+var btnLevel6 = new ImgButton("", 692, 405, 280, 175, btnLevel2_Click, Level2Image);
 
 function btnBegin_Click()
 {
+	ChangeMenu(Menus.LevelSelect);
+}
+
+function btnLevel1_Click()
+{
 	ChangeMenu(Menus.None);
 	boxes = [];
+	Level = 1;
+	LoadLevel();
+}
+
+function btnLevel2_Click()
+{
+	ChangeMenu(Menus.None);
+	boxes = [];
+	Level = 2;
 	LoadLevel();
 }
 
@@ -62,12 +92,20 @@ function btnGo_Click()
 	Controls = [];
 }
 
-function btnMain_Click()
+function btnDone_Click()
 {
 	redostack = [];
 	undostack = [];
 	EditTool = Tools.Box;
-	ChangeMenu(Menus.Main);
+	ChangeMenu(Menus.LevelSelect);
+}
+
+function btnShare_Click()
+{
+	redostack = [];
+	undostack = [];
+	EditTool = Tools.Box;
+	SaveReplay();
 }
 
 function btnBoxTool_Click()
@@ -124,7 +162,8 @@ function btnFlip_Click()
 var Engine = Matter.Engine,
     Render = Matter.Render,
     World = Matter.World,
-    Bodies = Matter.Bodies;
+    Bodies = Matter.Bodies,
+	Vertices = Matter.Vertices;
 
 // create an engine
 var engine = Engine.create({enableSleeping:true});
@@ -142,9 +181,13 @@ var render = Render.create({
 	}
 });
 
+var replayengine = null;
+var replayrender = null;
+
 // create two boxes and a ground
 //var boxA = Bodies.rectangle(b.x, b.y, 60, 60, {render:{fillStyle:"#666", strokeStyle:"#000"}, chamfer:{radius:10}, friction:0.08, frictionAir:0, frictionStatic:0.3, restitution:0.2});
 var ball = Bodies.circle(200, 549, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+var reball = null;
 var ground = Bodies.rectangle(400, 610, 1024, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
 var wall = Bodies.rectangle(0, SCREEN_HEIGHT / 2 - 60, 100, SCREEN_HEIGHT, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
 var stopblock = Bodies.rectangle(880, 570, 30, 40, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
@@ -169,7 +212,7 @@ var preloader = setInterval(preloadloop, 10);
 var gameloop;
 function preloadloop()
 {
-	if(ButtonImage.ready && DialogImage.ready && OutlineImage.ready && ToolboxImage.ready && BoxToolButtonImage.ready && EraseToolButtonImage.ready && CheckMarkImage.ready && UndoButtonImage.ready && RedoButtonImage.ready && ClearButtonImage.ready && FlipButtonImage.ready) //load assets
+	if(ButtonImage.ready && DialogImage.ready && OutlineImage.ready && ToolboxImage.ready && BoxToolButtonImage.ready && EraseToolButtonImage.ready && CheckMarkImage.ready && UndoButtonImage.ready && RedoButtonImage.ready && ClearButtonImage.ready && FlipButtonImage.ready && PlayButtonImage.ready && Level1Image.ready && Level2Image.ready) //load assets
 	{
 		clearInterval(preloader);
 		
@@ -256,10 +299,23 @@ function ChangeMenu(menu)
 	{
 		Controls.push(btnBegin);
 	}
+	else if(menu == Menus.LevelSelect)
+	{
+		Controls.push(btnLevel1);
+		Controls.push(btnLevel2);
+		Controls.push(btnLevel3);
+		Controls.push(btnLevel4);
+		Controls.push(btnLevel5);
+		Controls.push(btnLevel6);
+	}
 	else if(menu == Menus.Victory)
 	{
 		Controls.push(btnShare);
 		Controls.push(btnDone);
+	}
+	else if(menu == Menus.VictoryShared)
+	{
+		Controls.push(btnDoneShared);
 	}
 	else if(menu == Menus.None)
 	{
@@ -277,20 +333,68 @@ function ChangeMenu(menu)
 
 function drawScreen()
 {
-	if(MenuShowing)
+	if(Toppleblox())
 	{
-		clearScreen();
-		drawMenu();
+		if(MenuShowing)
+		{
+			clearScreen();
+			drawMenu();
+		}
+		else
+		{
+			Render.world(render);
+			drawOutlines();
+			drawToolbox();
+		}
+		
+		drawControls();
+		drawCheckMark();
 	}
 	else
 	{
-		Render.world(render);
-		drawOutlines();
-		drawToolbox();
+		if(replayrender !== null)
+		{
+			if(Replaying)
+			{
+				Engine.update(replayengine, 16.666);
+				
+				if(reball.position.y > SCREEN_HEIGHT + 50)
+				{
+					Replaying = false;
+				}
+				else
+				{
+					var sleepcount = 0;
+					var bodies = Matter.Composite.allBodies(replayengine.world);
+					for(var i = 0; i < bodies.length; i++)
+					{
+						if(bodies[i].isSleeping)
+						{
+							sleepcount++;
+						}
+						else if(bodies[i].position.y > SCREEN_HEIGHT + 50)
+						{
+							sleepcount++;
+						}
+					}
+					
+					if(sleepcount == bodies.length)
+					{
+						Replaying = false;
+					}
+				}
+			}
+			Render.world(replayrender);
+			if(!Replaying)
+			{
+				var replaycanvas = document.getElementById("replaycanvas");
+				var rs = replaycanvas.getContext("2d");
+				rs.fillStyle = "rgba(0, 0, 0, 0.5)";
+				rs.fillRect(0, 0, replaycanvas.width, replaycanvas.height);
+				rs.drawImage(PlayButtonImage, replaycanvas.width / 2 - 30, replaycanvas.height / 2 - 30);
+			}
+		}
 	}
-	
-	drawControls();
-	drawCheckMark();
 }
 
 function drawMenu()
@@ -299,6 +403,10 @@ function drawMenu()
 	{
 		FillWrapText("Toppleblox", 80, "center", SCREEN_WIDTH, SCREEN_WIDTH / 2, 180);
 	}
+	else if(MenuID == Menus.LevelSelect)
+	{
+		FillWrapText("Select a Level", 60, "center", SCREEN_WIDTH, SCREEN_WIDTH / 2, 110);
+	}
 	else if(MenuID == Menus.Victory)
 	{
 		Render.world(render);
@@ -306,7 +414,17 @@ function drawMenu()
 		screen.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 		screen.drawImage(DialogImage, SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT / 2 - 200);
 		
-		FillWrapText("You Win!", 60, "center", SCREEN_WIDTH, SCREEN_WIDTH / 2, 220);
+		FillWrapText("You Win!", 60, "center", 400, SCREEN_WIDTH / 2, 220);
+		FillWrapText("Share your replay on LookAtMe!", 20, "center", 400, SCREEN_WIDTH / 2, 280);
+	}
+	else if(MenuID == Menus.VictoryShared)
+	{
+		Render.world(render);
+		screen.fillStyle = "rgba(255, 255, 255, 0.5)";
+		screen.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+		drawDialog(SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT / 2 - 150, 400, 300);
+		
+		FillWrapText("You Win!", 60, "center", 400, SCREEN_WIDTH / 2, 270);
 	}
 }
 
@@ -318,6 +436,11 @@ function drawOutlines()
 		{
 			var b = boxes[i];
 			screen.drawImage(OutlineImage, b.x - 30, b.y - 30);
+		}
+		
+		if(EditTool == Tools.Box && MouseDown)
+		{
+			screen.drawImage(OutlineImage, LastX - 30, LastY - 30);
 		}
 	}
 }
@@ -371,13 +494,28 @@ function updateGame()
 
 function LoadLevel()
 {
-	ball = Bodies.circle(200, 549, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
-	var ground = Bodies.rectangle(400, 610, 1024, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
-	var wall = Bodies.rectangle(0, SCREEN_HEIGHT / 2 - 60, 100, SCREEN_HEIGHT, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+	if(Level == 1)
+	{
+		ball = Bodies.circle(200, 549, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		var ground = Bodies.rectangle(400, 610, 1024, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var wall = Bodies.rectangle(0, SCREEN_HEIGHT / 2 - 60, 100, SCREEN_HEIGHT, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
 
-	// add all of the bodies to the world
-	engine.world = World.create();
-	World.add(engine.world, [ball, ground, wall]);
+		//create new world and add all of the bodies to the world
+		engine.world = World.create();
+		World.add(engine.world, [ball, ground, wall]);
+	}
+	else if(Level == 2)
+	{
+		ball = Bodies.circle(200, 549, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		var ground = Bodies.rectangle(400, 610, 1024, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var wall = Bodies.rectangle(0, SCREEN_HEIGHT / 2 - 60, 100, SCREEN_HEIGHT, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var rampvertices = Vertices.fromPath("0 0 50 0 50 -40");
+		var ramp = Bodies.fromVertices(895, 566.5, rampvertices, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+
+		//create new world and add all of the bodies to the world
+		engine.world = World.create();
+		World.add(engine.world, [ball, ground, wall, ramp]);
+	}
 	
 	EditMode = true;
 	Controls.push(btnGo);
@@ -387,6 +525,122 @@ function LoadLevel()
 	Controls.push(btnRedo);
 	Controls.push(btnClear);
 	Controls.push(btnFlip);
+}
+
+function SaveReplay()
+{
+	var r = new Replay();
+	r.level = Level;
+	r.boxes = boxes.slice(0);
+	
+	var p = new Post();
+	p.user = "Username";
+	p.replay = r;
+	p.timestamp = curframe;
+	
+	Posts.push(p);
+	
+	LoadPost(p);
+	
+	ChangeMenu(Menus.VictoryShared);
+	
+	ToggleSite();
+}
+
+function LoadPost(post)
+{
+	var r = post.replay;
+	
+	var pc = document.getElementById("postcontent");
+	pc.innerHTML = "<p>Look what I did in level " + r.level + " of #Toppleblox:</p>";
+	var rc = document.createElement("canvas");
+	rc.style.marginLeft = "20px";
+	rc.id = "replaycanvas";
+	pc.appendChild(rc);
+	
+	var mybounds = Matter.Bounds.create(Vertices.fromPath("0 0 1024 0 1024 640 0 640"));
+	replayengine = Engine.create({enableSleeping:true});
+	
+	replayrender = Render.create({
+    canvas: rc,
+    engine: replayengine,
+	bounds: mybounds,
+	options: {
+		width:440,
+		height:275,
+		hasBounds:true,
+		wireframes:false,
+		background:"#9af",
+		showSleeping:false
+	}
+	});
+	
+	LoadReplayForPost(r);
+	
+	rc.addEventListener("click", ToggleReplay);
+}
+
+function LoadReplayForPost(r)
+{
+	if(r.level == 1)
+	{
+		reball = Bodies.circle(200, 549, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		var ground = Bodies.rectangle(400, 610, 1024, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var wall = Bodies.rectangle(0, SCREEN_HEIGHT / 2 - 60, 100, SCREEN_HEIGHT, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+
+		//create new world and add all of the bodies to the world
+		replayengine.world = World.create();
+		World.add(replayengine.world, [reball, ground, wall]);
+		AddReplayBoxes(r.boxes);
+	}
+	else if(r.level == 2)
+	{
+		reball = Bodies.circle(200, 549, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		var ground = Bodies.rectangle(400, 610, 1024, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var wall = Bodies.rectangle(0, SCREEN_HEIGHT / 2 - 60, 100, SCREEN_HEIGHT, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var rampvertices = Vertices.fromPath("0 0 50 0 50 -40");
+		var ramp = Bodies.fromVertices(895, 566.5, rampvertices, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+
+		//create new world and add all of the bodies to the world
+		replayengine.world = World.create();
+		World.add(replayengine.world, [reball, ground, wall, ramp]);
+		AddReplayBoxes(r.boxes);
+	}
+}
+
+function ToggleReplay()
+{
+	Replaying = !Replaying;
+}
+
+function Toppleblox()
+{
+	if(document.body.className == "toppleblox")
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+function ToggleSite()
+{
+	if(Toppleblox())
+	{
+		document.body.className = "lookatme";
+		document.getElementById("toppleblox").style.display = "none";
+		document.getElementById("lookatme").style.display = "inline";
+	}
+	else
+	{
+		document.body.className = "toppleblox";
+		document.getElementById("lookatme").style.display = "none";
+		document.getElementById("toppleblox").style.display = "inline";
+	}
+	
+	return false; //used to prevent buttons
 }
 
 function AddBoxes()
@@ -399,6 +653,18 @@ function AddBoxes()
 	}
 	
 	World.add(engine.world, bodies);
+}
+
+function AddReplayBoxes(rb)
+{
+	var bodies = [];
+	for(var i = 0; i < rb.length; i++)
+	{
+		var b = rb[i];
+		bodies.push(Bodies.rectangle(b.x, b.y, 60, 60, {render:{fillStyle:"#666", strokeStyle:"#000"}, chamfer:{radius:10}, friction:0.08, frictionAir:0, frictionStatic:0.3, restitution:0.2}));
+	}
+	
+	World.add(replayengine.world, bodies);
 }
 
 function EraseBoxes(x, y)
@@ -440,7 +706,18 @@ function Redo()
 	}
 }
 
-
+function drawDialog(x, y, w, h)
+{
+	screen.drawImage(DialogImage, 0, 0, 20, 20, x, y, 20, 20); //top left
+	screen.drawImage(DialogImage, 20, 0, 1, 20, x + 20, y, w - 40, 20); //top mid
+	screen.drawImage(DialogImage, 380, 0, 20, 20, x + w - 20, y, 20, 20); //top right
+	screen.drawImage(DialogImage, 0, 20, 20, 1, x, y + 20, 20, h - 40); //mid left
+	screen.drawImage(DialogImage, 20, 20, 1, 1, x + 20, y + 20, w - 40, h - 40); //mid mid
+	screen.drawImage(DialogImage, 380, 20, 20, 1, x + w - 20, y + 20, 20, h - 40); //mid right
+	screen.drawImage(DialogImage, 0, 380, 20, 20, x, y + h - 20, 20, 20); //bottom left
+	screen.drawImage(DialogImage, 20, 380, 1, 20, x + 20, y + h - 20, w - 40, 20); //bottom mid
+	screen.drawImage(DialogImage, 380, 380, 20, 20, x + w - 20, y + h - 20, 20, 20); //bottom right
+}
 
 
 
@@ -475,18 +752,21 @@ window.addEventListener("mousemove", function (event) {
 	LastX = x;
 	LastY = y;
 	
-	if(!MenuShowing && EditMode)
+	if(Toppleblox())
 	{
-		if(MouseDown && EditTool == Tools.Erase)
+		if(!MenuShowing && EditMode)
 		{
-			EraseBoxes(x, y);
+			if(MouseDown && EditTool == Tools.Erase)
+			{
+				EraseBoxes(x, y);
+			}
 		}
-	}
 	
-	//pick controls
-	for(var c = 0; c < Controls.length; c++)
-	{
-		Controls[c].pick(x, y, EventType.MOVE, MouseDown, MouseDownX, MouseDownY);
+		//pick controls
+		for(var c = 0; c < Controls.length; c++)
+		{
+			Controls[c].pick(x, y, EventType.MOVE, MouseDown, MouseDownX, MouseDownY);
+		}
 	}
 });
 
@@ -502,19 +782,22 @@ window.addEventListener("mousedown", function (event)
 	MouseDownX = x;
 	MouseDownY = y;
 	
-	if(!MenuShowing && EditMode)
+	if(Toppleblox())
 	{
-		if(EditTool == Tools.Erase)
+		if(!MenuShowing && EditMode)
 		{
-			erasehack = boxes.slice(0);
-			EraseBoxes(x, y);
+			if(EditTool == Tools.Erase)
+			{
+				erasehack = boxes.slice(0);
+				EraseBoxes(x, y);
+			}
 		}
-	}
 	
-	//pick controls
-	for(var c = 0; c < Controls.length; c++)
-	{
-		Controls[c].pick(x, y, EventType.DOWN, MouseDown, MouseDownX, MouseDownY);
+		//pick controls
+		for(var c = 0; c < Controls.length; c++)
+		{
+			Controls[c].pick(x, y, EventType.DOWN, MouseDown, MouseDownX, MouseDownY);
+		}
 	}
 });
 
@@ -528,36 +811,39 @@ window.addEventListener("mouseup", function (event)
 	
 	MouseDown = false;
 	
-	if(!MenuShowing && EditMode)
+	if(Toppleblox())
 	{
-		if(EditTool == Tools.Box)
+		if(!MenuShowing && EditMode)
 		{
-			if((btnGo.x > 20 && x < SCREEN_WIDTH - 200) || (btnGo.x < 50 && x > 200))
+			if(EditTool == Tools.Box)
 			{
-				undostack.push(boxes.slice(0));
-				redostack = [];
-				boxes.push(new Point(x, y));
+				if((btnGo.x > 20 && x < SCREEN_WIDTH - 200) || (btnGo.x < 50 && x > 200))
+				{
+					undostack.push(boxes.slice(0));
+					redostack = [];
+					boxes.push(new Point(x, y));
+				}
+			}
+			else if(EditTool == Tools.Erase)
+			{
+				if(erasehack.length != boxes.length)
+				{
+					undostack.push(erasehack.slice(0));
+					redostack = [];
+				}
+				EraseBoxes(x, y);
 			}
 		}
-		else if(EditTool == Tools.Erase)
+		else if(!MenuShowing && !EditMode)
 		{
-			if(erasehack.length != boxes.length)
-			{
-				undostack.push(erasehack.slice(0));
-				redostack = [];
-			}
-			EraseBoxes(x, y);
+			LoadLevel();
 		}
-	}
-	else if(!MenuShowing && !EditMode)
-	{
-		LoadLevel();
-	}
 	
-	//pick controls
-	for(var c = 0; c < Controls.length; c++)
-	{
-		Controls[c].pick(x, y, EventType.UP, MouseDown, MouseDownX, MouseDownY);
+		//pick controls
+		for(var c = 0; c < Controls.length; c++)
+		{
+			Controls[c].pick(x, y, EventType.UP, MouseDown, MouseDownX, MouseDownY);
+		}
 	}
 });
 
@@ -599,6 +885,180 @@ function FillWrapText(text, size, align, maxwidth, x, y, color)
 	{
 		screen.fillText(text, x, y);
 		return y + 60;
+	}
+}
+
+function pinUserbar()
+{
+	var top = document.documentElement.scrollTop || document.body.scrollTop;
+	if(top > 10)
+	{
+		var ub = document.getElementById("userbar");
+		var ut = document.getElementById("usertools");
+		ub.style.position = "relative";
+		ub.style.top = (top - 10) + "px";
+		ut.style.borderRadius = "0 0 10px 10px";
+	}
+	else
+	{
+		var ub = document.getElementById("userbar");
+		var ut = document.getElementById("usertools");
+		ub.style.position = "static";
+		ut.style.borderRadius = "10px";
+	}
+}
+
+window.onscroll = pinUserbar;
+
+function addUsername()
+{
+	var list = document.getElementById("userlist");
+	var li = document.createElement("li");
+	li.innerHTML = generateUsername() + " likes this";
+	list.insertBefore(li, list.childNodes[0]);
+}
+
+function generateUsername()
+{
+	var first = ["radio", "dark", "ninja", "death", "shadow", "diamond", "crystal", "rainbow", "cat", "marble", "granite", "coffee", "tea", "sushi", "ring", "sonic", "super", "crazy", "electric", "unicorn", "pegasus", "mega", "ultra", "lettuce", "banana", "coconut", "cyclone", "steel", "algebra", "fountain", "cake", "pie", "bug", "rose", "circle", "square", "triangle", "atom", "dandelion", "rabid", "mud", "belt", "white", "poison", "dance", "croquet", "needle", "lace", "ribbon", "puppy", "clover", "sleepy", "thunder", "lightning", "bright", "orange", "meat", "veggie", "oath", "asparagus", "quake", "pi", "liver", "dragon", "shark", "cape", "tau", "ant", "pirate", "glass", "ruby", "laser", "tiara", "widow", "big", "dry", "egg", "lantern", "milk", "engine", "distant", "triumph", "plush", "alicorn", "apple", "wheat", "pear", "pearl", "linux", "night", "quick", "box", "turnip", "black", "squash", "pixel", "elephant", "squid", "whale", "fish", "eagle", "ninja", "ice", "snow", "magic", "fairy", "cupcake", "owl", "math", "nuclear", "lizard", "corn", "phoenix", "disaster", "karate", "fenix", "ballet", "anvil", "stick", "pony", "quantum", "boat", "sad", "mint", "happy", "dragon", "raven", "crow", "fedora", "bubble", "window", "mad", "mummy", "angry", "robin", "bat", "princess", "squirrel", "blood", "red", "blue", "green", "pink", "tax", "prince", "grass", "lead", "cash", "snake", "leaf", "pixel", "wing", "fight", "club", "crown", "dog", "frog", "bird", "money", "clown", "jet", "knight", "flower", "cobra", "cat", "water", "air", "tech", "bit", "star", "light", "photon", "sun", "moon", "venom", "earth", "river", "ocean", "lake", "dirt", "fur", "feline", "tiger", "lion", "anti", "matter", "possum", "thorn", "brain", "pixie", "alien", "xeno", "mine", "cloud", "proton", "limousine", "ox", "yak", "submarine", "monster"];
+	var second = ["bomber", "boy", "girl", "gurl", "flood", "head", "cadillac", "samurai", "thief", "grrl", "face", "breaker", "kitty", "hacker", "chef", "haxxor", "rider", "buster", "singer", "lunatic", "catcher", "hunter", "stinger", "shaker", "dodger", "watcher", "smasher", "dancer", "dash", "fixer", "cheater", "pirate", "lord", "queen", "player", "reaper", "man", "mom", "oil", "breaker", "lady", "knight", "cat", "statue", "killer", "ninja", "killa", "wife", "phantom", "ranger", "stalker", "guy", "person", "man", "girl", "woman", "dude", "craft", "monster", "dragon", "woman", "bomb", "stealer", "creep", "eater", "maniac", "lover", "clown", "guy", "feline", "walker", "rope", "ghost", "money", "king", "queen", "cat", "master", "flyer", "hat", "shoes", "blizzard", "tornado", "avalanche", "shaker", "heart", "foot", "faerie", "hand", "sword", "knife", "mum", "kid", "jedi", "runner", "wing", "wizard", "summoner", "demon", "lad", "chick", "playa", "maker", "taker", "fang", "tooth", "thorn", "mime", "fighter", "dancer", "fairy", "drinker", "explosion"];
+	
+	if(Math.random() < 0.95) //two names
+	{
+		var part1 = Math.floor(Math.random() * first.length);
+		var part2 = Math.floor(Math.random() * second.length);
+		var num = generateUsernum(2);
+		var mid = "";
+		if(Math.random() < 0.3)
+		{
+			mid = "_";
+		}
+		var the = "";
+		if(Math.random() < 0.1)
+		{
+			the = "the" + mid;
+		}
+		
+		if(Math.random() < 0.8)
+		{
+			var username = the + first[part1] + mid + second[part2] + num;
+			return username;
+		}
+		else
+		{
+			part2 = Math.floor(Math.random() * first.length);
+			var username = the + first[part1] + mid + first[part2] + num;
+			return username;
+		}
+	}
+	else
+	{
+		if(Math.random() < 0.5)
+		{
+			var name = Math.floor(Math.random() * first.length);
+			var num = generateUsernum(1);
+			
+			var username = first[name] + num;
+			return username;
+		}
+		else
+		{
+			var name = Math.floor(Math.random() * second.length);
+			var num = generateUsernum(1);
+			
+			var username = second[name] + num;
+			return username;
+		}
+	}
+}
+
+function generateUsernum(names)
+{
+	if(names == 1)
+	{
+		var num = "";
+		
+		if(Math.random() < 0.99)
+		{
+			num = Math.floor(Math.random() * 1000);
+			if(num == 0)
+			{
+				num = 1337;
+			}
+			var digits = (num + "").length;
+			if(digits == 1)
+			{
+				if(Math.random() < 0.7)
+				{
+					if(Math.random() < 0.2)
+					{
+						num = "0" + num;
+					}
+					else
+					{
+						num = "00" + num;
+					}
+				}
+			}
+			else if(digits == 2)
+			{
+				if(Math.random() < 0.3)
+				{
+					if(Math.random() < 0.9)
+					{
+						num = "0" + num;
+					}
+					else
+					{
+						num = "00" + num;
+					}
+				}
+			}
+		}
+		
+		return num;
+	}
+	else
+	{
+		var num = "";
+		
+		if(Math.random() < 0.9)
+		{
+			num = Math.floor(Math.random() * 100);
+			if(num == 0)
+			{
+				num = 1337;
+			}
+			var digits = (num + "").length;
+			if(digits == 1)
+			{
+				if(Math.random() < 0.6)
+				{
+					if(Math.random() < 0.85)
+					{
+						num = "0" + num;
+					}
+					else
+					{
+						num = "00" + num;
+					}
+				}
+			}
+			else if(digits == 2)
+			{
+				if(Math.random() < 0.2)
+				{
+					num = "0" + num;
+				}
+			}
+		}
+		
+		if(num == "069") //seriously, this happens way too often (even for the internet)
+		{
+			num = "1337";
+		}
+		
+		return num;
 	}
 }
 

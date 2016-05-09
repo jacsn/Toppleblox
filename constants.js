@@ -1,13 +1,12 @@
 var SCREEN_WIDTH = 1024;
 var SCREEN_HEIGHT = 640;
 
-
 var Menus = new function()
 {
 	this.Main = 0;
-	this.Pause = 1;
+	this.LevelSelect = 1;
 	this.Victory = 2;
-	this.Loss = 3;
+	this.VictoryShared = 3;
 	this.None = 4;
 }
 
@@ -30,6 +29,13 @@ var Post = function()
 	this.viewcount = 0;
 	this.likecount = 0;
 	this.likes = [];
+	this.timestamp = 0;
+}
+
+var Replay = function()
+{
+	this.level = 1;
+	this.boxes = [];
 }
 
 
@@ -91,3 +97,18 @@ var FlipButtonImage = new Image();
 FlipButtonImage.ready = false;
 FlipButtonImage.onload = function(){this.ready = true;};
 FlipButtonImage.src = "flipbutton.png";
+
+var PlayButtonImage = new Image();
+PlayButtonImage.ready = false;
+PlayButtonImage.onload = function(){this.ready = true;};
+PlayButtonImage.src = "playbutton.png";
+
+var Level1Image = new Image();
+Level1Image.ready = false;
+Level1Image.onload = function(){this.ready = true;};
+Level1Image.src = "level1.png";
+
+var Level2Image = new Image();
+Level2Image.ready = false;
+Level2Image.onload = function(){this.ready = true;};
+Level2Image.src = "level2.png";
