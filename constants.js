@@ -117,3 +117,8 @@ var Level2Image = new Image();
 Level2Image.ready = false;
 Level2Image.onload = function(){this.ready = true;};
 Level2Image.src = "level2.png";
+
+var Level3Image = new Image();
+Level3Image.ready = false;
+Level3Image.onload = function(){this.ready = true;};
+Level3Image.src = "level3.png";

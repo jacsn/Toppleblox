@@ -45,6 +45,8 @@ var Level = 2;
 var Posts = [];
 var curPost = null;
 
+var validboxoutline = true;
+
 
 
 
@@ -61,7 +63,7 @@ var btnClear = new ImgButton("", SCREEN_WIDTH - 160, 420, 140, 60, btnClear_Clic
 var btnFlip = new ImgButton("", SCREEN_WIDTH - 202, 15, 30, 50, btnFlip_Click, FlipButtonImage);
 var btnLevel1 = new ImgButton("", 52, 185, 280, 175, btnLevel1_Click, Level1Image);
 var btnLevel2 = new ImgButton("", 372, 185, 280, 175, btnLevel2_Click, Level2Image);
-var btnLevel3 = new ImgButton("", 692, 185, 280, 175, btnLevel2_Click, Level2Image);
+var btnLevel3 = new ImgButton("", 692, 185, 280, 175, btnLevel3_Click, Level3Image);
 var btnLevel4 = new ImgButton("", 52, 405, 280, 175, btnLevel2_Click, Level2Image);
 var btnLevel5 = new ImgButton("", 372, 405, 280, 175, btnLevel2_Click, Level2Image);
 var btnLevel6 = new ImgButton("", 692, 405, 280, 175, btnLevel2_Click, Level2Image);
@@ -84,6 +86,14 @@ function btnLevel2_Click()
 	ChangeMenu(Menus.None);
 	boxes = [];
 	Level = 2;
+	LoadLevel();
+}
+
+function btnLevel3_Click()
+{
+	ChangeMenu(Menus.None);
+	boxes = [];
+	Level = 3;
 	LoadLevel();
 }
 
@@ -214,7 +224,7 @@ var preloader = setInterval(preloadloop, 10);
 var gameloop;
 function preloadloop()
 {
-	if(ButtonImage.ready && DialogImage.ready && OutlineImage.ready && ToolboxImage.ready && BoxToolButtonImage.ready && EraseToolButtonImage.ready && CheckMarkImage.ready && UndoButtonImage.ready && RedoButtonImage.ready && ClearButtonImage.ready && FlipButtonImage.ready && PlayButtonImage.ready && ReplayButtonImage.ready && Level1Image.ready && Level2Image.ready) //load assets
+	if(ButtonImage.ready && DialogImage.ready && OutlineImage.ready && ToolboxImage.ready && BoxToolButtonImage.ready && EraseToolButtonImage.ready && CheckMarkImage.ready && UndoButtonImage.ready && RedoButtonImage.ready && ClearButtonImage.ready && FlipButtonImage.ready && PlayButtonImage.ready && ReplayButtonImage.ready && Level1Image.ready && Level2Image.ready && Level3Image.ready) //load assets
 	{
 		clearInterval(preloader);
 		
@@ -426,7 +436,7 @@ function drawMenu()
 		screen.drawImage(DialogImage, SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT / 2 - 200);
 		
 		FillWrapText("You Win!", 60, "center", 400, SCREEN_WIDTH / 2, 220);
-		FillWrapText("Share your replay on LookAtMe!", 20, "center", 400, SCREEN_WIDTH / 2, 280);
+		FillWrapText("Share your replay on LookAtMe!", 20, "center", 400, SCREEN_WIDTH / 2, 275);
 	}
 	else if(MenuID == Menus.VictoryShared)
 	{
@@ -451,7 +461,10 @@ function drawOutlines()
 		
 		if(EditTool == Tools.Box && MouseDown)
 		{
-			screen.drawImage(OutlineImage, LastX - 30, LastY - 30);
+			if(validboxoutline)
+			{
+				screen.drawImage(OutlineImage, LastX - 30, LastY - 30);
+			}
 		}
 	}
 }
@@ -526,6 +539,19 @@ function LoadLevel()
 		//create new world and add all of the bodies to the world
 		engine.world = World.create();
 		World.add(engine.world, [ball, ground, wall, ramp]);
+	}
+	else if(Level == 3)
+	{
+		ball = Bodies.circle(510, 250, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		var wall1 = Bodies.rectangle(30, 280, 60, 600, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var wall2 = Bodies.rectangle(994, 280, 60, 600, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var floor1 = Bodies.rectangle(200, 610, 400, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var floor2 = Bodies.rectangle(824, 610, 400, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var platform = Bodies.rectangle(510, 310, 400, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		
+		//create new world and add all of the bodies to the world
+		engine.world = World.create();
+		World.add(engine.world, [ball, wall1, wall2, floor1, floor2, platform]);
 	}
 	
 	EditMode = true;
@@ -621,6 +647,20 @@ function LoadReplayForPost()
 		World.add(replayengine.world, [reball, ground, wall, ramp]);
 		AddReplayBoxes(r.boxes);
 	}
+	else if(r.level == 3)
+	{
+		reball = Bodies.circle(510, 250, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		var wall1 = Bodies.rectangle(30, 280, 60, 600, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var wall2 = Bodies.rectangle(994, 280, 60, 600, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var floor1 = Bodies.rectangle(200, 610, 400, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var floor2 = Bodies.rectangle(824, 610, 400, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var platform = Bodies.rectangle(510, 310, 400, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		
+		//create new world and add all of the bodies to the world
+		replayengine.world = World.create();
+		World.add(replayengine.world, [reball, wall1, wall2, floor1, floor2, platform]);
+		AddReplayBoxes(r.boxes);
+	}
 }
 
 function ToggleReplay()
@@ -658,6 +698,7 @@ function ToggleSite()
 		document.body.className = "toppleblox";
 		document.getElementById("lookatme").style.display = "none";
 		document.getElementById("toppleblox").style.display = "inline";
+		replayfinished = false;
 	}
 	
 	return false; //used to prevent buttons
@@ -811,6 +852,17 @@ window.addEventListener("mousedown", function (event)
 				erasehack = boxes.slice(0);
 				EraseBoxes(x, y);
 			}
+			else if(EditTool == Tools.Box)
+			{
+				if((btnGo.x > 20 && x < SCREEN_WIDTH - 200) || (btnGo.x < 50 && x > 200))
+				{
+					validboxoutline = true;
+				}
+				else
+				{
+					validboxoutline = false;
+				}
+			}
 		}
 	
 		//pick controls
@@ -837,7 +889,7 @@ window.addEventListener("mouseup", function (event)
 		{
 			if(EditTool == Tools.Box)
 			{
-				if((btnGo.x > 20 && x < SCREEN_WIDTH - 200) || (btnGo.x < 50 && x > 200))
+				if(validboxoutline)
 				{
 					undostack.push(boxes.slice(0));
 					redostack = [];
@@ -940,7 +992,7 @@ function addUsername()
 
 function generateUsername()
 {
-	var first = ["radio", "dark", "ninja", "death", "shadow", "diamond", "crystal", "rainbow", "cat", "marble", "granite", "coffee", "tea", "sushi", "ring", "sonic", "super", "crazy", "electric", "unicorn", "pegasus", "mega", "ultra", "lettuce", "banana", "coconut", "cyclone", "steel", "algebra", "fountain", "cake", "pie", "bug", "rose", "circle", "square", "triangle", "atom", "dandelion", "rabid", "mud", "belt", "white", "poison", "dance", "croquet", "needle", "lace", "ribbon", "puppy", "clover", "sleepy", "thunder", "lightning", "bright", "orange", "meat", "veggie", "oath", "asparagus", "quake", "pi", "liver", "dragon", "shark", "cape", "tau", "ant", "pirate", "glass", "ruby", "laser", "tiara", "widow", "big", "dry", "egg", "lantern", "milk", "engine", "distant", "triumph", "plush", "alicorn", "apple", "wheat", "pear", "pearl", "linux", "night", "quick", "box", "turnip", "black", "squash", "pixel", "elephant", "squid", "whale", "fish", "eagle", "ninja", "ice", "snow", "magic", "fairy", "cupcake", "owl", "math", "nuclear", "lizard", "corn", "phoenix", "disaster", "karate", "fenix", "ballet", "anvil", "stick", "pony", "quantum", "boat", "sad", "mint", "happy", "dragon", "raven", "crow", "fedora", "bubble", "window", "mad", "mummy", "angry", "robin", "bat", "princess", "squirrel", "blood", "red", "blue", "green", "pink", "tax", "prince", "grass", "lead", "cash", "snake", "leaf", "pixel", "wing", "fight", "club", "crown", "dog", "frog", "bird", "money", "clown", "jet", "knight", "flower", "cobra", "cat", "water", "air", "tech", "bit", "star", "light", "photon", "sun", "moon", "venom", "earth", "river", "ocean", "lake", "dirt", "fur", "feline", "tiger", "lion", "anti", "matter", "possum", "thorn", "brain", "pixie", "alien", "xeno", "mine", "cloud", "proton", "limousine", "ox", "yak", "submarine", "monster"];
+	var first = ["radio", "dark", "ninja", "death", "shadow", "diamond", "crystal", "bad", "good", "rainbow", "cat", "marble", "granite", "coffee", "tea", "sushi", "ring", "sonic", "super", "crazy", "electric", "unicorn", "pegasus", "mega", "ultra", "lettuce", "banana", "coconut", "cyclone", "steel", "algebra", "fountain", "cake", "pie", "bug", "rose", "circle", "square", "triangle", "atom", "dandelion", "rabid", "mud", "belt", "white", "poison", "dance", "croquet", "needle", "lace", "ribbon", "puppy", "clover", "sleepy", "thunder", "lightning", "bright", "orange", "meat", "veggie", "oath", "asparagus", "quake", "pi", "liver", "dragon", "shark", "cape", "tau", "ant", "pirate", "glass", "ruby", "laser", "tiara", "widow", "big", "dry", "egg", "lantern", "milk", "engine", "distant", "triumph", "plush", "alicorn", "apple", "wheat", "pear", "pearl", "linux", "night", "quick", "box", "turnip", "black", "squash", "pixel", "elephant", "squid", "whale", "fish", "eagle", "ninja", "ice", "snow", "magic", "fairy", "cupcake", "owl", "math", "nuclear", "lizard", "corn", "phoenix", "disaster", "karate", "fenix", "ballet", "anvil", "stick", "pony", "quantum", "boat", "sad", "mint", "happy", "dragon", "raven", "crow", "fedora", "bubble", "window", "mad", "mummy", "angry", "robin", "bat", "princess", "squirrel", "blood", "red", "blue", "green", "pink", "tax", "prince", "grass", "lead", "cash", "snake", "leaf", "pixel", "wing", "fight", "club", "crown", "dog", "frog", "bird", "money", "clown", "jet", "knight", "flower", "cobra", "cat", "water", "air", "tech", "bit", "star", "light", "photon", "sun", "moon", "venom", "earth", "river", "ocean", "lake", "dirt", "fur", "feline", "tiger", "lion", "anti", "matter", "possum", "thorn", "brain", "pixie", "alien", "xeno", "mine", "cloud", "proton", "limousine", "ox", "yak", "submarine", "monster"];
 	var second = ["bomber", "boy", "girl", "gurl", "flood", "head", "cadillac", "samurai", "thief", "grrl", "face", "breaker", "kitty", "hacker", "chef", "haxxor", "rider", "buster", "singer", "lunatic", "catcher", "hunter", "stinger", "shaker", "dodger", "watcher", "smasher", "dancer", "dash", "fixer", "cheater", "pirate", "lord", "queen", "player", "reaper", "man", "mom", "oil", "breaker", "lady", "knight", "cat", "statue", "killer", "ninja", "killa", "wife", "phantom", "ranger", "stalker", "guy", "person", "man", "girl", "woman", "dude", "craft", "monster", "dragon", "woman", "bomb", "stealer", "creep", "eater", "maniac", "lover", "clown", "guy", "feline", "walker", "rope", "ghost", "money", "king", "queen", "cat", "master", "flyer", "hat", "shoes", "blizzard", "tornado", "avalanche", "shaker", "heart", "foot", "faerie", "hand", "sword", "knife", "mum", "kid", "jedi", "runner", "wing", "wizard", "summoner", "demon", "lad", "chick", "playa", "maker", "taker", "fang", "tooth", "thorn", "mime", "fighter", "dancer", "fairy", "drinker", "explosion"];
 	
 	if(Math.random() < 0.95) //two names
