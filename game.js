@@ -31,6 +31,7 @@ var EditMode = true;
 var EditTool = Tools.Box;
 
 var Replaying = false;
+var replayfinished = false;
 
 var undostack = [];
 var redostack = [];
@@ -42,6 +43,7 @@ var boxes = [];
 var Level = 2;
 
 var Posts = [];
+var curPost = null;
 
 
 
@@ -212,7 +214,7 @@ var preloader = setInterval(preloadloop, 10);
 var gameloop;
 function preloadloop()
 {
-	if(ButtonImage.ready && DialogImage.ready && OutlineImage.ready && ToolboxImage.ready && BoxToolButtonImage.ready && EraseToolButtonImage.ready && CheckMarkImage.ready && UndoButtonImage.ready && RedoButtonImage.ready && ClearButtonImage.ready && FlipButtonImage.ready && PlayButtonImage.ready && Level1Image.ready && Level2Image.ready) //load assets
+	if(ButtonImage.ready && DialogImage.ready && OutlineImage.ready && ToolboxImage.ready && BoxToolButtonImage.ready && EraseToolButtonImage.ready && CheckMarkImage.ready && UndoButtonImage.ready && RedoButtonImage.ready && ClearButtonImage.ready && FlipButtonImage.ready && PlayButtonImage.ready && ReplayButtonImage.ready && Level1Image.ready && Level2Image.ready) //load assets
 	{
 		clearInterval(preloader);
 		
@@ -360,6 +362,7 @@ function drawScreen()
 				
 				if(reball.position.y > SCREEN_HEIGHT + 50)
 				{
+					replayfinished = true;
 					Replaying = false;
 				}
 				else
@@ -380,6 +383,7 @@ function drawScreen()
 					
 					if(sleepcount == bodies.length)
 					{
+						replayfinished = true;
 						Replaying = false;
 					}
 				}
@@ -391,7 +395,14 @@ function drawScreen()
 				var rs = replaycanvas.getContext("2d");
 				rs.fillStyle = "rgba(0, 0, 0, 0.5)";
 				rs.fillRect(0, 0, replaycanvas.width, replaycanvas.height);
-				rs.drawImage(PlayButtonImage, replaycanvas.width / 2 - 30, replaycanvas.height / 2 - 30);
+				if(replayfinished)
+				{
+					rs.drawImage(ReplayButtonImage, replaycanvas.width / 2 - 30, replaycanvas.height / 2 - 30);
+				}
+				else
+				{
+					rs.drawImage(PlayButtonImage, replaycanvas.width / 2 - 30, replaycanvas.height / 2 - 30);
+				}
 			}
 		}
 	}
@@ -540,21 +551,24 @@ function SaveReplay()
 	
 	Posts.push(p);
 	
-	LoadPost(p);
+	curPost = p;
+	
+	LoadPost();
 	
 	ChangeMenu(Menus.VictoryShared);
 	
 	ToggleSite();
 }
 
-function LoadPost(post)
+function LoadPost()
 {
-	var r = post.replay;
+	var r = curPost.replay;
 	
 	var pc = document.getElementById("postcontent");
 	pc.innerHTML = "<p>Look what I did in level " + r.level + " of #Toppleblox:</p>";
 	var rc = document.createElement("canvas");
 	rc.style.marginLeft = "20px";
+	rc.style.border = "1px solid black";
 	rc.id = "replaycanvas";
 	pc.appendChild(rc);
 	
@@ -575,13 +589,14 @@ function LoadPost(post)
 	}
 	});
 	
-	LoadReplayForPost(r);
+	LoadReplayForPost();
 	
 	rc.addEventListener("click", ToggleReplay);
 }
 
-function LoadReplayForPost(r)
+function LoadReplayForPost()
 {
+	var r = curPost.replay;
 	if(r.level == 1)
 	{
 		reball = Bodies.circle(200, 549, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
@@ -610,6 +625,11 @@ function LoadReplayForPost(r)
 
 function ToggleReplay()
 {
+	if(!Replaying && replayfinished)
+	{
+		replayfinished = false;
+		LoadReplayForPost();
+	}
 	Replaying = !Replaying;
 }
 

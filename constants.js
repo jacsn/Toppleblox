@@ -103,6 +103,11 @@ PlayButtonImage.ready = false;
 PlayButtonImage.onload = function(){this.ready = true;};
 PlayButtonImage.src = "playbutton.png";
 
+var ReplayButtonImage = new Image();
+ReplayButtonImage.ready = false;
+ReplayButtonImage.onload = function(){this.ready = true;};
+ReplayButtonImage.src = "replaybutton.png";
+
 var Level1Image = new Image();
 Level1Image.ready = false;
 Level1Image.onload = function(){this.ready = true;};
