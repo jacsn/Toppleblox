@@ -25,6 +25,7 @@ body.toppleblox
 	top:0px;
 	left:0px;
 	background:#000;
+	z-index:100000;
 }
 
 h1
@@ -63,6 +64,59 @@ h1
 	padding-left:10px;
 	line-height:2em;
 	border-bottom:1px solid #666;
+}
+
+#postlist
+{
+	list-style-type:none;
+	margin:0px;
+	padding:0px;
+	max-width:100%;
+}
+
+#postlist li:after
+{
+	content:"";
+	display:block;
+	clear:both;
+}
+
+#postlist li a
+{
+	display:block;
+	margin:0px;
+	padding:0px;
+	border-top:1px solid #e1e8ed;
+	height:60px;
+	position:relative;
+	text-decoration:none;
+	color:#000;
+}
+
+div.thumbnail
+{
+	display:block;
+	width:80px;
+	height:50px;
+	margin:5px 10px 5px 10px;
+	background-color:#999;
+	border:1px solid black;
+	float:left;
+}
+
+.posttext
+{
+	float:left;
+	line-height:60px;
+	margin:0px;
+	padding:0px;
+}
+
+.timestamp
+{
+	float:right;
+	text-align:right;
+	margin:10px 10px 0 0;
 }
 
 #userbar
@@ -104,6 +158,7 @@ h1
 	float:left;
 	padding-right:20px;
 	width:42.86%;
+	min-width:500px;
 }
 
 #post

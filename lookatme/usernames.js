@@ -20,11 +20,24 @@ function pinUserbar()
 
 window.onscroll = pinUserbar;
 
+function addPost()
+{
+	var d = new Date();
+	var time = d.toLocaleString().replace(", ", "<br />");
+	var list = document.getElementById("postlist");
+	var li = document.createElement("li");
+	var level = Math.floor(Math.random() * 5) + 1;
+	li.innerHTML = "<a href='viewpost?id=' onclick='return false;'><div class='thumbnail'></div><div class='posttext'>Look what I did in level " + level + " of #Toppleblox:</div><span class='timestamp'>" + time + "</span></a>";
+	list.insertBefore(li, list.childNodes[0]);
+}
+
 function addUsername()
 {
+	var d = new Date(1462825051215);
+	var time = d.toLocaleString();
 	var list = document.getElementById("userlist");
 	var li = document.createElement("li");
-	li.innerHTML = generateUsername() + " likes this";
+	li.innerHTML = generateUsername() + " likes this <span style='float:right; margin-right:10xp;'>" + time + "</span>";
 	list.insertBefore(li, list.childNodes[0]);
 }
 

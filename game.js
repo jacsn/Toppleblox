@@ -10,6 +10,7 @@ canvas.style.margin = "0 auto";
 
 //handle lookatme button events
 document.getElementById("logout").addEventListener("click", ToggleSite);
+document.getElementById("myposts").addEventListener("click", LoadAllPosts);
 
 var curframe = null;
 var lastframe = null;
@@ -32,6 +33,7 @@ var EditTool = Tools.Box;
 
 var Replaying = false;
 var replayfinished = false;
+var singlepost = true;
 
 var undostack = [];
 var redostack = [];
@@ -44,6 +46,8 @@ var Level = 2;
 
 var Posts = [];
 var curPost = null;
+
+var username = "Username";
 
 var validboxoutline = true;
 
@@ -362,7 +366,7 @@ function drawScreen()
 		drawControls();
 		drawCheckMark();
 	}
-	else
+	else if(singlepost)
 	{
 		if(replayrender !== null)
 		{
@@ -571,9 +575,11 @@ function SaveReplay()
 	r.boxes = boxes.slice(0);
 	
 	var p = new Post();
-	p.user = "Username";
+	p.user = username;
 	p.replay = r;
-	p.timestamp = curframe;
+	
+	var d = new Date();
+	p.timestamp = d.getTime();
 	
 	Posts.push(p);
 	
@@ -588,7 +594,11 @@ function SaveReplay()
 
 function LoadPost()
 {
+	clearSocialContent();
 	var r = curPost.replay;
+	singlepost = true;
+	Replaying = false;
+	replayfinished = false;
 	
 	var pc = document.getElementById("postcontent");
 	pc.innerHTML = "<p>Look what I did in level " + r.level + " of #Toppleblox:</p>";
@@ -689,12 +699,14 @@ function ToggleSite()
 {
 	if(Toppleblox())
 	{
+		document.title = "LookAtMe";
 		document.body.className = "lookatme";
 		document.getElementById("toppleblox").style.display = "none";
 		document.getElementById("lookatme").style.display = "inline";
 	}
 	else
 	{
+		document.title = "Toppleblox";
 		document.body.className = "toppleblox";
 		document.getElementById("lookatme").style.display = "none";
 		document.getElementById("toppleblox").style.display = "inline";
@@ -702,6 +714,147 @@ function ToggleSite()
 	}
 	
 	return false; //used to prevent buttons
+}
+
+function LoadAllPosts()
+{
+	singlepost = false;
+	
+	//clear out the main content area
+	clearSocialContent();
+	
+	var headtext = document.createElement("p");
+	headtext.className = "postcount";
+	if(Posts.length == 1)
+	{
+		headtext.innerHTML = username + " has 1 post:";
+	}
+	else
+	{
+		headtext.innerHTML = username + " has " + Posts.length + " posts:";
+	}
+	var theguy = document.getElementById("post");
+	theguy.insertBefore(headtext, theguy.childNodes[0]);
+	
+	for(var i = Posts.length - 1; i >= 0; i--)
+	{
+		var post = Posts[i];
+		
+		//deal with thumbnail
+		if(post.thumbnail === null)
+		{
+			post.thumbnail = GenerateThumbnail(post.replay);
+		}
+		
+		var d = new Date(post.timestamp);
+		var time = d.toLocaleString().replace(", ", "<br />");
+		var list = document.getElementById("postlist");
+		var li = document.createElement("li");
+		li.innerHTML = "<a id='viewpost" + i + "' href='viewpost?id=" + i + "' onclick='return false;'><div class='thumbnail'><img src='" + post.thumbnail.src + "' /></div><div class='posttext'>Look what I did in level " + post.replay.level + " of #Toppleblox:</div><span class='timestamp'>" + time + "</span></a>";
+		list.appendChild(li);
+	}
+	
+	for(var i = 0; i < Posts.length; i++)
+	{
+		var a = document.getElementById("viewpost" + i);
+		a.addEventListener("click", viewpostCallbackHandler(i));
+	}
+}
+
+function viewpostCallbackHandler(index)
+{
+	return function(event){LoadThisPost(index);};
+}
+
+function LoadThisPost(i)
+{
+	curPost = Posts[i];
+	LoadPost();
+}
+
+function clearSocialContent()
+{
+	//clears out all current content on the LookAtMe portion of the site, so that new content can be loaded in its place
+	document.getElementById("post").innerHTML = "<div id='postcontent'></div><ul id='userlist'></ul><ul id='postlist'></ul>";
+}
+
+function GenerateThumbnail(r)
+{
+	// create an engine
+	var thumbnailengine = Engine.create({enableSleeping:true});
+	
+	var mybounds = Matter.Bounds.create(Vertices.fromPath("0 0 1024 0 1024 640 0 640"));
+	
+	var thumbnailcanvas = document.createElement("canvas");
+
+	// create a renderer
+	var thumbnailrender = Render.create({
+		canvas: thumbnailcanvas,
+		engine: thumbnailengine,
+		bounds: mybounds,
+		options: {
+			width:80,
+			height:50,
+			wireframes:false,
+			background:"#9af",
+			showSleeping:false,
+			hasBounds:true
+		}
+	});
+	
+	if(r.level == 1)
+	{
+		var myball = Bodies.circle(200, 549, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		var ground = Bodies.rectangle(400, 610, 1024, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var wall = Bodies.rectangle(0, SCREEN_HEIGHT / 2 - 60, 100, SCREEN_HEIGHT, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+
+		//create new world and add all of the bodies to the world
+		thumbnailengine.world = World.create();
+		World.add(thumbnailengine.world, [myball, ground, wall]);
+		AddThumbnailBoxes(thumbnailengine, r.boxes);
+		
+		Render.world(thumbnailrender);
+		var img = new Image();
+		img.src = thumbnailcanvas.toDataURL();
+		return img;
+	}
+	else if(r.level == 2)
+	{
+		var myball = Bodies.circle(200, 549, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		var ground = Bodies.rectangle(400, 610, 1024, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var wall = Bodies.rectangle(0, SCREEN_HEIGHT / 2 - 60, 100, SCREEN_HEIGHT, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var rampvertices = Vertices.fromPath("0 0 50 0 50 -40");
+		var ramp = Bodies.fromVertices(895, 566.5, rampvertices, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+
+		//create new world and add all of the bodies to the world
+		thumbnailengine.world = World.create();
+		World.add(thumbnailengine.world, [myball, ground, wall, ramp]);
+		AddThumbnailBoxes(thumbnailengine, r.boxes);
+		
+		Render.world(thumbnailrender);
+		var img = new Image();
+		img.src = thumbnailcanvas.toDataURL();
+		return img;
+	}
+	else if(r.level == 3)
+	{
+		var myball = Bodies.circle(510, 250, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		var wall1 = Bodies.rectangle(30, 280, 60, 600, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var wall2 = Bodies.rectangle(994, 280, 60, 600, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var floor1 = Bodies.rectangle(200, 610, 400, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var floor2 = Bodies.rectangle(824, 610, 400, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var platform = Bodies.rectangle(510, 310, 400, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		
+		//create new world and add all of the bodies to the world
+		thumbnailengine.world = World.create();
+		World.add(thumbnailengine.world, [myball, wall1, wall2, floor1, floor2, platform]);
+		AddThumbnailBoxes(thumbnailengine, r.boxes);
+		
+		Render.world(thumbnailrender);
+		var img = new Image();
+		img.src = thumbnailcanvas.toDataURL();
+		return img;
+	}
 }
 
 function AddBoxes()
@@ -726,6 +879,18 @@ function AddReplayBoxes(rb)
 	}
 	
 	World.add(replayengine.world, bodies);
+}
+
+function AddThumbnailBoxes(eng, rb)
+{
+	var bodies = [];
+	for(var i = 0; i < rb.length; i++)
+	{
+		var b = rb[i];
+		bodies.push(Bodies.rectangle(b.x, b.y, 60, 60, {render:{fillStyle:"#666", strokeStyle:"#000"}, chamfer:{radius:10}, friction:0.08, frictionAir:0, frictionStatic:0.3, restitution:0.2}));
+	}
+	
+	World.add(eng.world, bodies);
 }
 
 function EraseBoxes(x, y)
@@ -992,7 +1157,7 @@ function addUsername()
 
 function generateUsername()
 {
-	var first = ["radio", "dark", "ninja", "death", "shadow", "diamond", "crystal", "bad", "good", "rainbow", "cat", "marble", "granite", "coffee", "tea", "sushi", "ring", "sonic", "super", "crazy", "electric", "unicorn", "pegasus", "mega", "ultra", "lettuce", "banana", "coconut", "cyclone", "steel", "algebra", "fountain", "cake", "pie", "bug", "rose", "circle", "square", "triangle", "atom", "dandelion", "rabid", "mud", "belt", "white", "poison", "dance", "croquet", "needle", "lace", "ribbon", "puppy", "clover", "sleepy", "thunder", "lightning", "bright", "orange", "meat", "veggie", "oath", "asparagus", "quake", "pi", "liver", "dragon", "shark", "cape", "tau", "ant", "pirate", "glass", "ruby", "laser", "tiara", "widow", "big", "dry", "egg", "lantern", "milk", "engine", "distant", "triumph", "plush", "alicorn", "apple", "wheat", "pear", "pearl", "linux", "night", "quick", "box", "turnip", "black", "squash", "pixel", "elephant", "squid", "whale", "fish", "eagle", "ninja", "ice", "snow", "magic", "fairy", "cupcake", "owl", "math", "nuclear", "lizard", "corn", "phoenix", "disaster", "karate", "fenix", "ballet", "anvil", "stick", "pony", "quantum", "boat", "sad", "mint", "happy", "dragon", "raven", "crow", "fedora", "bubble", "window", "mad", "mummy", "angry", "robin", "bat", "princess", "squirrel", "blood", "red", "blue", "green", "pink", "tax", "prince", "grass", "lead", "cash", "snake", "leaf", "pixel", "wing", "fight", "club", "crown", "dog", "frog", "bird", "money", "clown", "jet", "knight", "flower", "cobra", "cat", "water", "air", "tech", "bit", "star", "light", "photon", "sun", "moon", "venom", "earth", "river", "ocean", "lake", "dirt", "fur", "feline", "tiger", "lion", "anti", "matter", "possum", "thorn", "brain", "pixie", "alien", "xeno", "mine", "cloud", "proton", "limousine", "ox", "yak", "submarine", "monster"];
+	var first = ["radio", "dark", "ninja", "death", "shadow", "diamond", "crystal", "bad", "good", "rainbow", "cat", "marble", "granite", "wicked", "coffee", "tea", "sushi", "ring", "sonic", "super", "crazy", "electric", "unicorn", "pegasus", "mega", "ultra", "lettuce", "banana", "coconut", "cyclone", "steel", "algebra", "fountain", "cake", "pie", "bug", "rose", "circle", "square", "triangle", "atom", "dandelion", "rabid", "mud", "belt", "white", "poison", "dance", "croquet", "needle", "lace", "ribbon", "puppy", "clover", "sleepy", "thunder", "lightning", "bright", "orange", "meat", "veggie", "oath", "asparagus", "quake", "pi", "liver", "dragon", "shark", "cape", "tau", "ant", "pirate", "glass", "ruby", "laser", "tiara", "widow", "big", "dry", "egg", "lantern", "milk", "engine", "distant", "triumph", "plush", "alicorn", "apple", "wheat", "pear", "pearl", "linux", "night", "quick", "box", "turnip", "black", "squash", "pixel", "elephant", "squid", "whale", "fish", "eagle", "ninja", "ice", "snow", "magic", "fairy", "cupcake", "owl", "math", "nuclear", "lizard", "corn", "phoenix", "disaster", "karate", "fenix", "ballet", "anvil", "stick", "pony", "quantum", "boat", "sad", "mint", "happy", "dragon", "raven", "crow", "fedora", "bubble", "window", "mad", "mummy", "angry", "robin", "bat", "princess", "squirrel", "blood", "red", "blue", "green", "pink", "tax", "prince", "grass", "lead", "cash", "snake", "leaf", "pixel", "wing", "fight", "club", "crown", "dog", "frog", "bird", "money", "clown", "jet", "knight", "flower", "cobra", "cat", "water", "air", "tech", "bit", "star", "light", "photon", "sun", "moon", "venom", "earth", "river", "ocean", "lake", "dirt", "fur", "feline", "tiger", "lion", "anti", "matter", "possum", "thorn", "brain", "pixie", "alien", "xeno", "mine", "cloud", "proton", "limousine", "ox", "yak", "submarine", "monster"];
 	var second = ["bomber", "boy", "girl", "gurl", "flood", "head", "cadillac", "samurai", "thief", "grrl", "face", "breaker", "kitty", "hacker", "chef", "haxxor", "rider", "buster", "singer", "lunatic", "catcher", "hunter", "stinger", "shaker", "dodger", "watcher", "smasher", "dancer", "dash", "fixer", "cheater", "pirate", "lord", "queen", "player", "reaper", "man", "mom", "oil", "breaker", "lady", "knight", "cat", "statue", "killer", "ninja", "killa", "wife", "phantom", "ranger", "stalker", "guy", "person", "man", "girl", "woman", "dude", "craft", "monster", "dragon", "woman", "bomb", "stealer", "creep", "eater", "maniac", "lover", "clown", "guy", "feline", "walker", "rope", "ghost", "money", "king", "queen", "cat", "master", "flyer", "hat", "shoes", "blizzard", "tornado", "avalanche", "shaker", "heart", "foot", "faerie", "hand", "sword", "knife", "mum", "kid", "jedi", "runner", "wing", "wizard", "summoner", "demon", "lad", "chick", "playa", "maker", "taker", "fang", "tooth", "thorn", "mime", "fighter", "dancer", "fairy", "drinker", "explosion"];
 	
 	if(Math.random() < 0.95) //two names

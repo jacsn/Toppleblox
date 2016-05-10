@@ -95,6 +95,17 @@ Button.prototype = {
 					hittest = false;
 				}
 			}
+			else if(type == EventType.DOWN) //enable hoverless button pressing for the benefit of touch screens
+			{
+				if(hittest)
+				{
+					this.state = ButtonState.DOWN;
+				}
+				else
+				{
+					this.state = ButtonState.UP;
+				}
+			}
 		}
 		else if(this.state == ButtonState.DOWN)
 		{
@@ -295,6 +306,17 @@ ImgButton.prototype = {
 				{
 					this.state = ButtonState.HOVER;
 					hittest = false;
+				}
+			}
+			else if(type == EventType.DOWN) //enable hoverless button pressing for the benefit of touch screens
+			{
+				if(hittest)
+				{
+					this.state = ButtonState.DOWN;
+				}
+				else
+				{
+					this.state = ButtonState.UP;
 				}
 			}
 		}

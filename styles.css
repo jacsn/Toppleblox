@@ -25,6 +25,7 @@ body.toppleblox
 	top:0px;
 	left:0px;
 	background:#000;
+	z-index:10000;
 }
 
 h1
@@ -113,10 +114,73 @@ h1
 	border:1px solid #e1e8ed;
 }
 
+#post p.postcount
+{
+	font-size:20px;
+	margin:10px 0 0 20px;
+	padding:0px;
+	position:relative;
+	top:10px;
+}
+
 #postcontent p
 {
+	font-size:larger;
 	padding:20px;
 	margin:0px;
+}
+
+#postlist
+{
+	list-style-type:none;
+	margin:0px;
+	padding:0px;
+	max-width:100%;
+}
+
+#postlist li:after
+{
+	content:"";
+	display:block;
+	clear:both;
+}
+
+#postlist li a
+{
+	display:block;
+	margin:0px;
+	padding:0px;
+	border-top:1px solid #e1e8ed;
+	height:60px;
+	position:relative;
+	text-decoration:none;
+	color:#000;
+}
+
+div.thumbnail
+{
+	display:block;
+	width:80px;
+	height:50px;
+	margin:5px 10px 5px 10px;
+	background-color:#9af;
+	border:1px solid black;
+	float:left;
+}
+
+.posttext
+{
+	float:left;
+	line-height:60px;
+	margin:0px;
+	padding:0px;
+}
+
+.timestamp
+{
+	float:right;
+	text-align:right;
+	margin:10px 10px 0 0;
 }
 
 #usertools
