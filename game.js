@@ -45,11 +45,15 @@ var boxes = [];
 var Level = 2;
 
 var Posts = [];
-var curPost = null;
+var curPost = -1;
 
 var username = "Username";
 
 var validboxoutline = true;
+
+var ballcollisions = [];
+var balltopspeed = 0;
+var anytopspeed = 0;
 
 
 
@@ -104,6 +108,9 @@ function btnLevel3_Click()
 function btnGo_Click()
 {
 	AddBoxes();
+	ballcollisions = [];
+	balltopspeed = 0;
+	anytopspeed = 0;
 	EditMode = false;
 	Controls = [];
 }
@@ -183,6 +190,8 @@ var Engine = Matter.Engine,
 
 // create an engine
 var engine = Engine.create({enableSleeping:true});
+
+Matter.Events.on(engine, "collisionStart", trackCollisions);
 
 // create a renderer
 var render = Render.create({
@@ -511,6 +520,14 @@ function updateGame()
 			{
 				sleepcount++;
 			}
+			
+			//track ball speed
+			if(bodies[i].label == "ball")
+			{
+				balltopspeed = Math.max(balltopspeed, bodies[i].speed);
+			}
+			
+			anytopspeed = Math.max(anytopspeed, bodies[i].speed);
 		}
 		
 		if(sleepcount == bodies.length)
@@ -520,11 +537,42 @@ function updateGame()
 	}
 }
 
+function trackCollisions(e)
+{
+	if(engine.timing.timestamp > 50) //assures we're not counting until a few steps into the simulation
+	{
+		for(var i = 0; i < e.pairs.length; i++)
+		{
+			var pair = e.pairs[i];
+			if(pair.bodyA.label == "ball")
+			{
+				if(pair.bodyB.label.substr(0, 3) == "box")
+				{
+					if(ballcollisions.indexOf(pair.bodyB.label) < 0)
+					{
+						ballcollisions.push(pair.bodyB.label);
+					}
+				}
+			}
+			else if(pair.bodyB.label == "ball")
+			{
+				if(pair.bodyA.label.substr(0, 3) == "box")
+				{
+					if(ballcollisions.indexOf(pair.bodyA.label) < 0)
+					{
+						ballcollisions.push(pair.bodyA.label);
+					}
+				}
+			}
+		}
+	}
+}
+
 function LoadLevel()
 {
 	if(Level == 1)
 	{
-		ball = Bodies.circle(200, 549, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		ball = Bodies.circle(200, 549, 30, {label:"ball", render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
 		var ground = Bodies.rectangle(400, 610, 1024, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
 		var wall = Bodies.rectangle(0, SCREEN_HEIGHT / 2 - 60, 100, SCREEN_HEIGHT, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
 
@@ -534,7 +582,7 @@ function LoadLevel()
 	}
 	else if(Level == 2)
 	{
-		ball = Bodies.circle(200, 549, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		ball = Bodies.circle(200, 549, 30, {label:"ball", render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
 		var ground = Bodies.rectangle(400, 610, 1024, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
 		var wall = Bodies.rectangle(0, SCREEN_HEIGHT / 2 - 60, 100, SCREEN_HEIGHT, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
 		var rampvertices = Vertices.fromPath("0 0 50 0 50 -40");
@@ -546,7 +594,7 @@ function LoadLevel()
 	}
 	else if(Level == 3)
 	{
-		ball = Bodies.circle(510, 250, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		ball = Bodies.circle(510, 250, 30, {label:"ball", render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
 		var wall1 = Bodies.rectangle(30, 280, 60, 600, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
 		var wall2 = Bodies.rectangle(994, 280, 60, 600, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
 		var floor1 = Bodies.rectangle(200, 610, 400, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
@@ -581,9 +629,23 @@ function SaveReplay()
 	var d = new Date();
 	p.timestamp = d.getTime();
 	
-	Posts.push(p);
+	//evaluate replay "quality" based on some pretty vague metrics
+	var tsrating = (balltopspeed > 15) ? balltopspeed / 25 : balltopspeed / 50;
+	var gsrating = (anytopspeed == balltopspeed) ? balltopspeed / 20 : anytopspeed / 300;
+	var hitrating = ballcollisions.length / 30;
 	
-	curPost = p;
+	var discard = Math.min(tsrating, gsrating, hitrating);
+	var avgrating = (tsrating + gsrating + hitrating - discard) / 2;
+	p.rating = avgrating;
+	
+	//TODO:remove logs
+	console.log("Ball speed: " + tsrating);
+	console.log("Top speed: " + gsrating);
+	console.log("Boxes touched: " + hitrating);
+	console.log("Quality: " + avgrating)
+	
+	curPost = Posts.length;
+	Posts.push(p);
 	
 	LoadPost();
 	
@@ -595,7 +657,7 @@ function SaveReplay()
 function LoadPost()
 {
 	clearSocialContent();
-	var r = curPost.replay;
+	var r = Posts[curPost].replay;
 	singlepost = true;
 	Replaying = false;
 	replayfinished = false;
@@ -628,11 +690,122 @@ function LoadPost()
 	LoadReplayForPost();
 	
 	rc.addEventListener("click", ToggleReplay);
+	
+	//post footer
+	var pf = document.createElement("div");
+	pf.id = "postcaption";
+	var datetime = new Date(Posts[curPost].timestamp);
+	pf.innerHTML = username + " - " + datetime.toLocaleString();
+	pc.insertBefore(pf, pc.childNodes[0]);
+	
+	updateViews();
+	var viewsummary = document.createElement("p");
+	viewsummary.className = "summary";
+	if(Posts[curPost].viewcount == 0)
+	{
+		viewsummary.innerHTML = "This post has no views yet.";
+	}
+	else
+	{
+		viewsummary.innerHTML = "" + Posts[curPost].viewcount + " people have looked at this. " + Posts[curPost].likecount + " liked what they saw.";
+	}
+	pc.appendChild(viewsummary);
+	
+	var list = Posts[curPost].likes;
+	var ul = document.getElementById("userlist");
+	for(var i = 0; i < list.length; i++)
+	{
+		var li = document.createElement("li");
+		li.innerHTML = list[i] + " likes this";
+		ul.insertBefore(li, ul.childNodes[0]);
+	}
+	
+	if(Posts[curPost].likecount > MAX_LIKES)
+	{
+		var post = document.getElementById("post");
+		var more = document.createElement("p");
+		more.className = "more";
+		more.innerHTML = "And " + (Posts[curPost].likecount - MAX_LIKES) + " more...";
+		post.appendChild(more);
+	}
+	
+}
+
+function updateViews()
+{
+	var post = Posts[curPost];
+	var now = new Date();
+	var elapsed = now.getTime() - post.timestamp;
+	if(elapsed > 60000 && elapsed < 86400000) //no views until a minute in
+	{
+		//compute how many views this replay should get
+		var expectedviews = 0;
+		if(curPost > 3)
+		{
+			expectedviews = Posts[curPost - 1].likecount + Posts[curPost - 2].likecount + Posts[curPost - 3].likecount + Posts[curPost - 4].likecount + Math.round(Math.random() * 4000 + 1000);
+		}
+		else if(curPost == 3)
+		{
+			expectedviews = Posts[curPost - 1].likecount + Posts[curPost - 2].likecount + Posts[curPost - 3].likecount + Math.round(Math.random() * 4000 + 1000);
+		}
+		else if(curPost == 2)
+		{
+			expectedviews = Posts[curPost - 1].likecount + Posts[curPost - 2].likecount + Math.round(Math.random() * 4000 + 1000);
+		}
+		else if(curPost == 1)
+		{
+			expectedviews = Posts[curPost - 1].likecount + Math.round(Math.random() * 4000 + 1000);
+		}
+		else
+		{
+			expectedviews = Math.round(Math.random() * 4000 + 1000);
+		}
+		
+		var lifepercent = elapsed / 86400000;
+		var viewsneeded = Math.round(expectedviews * lifepercent) - post.viewcount;
+		if(viewsneeded > 0)
+		{
+			post.viewcount += viewsneeded + Math.round(Math.random() * 30 + 10);
+		}
+		
+		//compute how many likes it should get
+		var expectedlikes = Math.round(expectedviews * post.rating);
+		var likesneeded = Math.round(expectedlikes * lifepercent) - post.likecount;
+		if(likesneeded > 0)
+		{
+			for(var i = 0; i < likesneeded; i++)
+			{
+				post.likes.push(generateUsername());
+				if(post.likes.length > MAX_LIKES)
+				{
+					post.likes.shift();
+				}
+				post.likecount++;
+			}
+		}
+	}
+	else if(elapsed > 86400000) //traffic slows down after a day
+	{
+		if(Math.random() < 0.3)
+		{
+			post.views += Math.floor(Math.random() * 10);
+			
+			if(Math.random() < 0.1)
+			{
+				post.likes.push(generateUsername());
+				if(post.likes.length > MAX_LIKES)
+				{
+					post.likes.shift();
+				}
+				post.likecount++;
+			}
+		}
+	}
 }
 
 function LoadReplayForPost()
 {
-	var r = curPost.replay;
+	var r = Posts[curPost].replay;
 	if(r.level == 1)
 	{
 		reball = Bodies.circle(200, 549, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
@@ -768,7 +941,7 @@ function viewpostCallbackHandler(index)
 
 function LoadThisPost(i)
 {
-	curPost = Posts[i];
+	curPost = i;
 	LoadPost();
 }
 
@@ -863,7 +1036,7 @@ function AddBoxes()
 	for(var i = 0; i < boxes.length; i++)
 	{
 		var b = boxes[i];
-		bodies.push(Bodies.rectangle(b.x, b.y, 60, 60, {render:{fillStyle:"#666", strokeStyle:"#000"}, chamfer:{radius:10}, friction:0.08, frictionAir:0, frictionStatic:0.3, restitution:0.2}));
+		bodies.push(Bodies.rectangle(b.x, b.y, 60, 60, {label:"box" + i, render:{fillStyle:"#666", strokeStyle:"#000"}, chamfer:{radius:10}, friction:0.08, frictionAir:0, frictionStatic:0.3, restitution:0.2}));
 	}
 	
 	World.add(engine.world, bodies);

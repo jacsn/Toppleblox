@@ -1,6 +1,8 @@
 var SCREEN_WIDTH = 1024;
 var SCREEN_HEIGHT = 640;
 
+var MAX_LIKES = 20;
+
 var Menus = new function()
 {
 	this.Main = 0;
@@ -31,6 +33,7 @@ var Post = function()
 	this.likes = [];
 	this.thumbnail = null;
 	this.timestamp = 0;
+	this.rating = 0;
 }
 
 var Replay = function()
