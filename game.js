@@ -8,7 +8,7 @@ canvas.height = SCREEN_HEIGHT + "";
 canvas.style.display = "block";
 canvas.style.margin = "0 auto";
 
-//handle lookatme button events
+//handle lookatme user button events
 document.getElementById("logout").addEventListener("click", ToggleSite);
 document.getElementById("myposts").addEventListener("click", LoadAllPosts);
 
@@ -691,13 +691,21 @@ function LoadPost()
 	
 	rc.addEventListener("click", ToggleReplay);
 	
-	//post footer
-	var pf = document.createElement("div");
-	pf.id = "postcaption";
+	//post header
+	var ph = document.createElement("div");
+	ph.id = "postcaption";
+	ph.className = "postinfo";
 	var datetime = new Date(Posts[curPost].timestamp);
-	pf.innerHTML = username + " - " + datetime.toLocaleString();
-	pc.insertBefore(pf, pc.childNodes[0]);
+	ph.innerHTML = username + " - " + datetime.toLocaleString();
+	pc.insertBefore(ph, pc.childNodes[0]);
 	
+	var db = document.createElement("button");
+	db.id = "btnDelete";
+	db.innerHTML = "<img src='btnx.svg' />";
+	ph.insertBefore(db, ph.childNodes[0]);
+	db.addEventListener("click", TogglePostDeleteConfirm);
+	
+	//post footer
 	updateViews();
 	var viewsummary = document.createElement("p");
 	viewsummary.className = "summary";
@@ -731,8 +739,52 @@ function LoadPost()
 	
 }
 
-function updateViews()
+function TogglePostDeleteConfirm()
 {
+	var ph = document.getElementById("postcaption");
+	
+	if(ph.className == "postinfo")
+	{
+		ph.className = "confirm";
+		ph.innerHTML = "Are you sure you want to delete this post?";
+		var cb = document.createElement("button");
+		cb.innerHTML = "Cancel";
+		var db = document.createElement("button");
+		db.innerHTML = "Delete";
+		ph.appendChild(cb);
+		ph.appendChild(db);
+		
+		cb.addEventListener("click", TogglePostDeleteConfirm);
+		db.addEventListener("click", DeletePost);
+	}
+	else if(ph.className == "confirm")
+	{
+		var pc = document.getElementById("postcontent");
+		ph.className = "postinfo";
+		var datetime = new Date(Posts[curPost].timestamp);
+		ph.innerHTML = username + " - " + datetime.toLocaleString();
+		pc.insertBefore(ph, pc.childNodes[0]);
+		
+		var db = document.createElement("button");
+		db.id = "btnDelete";
+		db.innerHTML = "<img src='btnx.svg' />";
+		ph.insertBefore(db, ph.childNodes[0]);
+		db.addEventListener("click", TogglePostDeleteConfirm);
+	}
+}
+
+function DeletePost()
+{
+	Posts.splice(curPost, 1);
+	LoadAllPosts();
+}
+
+function updateViews(index)
+{
+	if(typeof(index) !== "undefined")
+	{
+		curPost = index;
+	}
 	var post = Posts[curPost];
 	var now = new Date();
 	var elapsed = now.getTime() - post.timestamp;
@@ -786,9 +838,25 @@ function updateViews()
 	}
 	else if(elapsed > 86400000) //traffic slows down after a day
 	{
+		var expectedlikes = Math.round(post.viewcount * post.rating);
+		if(post.likecount < expectedlikes)
+		{
+			//Due to the random elements, it might be possible for a post to get fewer likes than intended. If that happens, this should fix it.
+			var deficit = expectedlikes - post.likecount;
+			for(var i = 0; i < deficit; i++)
+			{
+				post.likes.push(generateUsername());
+				if(post.likes.length > MAX_LIKES)
+				{
+					post.likes.shift();
+				}
+				post.likecount++;
+			}
+		}
+		
 		if(Math.random() < 0.3)
 		{
-			post.views += Math.floor(Math.random() * 10);
+			post.viewcount += Math.floor(Math.random() * 10);
 			
 			if(Math.random() < 0.1)
 			{
@@ -929,6 +997,7 @@ function LoadAllPosts()
 	
 	for(var i = 0; i < Posts.length; i++)
 	{
+		updateViews(i);
 		var a = document.getElementById("viewpost" + i);
 		a.addEventListener("click", viewpostCallbackHandler(i));
 	}
