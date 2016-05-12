@@ -72,7 +72,7 @@ var btnFlip = new ImgButton("", SCREEN_WIDTH - 202, 15, 30, 50, btnFlip_Click, F
 var btnLevel1 = new ImgButton("", 52, 185, 280, 175, btnLevel1_Click, Level1Image);
 var btnLevel2 = new ImgButton("", 372, 185, 280, 175, btnLevel2_Click, Level2Image);
 var btnLevel3 = new ImgButton("", 692, 185, 280, 175, btnLevel3_Click, Level3Image);
-var btnLevel4 = new ImgButton("", 52, 405, 280, 175, btnLevel2_Click, Level2Image);
+var btnLevel4 = new ImgButton("", 52, 405, 280, 175, btnLevel4_Click, Level4Image);
 var btnLevel5 = new ImgButton("", 372, 405, 280, 175, btnLevel2_Click, Level2Image);
 var btnLevel6 = new ImgButton("", 692, 405, 280, 175, btnLevel2_Click, Level2Image);
 
@@ -102,6 +102,14 @@ function btnLevel3_Click()
 	ChangeMenu(Menus.None);
 	boxes = [];
 	Level = 3;
+	LoadLevel();
+}
+
+function btnLevel4_Click()
+{
+	ChangeMenu(Menus.None);
+	boxes = [];
+	Level = 4;
 	LoadLevel();
 }
 
@@ -605,6 +613,18 @@ function LoadLevel()
 		engine.world = World.create();
 		World.add(engine.world, [ball, wall1, wall2, floor1, floor2, platform]);
 	}
+	else if(Level == 4)
+	{
+		ball = Bodies.circle(150, 290, 30, {label:"ball", render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		var wall = Bodies.rectangle(30, 240, 60, 800, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var starter = Bodies.rectangle(120, 450, 120, 260, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var floor = Bodies.rectangle(510, 610, 900, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var obstacle = Bodies.rectangle(550, 530, 100, 100, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		
+		//create new world and add all of the bodies to the world
+		engine.world = World.create();
+		World.add(engine.world, [ball, wall, starter, floor, obstacle]);
+	}
 	
 	EditMode = true;
 	Controls.push(btnGo);
@@ -912,6 +932,19 @@ function LoadReplayForPost()
 		World.add(replayengine.world, [reball, wall1, wall2, floor1, floor2, platform]);
 		AddReplayBoxes(r.boxes);
 	}
+	else if(r.level == 4)
+	{
+		reball = Bodies.circle(150, 290, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		var wall = Bodies.rectangle(30, 240, 60, 800, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var starter = Bodies.rectangle(120, 450, 120, 260, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var floor = Bodies.rectangle(510, 610, 900, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var obstacle = Bodies.rectangle(550, 530, 100, 100, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		
+		//create new world and add all of the bodies to the world
+		replayengine.world = World.create();
+		World.add(replayengine.world, [reball, wall, starter, floor, obstacle]);
+		AddReplayBoxes(r.boxes);
+	}
 }
 
 function ToggleReplay()
@@ -1090,6 +1123,24 @@ function GenerateThumbnail(r)
 		//create new world and add all of the bodies to the world
 		thumbnailengine.world = World.create();
 		World.add(thumbnailengine.world, [myball, wall1, wall2, floor1, floor2, platform]);
+		AddThumbnailBoxes(thumbnailengine, r.boxes);
+		
+		Render.world(thumbnailrender);
+		var img = new Image();
+		img.src = thumbnailcanvas.toDataURL();
+		return img;
+	}
+	else if(r.level == 4)
+	{
+		var myball = Bodies.circle(150, 290, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		var wall = Bodies.rectangle(30, 240, 60, 800, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var starter = Bodies.rectangle(120, 450, 120, 260, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var floor = Bodies.rectangle(510, 610, 900, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var obstacle = Bodies.rectangle(550, 530, 100, 100, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		
+		//create new world and add all of the bodies to the world
+		thumbnailengine.world = World.create();
+		World.add(thumbnailengine.world, [myball, wall, starter, floor, obstacle]);
 		AddThumbnailBoxes(thumbnailengine, r.boxes);
 		
 		Render.world(thumbnailrender);
