@@ -73,8 +73,8 @@ var btnLevel1 = new ImgButton("", 52, 185, 280, 175, btnLevel1_Click, Level1Imag
 var btnLevel2 = new ImgButton("", 372, 185, 280, 175, btnLevel2_Click, Level2Image);
 var btnLevel3 = new ImgButton("", 692, 185, 280, 175, btnLevel3_Click, Level3Image);
 var btnLevel4 = new ImgButton("", 52, 405, 280, 175, btnLevel4_Click, Level4Image);
-var btnLevel5 = new ImgButton("", 372, 405, 280, 175, btnLevel2_Click, Level2Image);
-var btnLevel6 = new ImgButton("", 692, 405, 280, 175, btnLevel2_Click, Level2Image);
+var btnLevel5 = new ImgButton("", 372, 405, 280, 175, btnLevel5_Click, Level5Image);
+var btnLevel6 = new ImgButton("", 692, 405, 280, 175, btnLevel6_Click, Level6Image);
 
 function btnBegin_Click()
 {
@@ -110,6 +110,22 @@ function btnLevel4_Click()
 	ChangeMenu(Menus.None);
 	boxes = [];
 	Level = 4;
+	LoadLevel();
+}
+
+function btnLevel5_Click()
+{
+	ChangeMenu(Menus.None);
+	boxes = [];
+	Level = 5;
+	LoadLevel();
+}
+
+function btnLevel6_Click()
+{
+	ChangeMenu(Menus.None);
+	boxes = [];
+	Level = 6;
 	LoadLevel();
 }
 
@@ -245,7 +261,7 @@ var preloader = setInterval(preloadloop, 10);
 var gameloop;
 function preloadloop()
 {
-	if(ButtonImage.ready && DialogImage.ready && OutlineImage.ready && ToolboxImage.ready && BoxToolButtonImage.ready && EraseToolButtonImage.ready && CheckMarkImage.ready && UndoButtonImage.ready && RedoButtonImage.ready && ClearButtonImage.ready && FlipButtonImage.ready && PlayButtonImage.ready && ReplayButtonImage.ready && Level1Image.ready && Level2Image.ready && Level3Image.ready) //load assets
+	if(ButtonImage.ready && DialogImage.ready && OutlineImage.ready && ToolboxImage.ready && BoxToolButtonImage.ready && EraseToolButtonImage.ready && CheckMarkImage.ready && UndoButtonImage.ready && RedoButtonImage.ready && ClearButtonImage.ready && FlipButtonImage.ready && PlayButtonImage.ready && ReplayButtonImage.ready && Level1Image.ready && Level2Image.ready && Level3Image.ready && Level4Image.ready && Level5Image.ready && Level6Image.ready) //load assets
 	{
 		clearInterval(preloader);
 		
@@ -625,6 +641,37 @@ function LoadLevel()
 		engine.world = World.create();
 		World.add(engine.world, [ball, wall, starter, floor, obstacle]);
 	}
+	else if(Level == 5)
+	{
+		ball = Bodies.circle(400, 130, 30, {label:"ball", render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		var wall1 = Bodies.rectangle(30, 290, 60, 620, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var wall2 = Bodies.rectangle(1030, 290, 60, 620, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var floor1 = Bodies.rectangle(300, 630, 600, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var floor2 = Bodies.rectangle(910, 630, 300, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var stopper = Bodies.rectangle(790, 530, 60, 140, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var platform = Bodies.rectangle(400, 190, 120, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var rampvertices = Vertices.fromPath("0 0 220 160 220 220 0 60");
+		var ramp = Bodies.fromVertices(570, 270, rampvertices, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		
+		//create new world and add all of the bodies to the world
+		engine.world = World.create();
+		World.add(engine.world, [ball, wall1, wall2, floor1, floor2, stopper, platform, ramp]);
+	}
+	else if(Level == 6)
+	{
+		ball = Bodies.circle(512, 550, 30, {label:"ball", render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		var floor = Bodies.rectangle(512, 610, 900, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var block1 = Bodies.rectangle(112, 530, 100, 100, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var ramp1vertices = Vertices.fromPath("0 0 100 100 0 100");
+		var ramp1 = Bodies.fromVertices(196, 547, ramp1vertices, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var block2 = Bodies.rectangle(912, 530, 100, 100, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var ramp2vertices = Vertices.fromPath("100 0 100 100 0 100");
+		var ramp2 = Bodies.fromVertices(828, 547, ramp2vertices, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		
+		//create new world and add all of the bodies to the world
+		engine.world = World.create();
+		World.add(engine.world, [ball, floor, block1, ramp1, block2, ramp2]);
+	}
 	
 	EditMode = true;
 	Controls.push(btnGo);
@@ -676,6 +723,7 @@ function SaveReplay()
 
 function LoadPost()
 {
+	window.scrollTo(0, 0);
 	clearSocialContent();
 	var r = Posts[curPost].replay;
 	singlepost = true;
@@ -945,6 +993,39 @@ function LoadReplayForPost()
 		World.add(replayengine.world, [reball, wall, starter, floor, obstacle]);
 		AddReplayBoxes(r.boxes);
 	}
+	else if(r.level == 5)
+	{
+		reball = Bodies.circle(400, 130, 30, {label:"ball", render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		var wall1 = Bodies.rectangle(30, 290, 60, 620, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var wall2 = Bodies.rectangle(1030, 290, 60, 620, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var floor1 = Bodies.rectangle(300, 630, 600, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var floor2 = Bodies.rectangle(910, 630, 300, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var stopper = Bodies.rectangle(790, 530, 60, 140, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var platform = Bodies.rectangle(400, 190, 120, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var rampvertices = Vertices.fromPath("0 0 220 160 220 220 0 60");
+		var ramp = Bodies.fromVertices(570, 270, rampvertices, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		
+		//create new world and add all of the bodies to the world
+		replayengine.world = World.create();
+		World.add(replayengine.world, [reball, wall1, wall2, floor1, floor2, stopper, platform, ramp]);
+		AddReplayBoxes(r.boxes);
+	}
+	else if(r.level == 6)
+	{
+		reball = Bodies.circle(512, 550, 30, {label:"ball", render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		var floor = Bodies.rectangle(512, 610, 900, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var block1 = Bodies.rectangle(112, 530, 100, 100, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var ramp1vertices = Vertices.fromPath("0 0 100 100 0 100");
+		var ramp1 = Bodies.fromVertices(196, 547, ramp1vertices, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var block2 = Bodies.rectangle(912, 530, 100, 100, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var ramp2vertices = Vertices.fromPath("100 0 100 100 0 100");
+		var ramp2 = Bodies.fromVertices(828, 547, ramp2vertices, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		
+		//create new world and add all of the bodies to the world
+		replayengine.world = World.create();
+		World.add(replayengine.world, [reball, floor, block1, ramp1, block2, ramp2]);
+		AddReplayBoxes(r.boxes);
+	}
 }
 
 function ToggleReplay()
@@ -992,6 +1073,7 @@ function ToggleSite()
 
 function LoadAllPosts()
 {
+	window.scrollTo(0, 0);
 	singlepost = false;
 	
 	//clear out the main content area
@@ -1141,6 +1223,49 @@ function GenerateThumbnail(r)
 		//create new world and add all of the bodies to the world
 		thumbnailengine.world = World.create();
 		World.add(thumbnailengine.world, [myball, wall, starter, floor, obstacle]);
+		AddThumbnailBoxes(thumbnailengine, r.boxes);
+		
+		Render.world(thumbnailrender);
+		var img = new Image();
+		img.src = thumbnailcanvas.toDataURL();
+		return img;
+	}
+	else if(r.level == 5)
+	{
+		var myball = Bodies.circle(400, 130, 30, {label:"ball", render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		var wall1 = Bodies.rectangle(30, 290, 60, 620, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var wall2 = Bodies.rectangle(1030, 290, 60, 620, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var floor1 = Bodies.rectangle(300, 630, 600, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var floor2 = Bodies.rectangle(910, 630, 300, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var stopper = Bodies.rectangle(790, 530, 60, 140, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var platform = Bodies.rectangle(400, 190, 120, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var rampvertices = Vertices.fromPath("0 0 220 160 220 220 0 60");
+		var ramp = Bodies.fromVertices(570, 270, rampvertices, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		
+		//create new world and add all of the bodies to the world
+		thumbnailengine.world = World.create();
+		World.add(thumbnailengine.world, [myball, wall1, wall2, floor1, floor2, stopper, platform, ramp]);
+		AddThumbnailBoxes(thumbnailengine, r.boxes);
+		
+		Render.world(thumbnailrender);
+		var img = new Image();
+		img.src = thumbnailcanvas.toDataURL();
+		return img;
+	}
+	else if(r.level == 6)
+	{
+		var myball = Bodies.circle(512, 550, 30, {label:"ball", render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		var floor = Bodies.rectangle(512, 610, 900, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var block1 = Bodies.rectangle(112, 530, 100, 100, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var ramp1vertices = Vertices.fromPath("0 0 100 100 0 100");
+		var ramp1 = Bodies.fromVertices(196, 547, ramp1vertices, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var block2 = Bodies.rectangle(912, 530, 100, 100, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		var ramp2vertices = Vertices.fromPath("100 0 100 100 0 100");
+		var ramp2 = Bodies.fromVertices(828, 547, ramp2vertices, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+		
+		//create new world and add all of the bodies to the world
+		thumbnailengine.world = World.create();
+		World.add(thumbnailengine.world, [myball, floor, block1, ramp1, block2, ramp2]);
 		AddThumbnailBoxes(thumbnailengine, r.boxes);
 		
 		Render.world(thumbnailrender);
@@ -1450,7 +1575,7 @@ function addUsername()
 
 function generateUsername()
 {
-	var first = ["radio", "dark", "ninja", "death", "shadow", "diamond", "crystal", "bad", "good", "rainbow", "cat", "bee", "marble", "granite", "wicked", "coffee", "tea", "sushi", "ring", "sonic", "super", "crazy", "electric", "unicorn", "pegasus", "mega", "ultra", "lettuce", "banana", "coconut", "cyclone", "steel", "algebra", "fountain", "cake", "pie", "bug", "rose", "circle", "square", "triangle", "atom", "dandelion", "rabid", "mud", "belt", "white", "poison", "dance", "croquet", "needle", "lace", "ribbon", "puppy", "clover", "sleepy", "thunder", "lightning", "bright", "orange", "meat", "veggie", "oath", "asparagus", "quake", "pi", "liver", "dragon", "shark", "cape", "tau", "ant", "pirate", "glass", "ruby", "laser", "tiara", "widow", "big", "dry", "egg", "lantern", "milk", "engine", "distant", "triumph", "plush", "alicorn", "apple", "wheat", "pear", "pearl", "linux", "night", "quick", "box", "turnip", "black", "squash", "pixel", "elephant", "squid", "whale", "fish", "eagle", "ninja", "ice", "snow", "magic", "fairy", "cupcake", "owl", "math", "nuclear", "lizard", "corn", "phoenix", "disaster", "karate", "fenix", "ballet", "anvil", "stick", "pony", "quantum", "boat", "sad", "mint", "happy", "dragon", "raven", "crow", "fedora", "bubble", "window", "mad", "mummy", "angry", "robin", "bat", "princess", "squirrel", "blood", "red", "blue", "green", "pink", "tax", "prince", "grass", "lead", "cash", "snake", "leaf", "pixel", "wing", "fight", "club", "crown", "dog", "frog", "bird", "money", "clown", "jet", "knight", "flower", "cobra", "cat", "water", "air", "tech", "bit", "star", "light", "photon", "sun", "moon", "venom", "earth", "river", "ocean", "lake", "dirt", "fur", "feline", "tiger", "lion", "anti", "matter", "possum", "thorn", "brain", "pixie", "alien", "xeno", "mine", "cloud", "proton", "limousine", "ox", "yak", "submarine", "monster"];
+	var first = ["radio", "dark", "ninja", "death", "shadow", "diamond", "crystal", "bad", "good", "rainbow", "cat", "bee", "leather", "marble", "granite", "wicked", "coffee", "tea", "sushi", "ring", "sonic", "super", "crazy", "electric", "unicorn", "pegasus", "mega", "ultra", "lettuce", "banana", "coconut", "cyclone", "steel", "algebra", "fountain", "cake", "pie", "bug", "rose", "circle", "square", "triangle", "atom", "dandelion", "rabid", "mud", "belt", "white", "poison", "dance", "croquet", "needle", "lace", "ribbon", "puppy", "clover", "sleepy", "thunder", "lightning", "bright", "orange", "meat", "veggie", "oath", "asparagus", "quake", "pi", "liver", "dragon", "shark", "cape", "tau", "ant", "pirate", "glass", "ruby", "laser", "tiara", "widow", "big", "dry", "egg", "lantern", "milk", "engine", "distant", "triumph", "plush", "alicorn", "apple", "wheat", "pear", "pearl", "linux", "night", "quick", "box", "turnip", "black", "squash", "pixel", "elephant", "squid", "whale", "fish", "eagle", "ninja", "ice", "snow", "magic", "fairy", "cupcake", "owl", "math", "nuclear", "lizard", "corn", "phoenix", "disaster", "karate", "fenix", "ballet", "anvil", "stick", "pony", "quantum", "boat", "sad", "mint", "happy", "dragon", "raven", "crow", "fedora", "bubble", "window", "mad", "mummy", "angry", "robin", "bat", "princess", "squirrel", "blood", "red", "blue", "green", "pink", "tax", "prince", "grass", "lead", "cash", "snake", "leaf", "pixel", "wing", "fight", "club", "crown", "dog", "frog", "bird", "money", "clown", "jet", "knight", "flower", "cobra", "cat", "water", "air", "tech", "bit", "star", "light", "photon", "sun", "moon", "venom", "earth", "river", "ocean", "lake", "dirt", "fur", "feline", "tiger", "lion", "anti", "matter", "possum", "thorn", "brain", "pixie", "alien", "xeno", "mine", "cloud", "proton", "limousine", "ox", "yak", "submarine", "monster"];
 	var second = ["bomber", "boy", "girl", "gurl", "flood", "head", "cadillac", "samurai", "thief", "grrl", "face", "breaker", "kitty", "hacker", "chef", "haxxor", "rider", "buster", "singer", "lunatic", "catcher", "hunter", "stinger", "shaker", "dodger", "watcher", "smasher", "dancer", "dash", "fixer", "cheater", "pirate", "lord", "queen", "player", "reaper", "man", "mom", "oil", "breaker", "lady", "knight", "cat", "statue", "killer", "ninja", "killa", "wife", "phantom", "ranger", "stalker", "guy", "person", "man", "girl", "woman", "dude", "craft", "monster", "dragon", "woman", "bomb", "stealer", "creep", "eater", "maniac", "lover", "clown", "guy", "feline", "walker", "rope", "ghost", "money", "king", "queen", "cat", "master", "flyer", "hat", "shoes", "blizzard", "tornado", "avalanche", "shaker", "heart", "foot", "faerie", "hand", "sword", "knife", "mum", "kid", "jedi", "runner", "wing", "wizard", "summoner", "demon", "lad", "chick", "playa", "maker", "taker", "fang", "tooth", "thorn", "mime", "fighter", "dancer", "fairy", "drinker", "explosion"];
 	
 	if(Math.random() < 0.95) //two names

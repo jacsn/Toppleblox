@@ -131,3 +131,13 @@ var Level4Image = new Image();
 Level4Image.ready = false;
 Level4Image.onload = function(){this.ready = true;};
 Level4Image.src = "level4.png";
+
+var Level5Image = new Image();
+Level5Image.ready = false;
+Level5Image.onload = function(){this.ready = true;};
+Level5Image.src = "level5.png";
+
+var Level6Image = new Image();
+Level6Image.ready = false;
+Level6Image.onload = function(){this.ready = true;};
+Level6Image.src = "level6.png";
