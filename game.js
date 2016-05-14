@@ -78,6 +78,10 @@ var btnLevel6 = new ImgButton("", 692, 405, 280, 175, btnLevel6_Click, Level6Ima
 
 function btnBegin_Click()
 {
+	if(CheckGame())
+	{
+		LoadGame();
+	}
 	ChangeMenu(Menus.LevelSelect);
 }
 
@@ -703,13 +707,7 @@ function SaveReplay()
 	
 	var discard = Math.min(tsrating, gsrating, hitrating);
 	var avgrating = (tsrating + gsrating + hitrating - discard) / 2;
-	p.rating = avgrating;
-	
-	//TODO:remove logs
-	console.log("Ball speed: " + tsrating);
-	console.log("Top speed: " + gsrating);
-	console.log("Boxes touched: " + hitrating);
-	console.log("Quality: " + avgrating)
+	p.rating = Math.min(avgrating, 0.99);
 	
 	curPost = Posts.length;
 	Posts.push(p);
@@ -889,8 +887,8 @@ function updateViews(index)
 		}
 		
 		//compute how many likes it should get
-		var expectedlikes = Math.round(expectedviews * post.rating);
-		var likesneeded = Math.round(expectedlikes * lifepercent) - post.likecount;
+		var expectedlikes = Math.round(post.viewcount * post.rating);
+		var likesneeded = expectedlikes - post.likecount;
 		if(likesneeded > 0)
 		{
 			for(var i = 0; i < likesneeded; i++)
@@ -906,6 +904,34 @@ function updateViews(index)
 	}
 	else if(elapsed > 86400000) //traffic slows down after a day
 	{
+		var expectedviews = 0;
+		if(curPost > 3)
+		{
+			expectedviews = Posts[curPost - 1].likecount + Posts[curPost - 2].likecount + Posts[curPost - 3].likecount + Posts[curPost - 4].likecount + 1000;
+		}
+		else if(curPost == 3)
+		{
+			expectedviews = Posts[curPost - 1].likecount + Posts[curPost - 2].likecount + Posts[curPost - 3].likecount + 1000;
+		}
+		else if(curPost == 2)
+		{
+			expectedviews = Posts[curPost - 1].likecount + Posts[curPost - 2].likecount + 1000;
+		}
+		else if(curPost == 1)
+		{
+			expectedviews = Posts[curPost - 1].likecount + 1000;
+		}
+		else
+		{
+			expectedviews = 1000;
+		}
+		
+		//make sure the views get updated on old posts even if you haven't checked
+		if(post.viewcount < expectedviews)
+		{
+			post.viewcount = expectedviews + (Math.random() * 100);
+		}
+		
 		var expectedlikes = Math.round(post.viewcount * post.rating);
 		if(post.likecount < expectedlikes)
 		{
@@ -1068,6 +1094,7 @@ function ToggleSite()
 		replayfinished = false;
 	}
 	
+	SaveGame();
 	return false; //used to prevent buttons
 }
 
@@ -1232,7 +1259,7 @@ function GenerateThumbnail(r)
 	}
 	else if(r.level == 5)
 	{
-		var myball = Bodies.circle(400, 130, 30, {label:"ball", render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		var myball = Bodies.circle(400, 130, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
 		var wall1 = Bodies.rectangle(30, 290, 60, 620, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
 		var wall2 = Bodies.rectangle(1030, 290, 60, 620, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
 		var floor1 = Bodies.rectangle(300, 630, 600, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
@@ -1254,7 +1281,7 @@ function GenerateThumbnail(r)
 	}
 	else if(r.level == 6)
 	{
-		var myball = Bodies.circle(512, 550, 30, {label:"ball", render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+		var myball = Bodies.circle(512, 550, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
 		var floor = Bodies.rectangle(512, 610, 900, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
 		var block1 = Bodies.rectangle(112, 530, 100, 100, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
 		var ramp1vertices = Vertices.fromPath("0 0 100 100 0 100");
@@ -1352,15 +1379,155 @@ function Redo()
 
 function drawDialog(x, y, w, h)
 {
-	screen.drawImage(DialogImage, 0, 0, 20, 20, x, y, 20, 20); //top left
-	screen.drawImage(DialogImage, 20, 0, 1, 20, x + 20, y, w - 40, 20); //top mid
-	screen.drawImage(DialogImage, 380, 0, 20, 20, x + w - 20, y, 20, 20); //top right
-	screen.drawImage(DialogImage, 0, 20, 20, 1, x, y + 20, 20, h - 40); //mid left
-	screen.drawImage(DialogImage, 20, 20, 1, 1, x + 20, y + 20, w - 40, h - 40); //mid mid
-	screen.drawImage(DialogImage, 380, 20, 20, 1, x + w - 20, y + 20, 20, h - 40); //mid right
-	screen.drawImage(DialogImage, 0, 380, 20, 20, x, y + h - 20, 20, 20); //bottom left
-	screen.drawImage(DialogImage, 20, 380, 1, 20, x + 20, y + h - 20, w - 40, 20); //bottom mid
-	screen.drawImage(DialogImage, 380, 380, 20, 20, x + w - 20, y + h - 20, 20, 20); //bottom right
+	if(w == 400 && h == 400)
+	{
+		screen.drawImage(DialogImage, x, y);
+	}
+	else
+	{
+		screen.drawImage(DialogImage, 0, 0, 20, 20, x, y, 20, 20); //top left
+		screen.drawImage(DialogImage, 20, 0, 1, 20, x + 20, y, w - 40, 20); //top mid
+		screen.drawImage(DialogImage, 380, 0, 20, 20, x + w - 20, y, 20, 20); //top right
+		screen.drawImage(DialogImage, 0, 20, 20, 1, x, y + 20, 20, h - 40); //mid left
+		screen.drawImage(DialogImage, 20, 20, 1, 1, x + 20, y + 20, w - 40, h - 40); //mid mid
+		screen.drawImage(DialogImage, 380, 20, 20, 1, x + w - 20, y + 20, 20, h - 40); //mid right
+		screen.drawImage(DialogImage, 0, 380, 20, 20, x, y + h - 20, 20, 20); //bottom left
+		screen.drawImage(DialogImage, 20, 380, 1, 20, x + 20, y + h - 20, w - 40, 20); //bottom mid
+		screen.drawImage(DialogImage, 380, 380, 20, 20, x + w - 20, y + h - 20, 20, 20); //bottom right
+	}
+}
+
+//level;x:y,x:y,x:y;timestamp;rating;viewcount;likecount;name,name,name~
+function SaveGame()
+{
+	if(typeof(Storage) !== "undefined")
+	{
+		var savestring = "";
+		
+		for(var i = 0; i < Posts.length; i++)
+		{
+			var p = Posts[i];
+			
+			if(i > 0)
+			{
+				savestring += "~";
+			}
+			
+			var r = p.replay;
+			savestring += r.level + ";";
+			for(var j = 0; j < r.boxes.length; j++)
+			{
+				var xypair = r.boxes[j];
+				if(j > 0)
+				{
+					savestring += ",";
+				}
+				savestring += xypair.x + ":" + xypair.y;
+			}
+			savestring += ";";
+			
+			savestring += p.timestamp + ";";
+			savestring += p.rating + ";";
+			savestring += p.viewcount + ";";
+			savestring += p.likecount + ";";
+			
+			for(var j = 0; j < p.likes.length; j++)
+			{
+				if(j > 0)
+				{
+					savestring += ",";
+				}
+				savestring += p.likes[j];
+			}
+		}
+		
+		localStorage.setItem("LOOKATME_USERNAME", username);
+		localStorage.setItem("TOPPLEBLOX_PROGRESS", savestring);
+	}
+}
+
+//level;x:y,x:y,x:y;timestamp;rating;viewcount;likecount;name,name,name~
+function LoadGame()
+{
+	if(typeof(Storage) !== "undefined")
+	{
+		username = localStorage.getItem("LOOKATME_USERNAME");
+		if(username === null)
+		{
+			username = "Username";
+		}
+		
+		var savestring = localStorage.getItem("TOPPLEBLOX_PROGRESS");
+		if(savestring !== null)
+		{
+			Posts = [];
+			var postarray = savestring.split("~");
+			for(var i = 0; i < postarray.length; i++)
+			{
+				var mypost = new Post();
+				var myreplay = new Replay();
+				
+				var postdata = postarray[i].split(";");
+				myreplay.level = parseInt(postdata[0]);
+				
+				var boxarray = postdata[1].split(",");
+				for(var j = 0; j < boxarray.length; j++)
+				{
+					var bxy = boxarray[j].split(":");
+					myreplay.boxes.push(new Point(parseFloat(bxy[0]), parseFloat(bxy[1])));
+				}
+				mypost.replay = myreplay;
+				
+				mypost.timestamp = parseInt(postdata[2]);
+				mypost.rating = parseFloat(postdata[3]);
+				mypost.viewcount = parseInt(postdata[4]);
+				mypost.likecount = parseInt(postdata[5]);
+				
+				var likearray = postdata[6].split(",");
+				for(var j = 0; j < likearray.length; j++)
+				{
+					if(likearray[j] != "")
+					{
+						mypost.likes.push(likearray[j]);
+					}
+				}
+				
+				Posts.push(mypost);
+			}
+		}
+		else
+		{
+			Posts = [];
+		}
+	}
+}
+
+function EraseGame()
+{
+	if(typeof(Storage) !== "undefined")
+	{
+		localStorage.removeItem("LOOKATME_USERNAME");
+		localStorage.removeItem("TOPPLEBLOX_PROGRESS");
+	}
+}
+
+function CheckGame()
+{
+	if(typeof(Storage) !== "undefined")
+	{
+		if(localStorage.getItem("LOOKATME_USERNAME") !== null)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		return false;
+	}
 }
 
 

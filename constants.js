@@ -26,7 +26,6 @@ var Point = function(x, y)
 
 var Post = function()
 {
-	this.user = "";
 	this.replay = null;
 	this.viewcount = 0;
 	this.likecount = 0;
