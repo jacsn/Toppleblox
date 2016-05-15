@@ -78,11 +78,16 @@ var btnLevel6 = new ImgButton("", 692, 405, 280, 175, btnLevel6_Click, Level6Ima
 
 function btnBegin_Click()
 {
+	//TODO:fix this please
 	if(CheckGame())
 	{
 		LoadGame();
+		ChangeMenu(Menus.LevelSelect);
 	}
-	ChangeMenu(Menus.LevelSelect);
+	else
+	{
+		ChangeMenu(Menus.Signup);
+	}
 }
 
 function btnLevel1_Click()
@@ -352,6 +357,40 @@ function ChangeMenu(menu)
 	{
 		Controls.push(btnBegin);
 	}
+	else if(menu == Menus.Signup)
+	{
+		var form = document.createElement("div");
+		form.id = "usernameform";
+		form.style.display = "block";
+		form.style.margin = "0 auto";
+		form.style.marginTop = "-" + SCREEN_HEIGHT + "px";
+		form.style.width = SCREEN_WIDTH + "px";
+		form.style.height = SCREEN_HEIGHT + "px";
+		form.style.position = "relative";
+		document.body.appendChild(form);
+		
+		var prompt = document.createElement("p");
+		prompt.id = "prompt";
+		prompt.innerHTML = "Please create an account:";
+		form.appendChild(prompt);
+		
+		var txt = document.createElement("input");
+		txt.id = "txtUsername";
+		txt.placeholder = "Username";
+		form.appendChild(txt);
+		txt.focus();
+		
+		var btn = document.createElement("button");
+		btn.id = "btnUsername";
+		form.appendChild(btn);
+		
+		btn.addEventListener("click", SubmitUsername);
+		
+		var err = document.createElement("div");
+		err.id = "error";
+		form.appendChild(err);
+		
+	}
 	else if(menu == Menus.LevelSelect)
 	{
 		Controls.push(btnLevel1);
@@ -381,6 +420,28 @@ function ChangeMenu(menu)
 	for(var c = 0; c < Controls.length; c++)
 	{
 		Controls[c].pick(LastX, LastY, EventType.MOVE, MouseDown, MouseDownX, MouseDownY);
+	}
+}
+
+function SubmitUsername()
+{
+	var uname = document.getElementById("txtUsername").value;
+	
+	if(uname == "")
+	{
+		username = "Username";
+		document.getElementById("usernameform").remove();
+		ChangeMenu(Menus.LevelSelect);
+	}
+	else if(/^[a-zA-Z0-9_]+$/.test(uname))
+	{
+		username = uname;
+		document.getElementById("usernameform").remove();
+		ChangeMenu(Menus.LevelSelect);
+	}
+	else
+	{
+		document.getElementById("error").innerHTML = "<p>Please use only alphanumeric characters and _underscores_.</p>";
 	}
 }
 
@@ -842,6 +903,7 @@ function TogglePostDeleteConfirm()
 function DeletePost()
 {
 	Posts.splice(curPost, 1);
+	SaveGame();
 	LoadAllPosts();
 }
 
@@ -860,23 +922,23 @@ function updateViews(index)
 		var expectedviews = 0;
 		if(curPost > 3)
 		{
-			expectedviews = Posts[curPost - 1].likecount + Posts[curPost - 2].likecount + Posts[curPost - 3].likecount + Posts[curPost - 4].likecount + Math.round(Math.random() * 4000 + 1000);
+			expectedviews = Posts[curPost - 1].likecount + Posts[curPost - 2].likecount + Posts[curPost - 3].likecount + Posts[curPost - 4].likecount + Math.round(Math.random() * 200);
 		}
 		else if(curPost == 3)
 		{
-			expectedviews = Posts[curPost - 1].likecount + Posts[curPost - 2].likecount + Posts[curPost - 3].likecount + Math.round(Math.random() * 4000 + 1000);
+			expectedviews = Posts[curPost - 1].likecount + Posts[curPost - 2].likecount + Posts[curPost - 3].likecount + Math.round(Math.random() * 200);
 		}
 		else if(curPost == 2)
 		{
-			expectedviews = Posts[curPost - 1].likecount + Posts[curPost - 2].likecount + Math.round(Math.random() * 4000 + 1000);
+			expectedviews = Posts[curPost - 1].likecount + Posts[curPost - 2].likecount + Math.round(Math.random() * 200);
 		}
 		else if(curPost == 1)
 		{
-			expectedviews = Posts[curPost - 1].likecount + Math.round(Math.random() * 4000 + 1000);
+			expectedviews = Posts[curPost - 1].likecount + Math.round(Math.random() * 200);
 		}
 		else
 		{
-			expectedviews = Math.round(Math.random() * 4000 + 1000);
+			expectedviews = Math.round(Math.random() * 200 + 10);
 		}
 		
 		var lifepercent = elapsed / 86400000;
@@ -907,29 +969,29 @@ function updateViews(index)
 		var expectedviews = 0;
 		if(curPost > 3)
 		{
-			expectedviews = Posts[curPost - 1].likecount + Posts[curPost - 2].likecount + Posts[curPost - 3].likecount + Posts[curPost - 4].likecount + 1000;
+			expectedviews = Posts[curPost - 1].likecount + Posts[curPost - 2].likecount + Posts[curPost - 3].likecount + Posts[curPost - 4].likecount;
 		}
 		else if(curPost == 3)
 		{
-			expectedviews = Posts[curPost - 1].likecount + Posts[curPost - 2].likecount + Posts[curPost - 3].likecount + 1000;
+			expectedviews = Posts[curPost - 1].likecount + Posts[curPost - 2].likecount + Posts[curPost - 3].likecount;
 		}
 		else if(curPost == 2)
 		{
-			expectedviews = Posts[curPost - 1].likecount + Posts[curPost - 2].likecount + 1000;
+			expectedviews = Posts[curPost - 1].likecount + Posts[curPost - 2].likecount;
 		}
 		else if(curPost == 1)
 		{
-			expectedviews = Posts[curPost - 1].likecount + 1000;
+			expectedviews = Posts[curPost - 1].likecount;
 		}
 		else
 		{
-			expectedviews = 1000;
+			expectedviews = 50 + (Math.random() * 30);
 		}
 		
 		//make sure the views get updated on old posts even if you haven't checked
 		if(post.viewcount < expectedviews)
 		{
-			post.viewcount = expectedviews + (Math.random() * 100);
+			post.viewcount = expectedviews + (Math.random() * 20);
 		}
 		
 		var expectedlikes = Math.round(post.viewcount * post.rating);
@@ -938,21 +1000,6 @@ function updateViews(index)
 			//Due to the random elements, it might be possible for a post to get fewer likes than intended. If that happens, this should fix it.
 			var deficit = expectedlikes - post.likecount;
 			for(var i = 0; i < deficit; i++)
-			{
-				post.likes.push(generateUsername());
-				if(post.likes.length > MAX_LIKES)
-				{
-					post.likes.shift();
-				}
-				post.likecount++;
-			}
-		}
-		
-		if(Math.random() < 0.3)
-		{
-			post.viewcount += Math.floor(Math.random() * 10);
-			
-			if(Math.random() < 0.1)
 			{
 				post.likes.push(generateUsername());
 				if(post.likes.length > MAX_LIKES)
@@ -1084,6 +1131,20 @@ function ToggleSite()
 		document.body.className = "lookatme";
 		document.getElementById("toppleblox").style.display = "none";
 		document.getElementById("lookatme").style.display = "inline";
+		
+		var un = document.getElementById("username");
+		var width = un.offsetWidth - 100;
+		
+		var size = 26;
+		screen.font = size + "px Arial, sans-serif";
+		while(screen.measureText(username).width > width)
+		{
+			size--;
+			screen.font = size + "px Arial, sans-serif";
+		}
+		
+		un.innerHTML = username
+		un.style.fontSize = size + "px";
 	}
 	else
 	{
@@ -1458,7 +1519,7 @@ function LoadGame()
 		}
 		
 		var savestring = localStorage.getItem("TOPPLEBLOX_PROGRESS");
-		if(savestring !== null)
+		if(savestring !== null && savestring != "")
 		{
 			Posts = [];
 			var postarray = savestring.split("~");
@@ -1517,7 +1578,14 @@ function CheckGame()
 	{
 		if(localStorage.getItem("LOOKATME_USERNAME") !== null)
 		{
-			return true;
+			if(localStorage.getItem("LOOKATME_USERNAME") == "")
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
 		}
 		else
 		{
@@ -1554,6 +1622,17 @@ function drawControls()
 		Controls[i].draw(screen);
 	}
 }
+
+window.addEventListener("keydown", function (e) {
+	if(e.which == K_ENTER)
+	{
+		e.preventDefault();
+		if(MenuShowing && MenuID == Menus.Signup)
+		{
+			document.getElementById("btnUsername").click();
+		}
+	}
+});
 
 window.addEventListener("mousemove", function (event) {
 	var left = (window.pageXOffset || document.body.scrollLeft) - (document.body.clientLeft || 0);
@@ -1742,7 +1821,7 @@ function addUsername()
 
 function generateUsername()
 {
-	var first = ["radio", "dark", "ninja", "death", "shadow", "diamond", "crystal", "bad", "good", "rainbow", "cat", "bee", "leather", "marble", "granite", "wicked", "coffee", "tea", "sushi", "ring", "sonic", "super", "crazy", "electric", "unicorn", "pegasus", "mega", "ultra", "lettuce", "banana", "coconut", "cyclone", "steel", "algebra", "fountain", "cake", "pie", "bug", "rose", "circle", "square", "triangle", "atom", "dandelion", "rabid", "mud", "belt", "white", "poison", "dance", "croquet", "needle", "lace", "ribbon", "puppy", "clover", "sleepy", "thunder", "lightning", "bright", "orange", "meat", "veggie", "oath", "asparagus", "quake", "pi", "liver", "dragon", "shark", "cape", "tau", "ant", "pirate", "glass", "ruby", "laser", "tiara", "widow", "big", "dry", "egg", "lantern", "milk", "engine", "distant", "triumph", "plush", "alicorn", "apple", "wheat", "pear", "pearl", "linux", "night", "quick", "box", "turnip", "black", "squash", "pixel", "elephant", "squid", "whale", "fish", "eagle", "ninja", "ice", "snow", "magic", "fairy", "cupcake", "owl", "math", "nuclear", "lizard", "corn", "phoenix", "disaster", "karate", "fenix", "ballet", "anvil", "stick", "pony", "quantum", "boat", "sad", "mint", "happy", "dragon", "raven", "crow", "fedora", "bubble", "window", "mad", "mummy", "angry", "robin", "bat", "princess", "squirrel", "blood", "red", "blue", "green", "pink", "tax", "prince", "grass", "lead", "cash", "snake", "leaf", "pixel", "wing", "fight", "club", "crown", "dog", "frog", "bird", "money", "clown", "jet", "knight", "flower", "cobra", "cat", "water", "air", "tech", "bit", "star", "light", "photon", "sun", "moon", "venom", "earth", "river", "ocean", "lake", "dirt", "fur", "feline", "tiger", "lion", "anti", "matter", "possum", "thorn", "brain", "pixie", "alien", "xeno", "mine", "cloud", "proton", "limousine", "ox", "yak", "submarine", "monster"];
+	var first = ["radio", "dark", "ninja", "death", "shadow", "diamond", "crystal", "bad", "good", "rainbow", "butterfly", "cat", "bee", "speed", "leather", "marble", "granite", "wicked", "coffee", "tea", "sushi", "ring", "sonic", "super", "crazy", "electric", "unicorn", "pegasus", "mega", "ultra", "lettuce", "banana", "coconut", "cyclone", "steel", "algebra", "fountain", "cake", "pie", "bug", "rose", "circle", "square", "triangle", "atom", "dandelion", "rabid", "mud", "belt", "white", "poison", "dance", "croquet", "needle", "lace", "ribbon", "puppy", "clover", "sleepy", "thunder", "lightning", "bright", "orange", "meat", "veggie", "oath", "asparagus", "quake", "pi", "liver", "dragon", "shark", "cape", "tau", "ant", "pirate", "glass", "ruby", "laser", "tiara", "widow", "big", "dry", "egg", "lantern", "milk", "engine", "distant", "triumph", "plush", "alicorn", "apple", "wheat", "pear", "pearl", "linux", "night", "quick", "box", "turnip", "black", "squash", "pixel", "elephant", "squid", "whale", "fish", "eagle", "ninja", "ice", "snow", "magic", "fairy", "cupcake", "owl", "math", "nuclear", "lizard", "corn", "phoenix", "disaster", "karate", "fenix", "ballet", "anvil", "stick", "pony", "quantum", "boat", "sad", "mint", "happy", "dragon", "raven", "crow", "fedora", "bubble", "window", "mad", "mummy", "angry", "robin", "bat", "princess", "squirrel", "blood", "red", "blue", "green", "pink", "tax", "prince", "grass", "lead", "cash", "snake", "leaf", "pixel", "wing", "fight", "club", "crown", "dog", "frog", "bird", "money", "clown", "jet", "knight", "flower", "cobra", "cat", "water", "air", "tech", "bit", "star", "light", "photon", "sun", "moon", "venom", "earth", "river", "ocean", "lake", "dirt", "fur", "feline", "tiger", "lion", "anti", "matter", "possum", "thorn", "brain", "pixie", "alien", "xeno", "mine", "cloud", "proton", "limousine", "ox", "yak", "submarine", "monster"];
 	var second = ["bomber", "boy", "girl", "gurl", "flood", "head", "cadillac", "samurai", "thief", "grrl", "face", "breaker", "kitty", "hacker", "chef", "haxxor", "rider", "buster", "singer", "lunatic", "catcher", "hunter", "stinger", "shaker", "dodger", "watcher", "smasher", "dancer", "dash", "fixer", "cheater", "pirate", "lord", "queen", "player", "reaper", "man", "mom", "oil", "breaker", "lady", "knight", "cat", "statue", "killer", "ninja", "killa", "wife", "phantom", "ranger", "stalker", "guy", "person", "man", "girl", "woman", "dude", "craft", "monster", "dragon", "woman", "bomb", "stealer", "creep", "eater", "maniac", "lover", "clown", "guy", "feline", "walker", "rope", "ghost", "money", "king", "queen", "cat", "master", "flyer", "hat", "shoes", "blizzard", "tornado", "avalanche", "shaker", "heart", "foot", "faerie", "hand", "sword", "knife", "mum", "kid", "jedi", "runner", "wing", "wizard", "summoner", "demon", "lad", "chick", "playa", "maker", "taker", "fang", "tooth", "thorn", "mime", "fighter", "dancer", "fairy", "drinker", "explosion"];
 	
 	if(Math.random() < 0.95) //two names

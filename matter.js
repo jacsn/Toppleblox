@@ -4353,7 +4353,7 @@ module.exports = Common;
         switch (type) {
 
         case 'warn':
-            //console.warn('Matter.js:', message);
+            console.warn('Matter.js:', message);
             break;
         case 'error':
             console.log('Matter.js:', message);

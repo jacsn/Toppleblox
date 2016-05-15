@@ -3,13 +3,16 @@ var SCREEN_HEIGHT = 640;
 
 var MAX_LIKES = 20;
 
+var K_ENTER = 13;
+
 var Menus = new function()
 {
 	this.Main = 0;
-	this.LevelSelect = 1;
-	this.Victory = 2;
-	this.VictoryShared = 3;
-	this.None = 4;
+	this.Signup = 1;
+	this.LevelSelect = 2;
+	this.Victory = 3;
+	this.VictoryShared = 4;
+	this.None = 5;
 }
 
 var Tools = new function()
