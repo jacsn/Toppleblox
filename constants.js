@@ -54,6 +54,11 @@ ButtonImage.ready = false;
 ButtonImage.onload = function(){this.ready = true;};
 ButtonImage.src = "button.png";
 
+var LookAtMeButtonImage = new Image();
+LookAtMeButtonImage.ready = false;
+LookAtMeButtonImage.onload = function(){this.ready = true;};
+LookAtMeButtonImage.src = "lookatmebutton.png";
+
 var DialogImage = new Image();
 DialogImage.ready = false;
 DialogImage.onload = function(){this.ready = true;};

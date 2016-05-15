@@ -65,7 +65,7 @@ div#error
 #postcaption button
 {
 	float:right;
-	margin:0 10px;
+	margin:0 5px;
 }
 
 #postcaption button#btnDelete
@@ -114,11 +114,17 @@ body.toppleblox
 
 h1
 {
+	display:block;
+	height:40px;
 	color:#fff;
 	font-family:Verdana, sans-serif;
 	font-size:20px;
-	padding:10px;
-	margin-top:-2px;
+	padding:0 0 0 100%;
+	margin:0px;
+	overflow:hidden;
+	background-image:url(logo.svg);
+	background-position:0px 0px;
+	background-repeat:no-repeat;
 }
 
 #wrapper
