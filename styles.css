@@ -90,7 +90,7 @@ div#error
 
 body.lookatme
 {
-	background:#f5f8fa;
+	background:#f6f9fc;
 	padding:40px 50px 20px;
 	margin-top:10px;
 }
@@ -132,6 +132,7 @@ h1
 	/*display:none;*/
 	margin:0 auto;
 	max-width:1280px;
+	min-width:1024px;
 	padding-bottom:10px;
 }
 

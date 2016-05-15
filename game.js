@@ -1136,6 +1136,12 @@ function Toppleblox()
 
 function ToggleSite()
 {
+	//this won't often matter, but it gives me peace of mind
+	for(var c = 0; c < Controls.length; c++)
+	{
+		Controls[c].state = ButtonState.UP;
+	}
+	
 	if(Toppleblox())
 	{
 		document.title = "LookAtMe";
