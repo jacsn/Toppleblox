@@ -996,13 +996,13 @@ function updateViews(index)
 		}
 		else
 		{
-			expectedviews = 50 + (Math.random() * 30);
+			expectedviews = 50 + Math.round(Math.random() * 30);
 		}
 		
 		//make sure the views get updated on old posts even if you haven't checked
 		if(post.viewcount < expectedviews)
 		{
-			post.viewcount = expectedviews + (Math.random() * 20);
+			post.viewcount = expectedviews + Math.round(Math.random() * 20);
 		}
 		
 		var expectedlikes = Math.round(post.viewcount * post.rating);
