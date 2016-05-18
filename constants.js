@@ -38,6 +38,20 @@ var Post = function()
 	this.rating = 0;
 }
 
+var FakePost = function()
+{
+	this.user = "Username";
+	this.headline = "";
+	this.text = "";
+	this.replay = null;
+	this.viewcount = 0;
+	this.likecount = 0;
+	this.likes = [];
+	this.thumbnail = null;
+	this.timestamp = 0;
+	this.liked = false;
+}
+
 var Replay = function()
 {
 	this.level = 1;
