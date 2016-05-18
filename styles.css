@@ -1,3 +1,126 @@
+@media (min-width:1366px)
+{
+	#wrapper
+	{
+		margin:0 auto;
+		width:1280px;
+		padding-bottom:10px;
+	}
+
+	#userbar
+	{
+		box-sizing:border-box;
+		display:block;
+		float:left;
+		padding-right:20px;
+		width:28.57%;
+	}
+
+	#suggestions
+	{
+		box-sizing:border-box;
+		display:block;
+		float:left;
+		padding:0px;
+		width:28.57%;
+	}
+
+	#maincontent
+	{
+		box-sizing:border-box;
+		display:block;
+		float:left;
+		padding-right:20px;
+		width:42.86%;
+	}
+}
+
+@media (max-width:1365px)
+{
+	#wrapper
+	{
+		margin:0 auto;
+		max-width:1024px;
+		padding-bottom:10px;
+	}
+
+	#userbar
+	{
+		box-sizing:border-box;
+		display:block;
+		float:left;
+		padding-right:20px;
+		width:33.34%;
+	}
+
+	#suggestions
+	{
+		box-sizing:border-box;
+		display:block;
+		float:left;
+		clear:left;
+		padding:0px;
+		padding-top:10px;
+		padding-left:33.34%;
+		width:66.66%;
+	}
+
+	#maincontent
+	{
+		box-sizing:border-box;
+		display:block;
+		float:left;
+		width:66.66%;
+	}
+}
+
+@media (max-width:800px)
+{
+	#wrapper
+	{
+		margin:0 auto;
+		max-width:800px;
+		padding-bottom:10px;
+	}
+
+	#userbar
+	{
+		box-sizing:border-box;
+		display:block;
+		float:left;
+		width:100%;
+		padding:0px;
+	}
+
+	#suggestions
+	{
+		box-sizing:border-box;
+		display:block;
+		float:left;
+		clear:left;
+		padding:0px;
+		padding-top:10px;
+		width:100%;
+	}
+
+	#maincontent
+	{
+		box-sizing:border-box;
+		display:block;
+		float:left;
+		clear:left;
+		width:100%;
+		padding:0px;
+		padding-top:10px;
+	}
+}
+
+
+*
+{
+	font-size:14px;
+}
+
 p#prompt
 {
 	display:block;
@@ -127,15 +250,6 @@ h1
 	background-repeat:no-repeat;
 }
 
-#wrapper
-{
-	/*display:none;*/
-	margin:0 auto;
-	max-width:1280px;
-	min-width:1024px;
-	padding-bottom:10px;
-}
-
 #wrapper:after
 {
 	content:"";
@@ -157,24 +271,6 @@ h1
 	border-bottom:1px solid #666;
 }
 
-#userbar
-{
-	box-sizing:border-box;
-	display:block;
-	float:left;
-	padding-right:20px;
-	width:28.57%;
-}
-
-#suggestions
-{
-	box-sizing:border-box;
-	display:block;
-	float:left;
-	padding:0px;
-	width:28.57%;
-}
-
 #suggestbox
 {
 	background:#fff;
@@ -187,15 +283,6 @@ h1
 {
 	padding:20px;
 	margin:0px;
-}
-
-#maincontent
-{
-	box-sizing:border-box;
-	display:block;
-	float:left;
-	padding-right:20px;
-	width:42.86%;
 }
 
 #post
@@ -290,7 +377,7 @@ div.thumbnail
 {
 	float:right;
 	text-align:right;
-	margin:10px 10px 0 0;
+	margin:15px 10px 0 0;
 }
 
 #usertools

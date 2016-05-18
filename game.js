@@ -215,8 +215,41 @@ function btnFlip_Click()
 	}
 }
 
+function createFakes()
+{
+	var fp01 = new FakePost();
+	fp01.user = "DragonLancer";
+	fp01.headline = "...#Toppleblox...";
+	fp01.text = "Look what I did in level 1 of #Toppleblox:";
+	var r01 = new Replay();
+	r01.level = 1;
+	r01.boxes = [new Point(175, -8000), new Point(395, 550), new Point(395, 490), new Point(395, 430), new Point(455, 550), new Point(455, 550), new Point(455, 490), new Point(455, 430), new Point(455, 370), new Point(515, 550), new Point(515, 490), new Point(515, 430), new Point(515, 370), new Point(515, 310), new Point(575, 550), new Point(575, 490), new Point(575, 430), new Point(575, 370), new Point(635, 550), new Point(635, 490), new Point(635, 430)];
+	fp01.replay = r01;
+	fp01.viewcount = 2403488;
+	fp01.likecount = 618492;
+	fp01.likes = ["redqueen42", "sodadrinker01", "lancebreaker", "ponyprincess6", "apple_girl41", "mommasboy16", "cupcakedancer", "minewoman013", "fairyprincess09", "bitbuster99", "megaman2", "electric_unicorn", "dragonheart62", "foxface131", "leatherlady55", "meat_ghost", "batgirl20", "crazyninja14", "faerie_dancer", "catlady38"];
+	fp01.timestamp = 1453551182292;
+	Fakes.push(fp01);
+	
+	var fp02 = new FakePost();
+	fp02.user = "DragonLancer";
+	fpo2.headline = "...#Toppleblox...";
+	fp02.text = "Look what I did in level 2 of #Toppleblox:";
+	var r02 = new Replay();
+	r02.level = 2;
+	r02.boxes = [new Point(170, -800), new Point(700, 510), new Point(700, 490)];
+	fp02.replay = r02;
+	fp02.viewcount = 1403488;
+	fp02.likecount = 288492;
+	fp02.likes = ["badwalker61", "marble_girl016", "cornguy63", "dog_jedi", "antman74", "fenixmaker076", "nuclear_knife46", "elephantman038", "matter_stealer10", "rat_eater17", "minecraft142", "wickedlad20", "poisonkid03", "knight1337", "electric_lady", "laserphantom16", "atom_creep82", "techrat", "green_blizzard73", "wolfdude60"];
+	fp02.timestamp = 1453851312452;
+	Fakes.push(fp02);
+	
+	//thebluefairy
+}
 
-
+var Fakes = [];
+var curFake = -1;
 
 
 
@@ -1149,19 +1182,7 @@ function ToggleSite()
 		document.getElementById("toppleblox").style.display = "none";
 		document.getElementById("lookatme").style.display = "inline";
 		
-		var un = document.getElementById("username");
-		var width = un.offsetWidth - 100;
-		
-		var size = 26;
-		screen.font = size + "px Arial, sans-serif";
-		while(screen.measureText(username).width > width)
-		{
-			size--;
-			screen.font = size + "px Arial, sans-serif";
-		}
-		
-		un.innerHTML = username
-		un.style.fontSize = size + "px";
+		resizeUsername();
 	}
 	else
 	{
@@ -1174,6 +1195,26 @@ function ToggleSite()
 	
 	SaveGame();
 	return false; //used to prevent buttons
+}
+
+function resizeUsername()
+{
+	if(!Toppleblox())
+	{
+		var un = document.getElementById("username");
+		var width = un.offsetWidth - 100;
+		
+		var size = 26;
+		screen.font = size + "px Arial, sans-serif";
+		while(screen.measureText(username).width > width)
+		{
+			size--;
+			screen.font = size + "px Arial, sans-serif";
+		}
+		
+		un.style.fontSize = size + "px";
+		un.innerHTML = username;
+	}
 }
 
 function LoadAllPosts()
@@ -1808,14 +1849,25 @@ function FillWrapText(text, size, align, maxwidth, x, y, color)
 
 function pinUserbar()
 {
-	var top = document.documentElement.scrollTop || document.body.scrollTop;
-	if(top > 10)
+	var width = document.documentElement.clientWidth;
+	if(width > 800)
 	{
-		var ub = document.getElementById("userbar");
-		var ut = document.getElementById("usertools");
-		ub.style.position = "relative";
-		ub.style.top = (top - 10) + "px";
-		ut.style.borderRadius = "0 0 10px 10px";
+		var top = document.documentElement.scrollTop || document.body.scrollTop;
+		if(top > 10)
+		{
+			var ub = document.getElementById("userbar");
+			var ut = document.getElementById("usertools");
+			ub.style.position = "relative";
+			ub.style.top = (top - 10) + "px";
+			ut.style.borderRadius = "0 0 10px 10px";
+		}
+		else
+		{
+			var ub = document.getElementById("userbar");
+			var ut = document.getElementById("usertools");
+			ub.style.position = "static";
+			ut.style.borderRadius = "10px";
+		}
 	}
 	else
 	{
@@ -1827,6 +1879,7 @@ function pinUserbar()
 }
 
 window.onscroll = pinUserbar;
+window.addEventListener("resize", resizeUsername);
 
 function addUsername()
 {
@@ -1838,7 +1891,7 @@ function addUsername()
 
 function generateUsername()
 {
-	var first = ["radio", "dark", "ninja", "death", "shadow", "diamond", "crystal", "bad", "good", "fox", "wolf", "rainbow", "butterfly", "cat", "bee", "speed", "leather", "marble", "granite", "wicked", "coffee", "tea", "sushi", "ring", "sonic", "super", "crazy", "electric", "unicorn", "pegasus", "mega", "ultra", "lettuce", "banana", "coconut", "cyclone", "steel", "algebra", "fountain", "cake", "pie", "bug", "rose", "circle", "square", "triangle", "atom", "dandelion", "rabid", "mud", "belt", "white", "poison", "dance", "croquet", "needle", "lace", "ribbon", "puppy", "clover", "sleepy", "thunder", "lightning", "bright", "orange", "meat", "veggie", "oath", "asparagus", "quake", "pi", "liver", "dragon", "shark", "cape", "tau", "ant", "pirate", "glass", "ruby", "laser", "tiara", "widow", "big", "dry", "egg", "lantern", "milk", "engine", "distant", "triumph", "plush", "alicorn", "apple", "wheat", "pear", "pearl", "linux", "night", "quick", "box", "turnip", "black", "squash", "pixel", "elephant", "squid", "whale", "fish", "eagle", "ninja", "ice", "snow", "magic", "fairy", "cupcake", "owl", "math", "nuclear", "lizard", "corn", "phoenix", "disaster", "karate", "fenix", "ballet", "anvil", "stick", "pony", "quantum", "boat", "sad", "mint", "happy", "dragon", "raven", "crow", "fedora", "bubble", "window", "mad", "mummy", "angry", "robin", "bat", "princess", "squirrel", "blood", "red", "blue", "green", "pink", "tax", "prince", "grass", "lead", "cash", "snake", "leaf", "pixel", "wing", "fight", "club", "crown", "dog", "frog", "bird", "money", "clown", "jet", "knight", "flower", "cobra", "cat", "water", "air", "tech", "bit", "star", "light", "photon", "sun", "moon", "venom", "earth", "river", "ocean", "lake", "dirt", "fur", "feline", "tiger", "lion", "anti", "matter", "possum", "thorn", "brain", "pixie", "alien", "xeno", "mine", "cloud", "proton", "limousine", "ox", "yak", "submarine", "monster"];
+	var first = ["radio", "dark", "ninja", "death", "shadow", "diamond", "crystal", "bad", "soda", "pop", "good", "fox", "wolf", "rainbow", "butterfly", "cat", "bee", "speed", "leather", "marble", "granite", "wicked", "coffee", "tea", "sushi", "ring", "sonic", "super", "crazy", "electric", "unicorn", "pegasus", "mega", "ultra", "lettuce", "banana", "coconut", "cyclone", "steel", "algebra", "fountain", "cake", "pie", "bug", "rose", "circle", "square", "triangle", "atom", "dandelion", "rabid", "mud", "belt", "white", "poison", "dance", "croquet", "needle", "lace", "ribbon", "puppy", "clover", "sleepy", "thunder", "lightning", "bright", "orange", "meat", "veggie", "oath", "asparagus", "quake", "pi", "liver", "dragon", "shark", "cape", "tau", "ant", "pirate", "glass", "ruby", "laser", "tiara", "widow", "big", "dry", "egg", "lantern", "milk", "engine", "distant", "triumph", "plush", "alicorn", "apple", "wheat", "pear", "pearl", "linux", "night", "quick", "box", "turnip", "black", "squash", "pixel", "elephant", "squid", "whale", "fish", "eagle", "ninja", "ice", "snow", "magic", "fairy", "cupcake", "owl", "math", "nuclear", "lizard", "corn", "phoenix", "disaster", "karate", "fenix", "ballet", "anvil", "stick", "pony", "quantum", "boat", "sad", "mint", "happy", "dragon", "raven", "crow", "fedora", "bubble", "window", "mad", "mummy", "angry", "robin", "bat", "princess", "squirrel", "blood", "red", "blue", "green", "pink", "tax", "prince", "grass", "lead", "cash", "snake", "leaf", "pixel", "wing", "fight", "club", "crown", "dog", "frog", "bird", "money", "clown", "jet", "knight", "flower", "cobra", "cat", "water", "air", "tech", "bit", "star", "light", "photon", "sun", "moon", "venom", "earth", "river", "ocean", "lake", "dirt", "fur", "feline", "tiger", "lion", "anti", "matter", "possum", "thorn", "brain", "pixie", "alien", "xeno", "mine", "cloud", "proton", "limousine", "ox", "yak", "submarine", "monster"];
 	var second = ["bomber", "boy", "girl", "gurl", "flood", "head", "cadillac", "samurai", "thief", "grrl", "driver", "face", "breaker", "kitty", "hacker", "chef", "haxxor", "rider", "buster", "singer", "lunatic", "catcher", "hunter", "stinger", "shaker", "dodger", "watcher", "smasher", "dancer", "dash", "fixer", "cheater", "pirate", "lord", "queen", "player", "reaper", "man", "mom", "oil", "breaker", "lady", "knight", "cat", "statue", "killer", "ninja", "killa", "wife", "phantom", "ranger", "stalker", "guy", "person", "man", "girl", "woman", "dude", "craft", "monster", "dragon", "woman", "bomb", "stealer", "creep", "eater", "maniac", "lover", "clown", "guy", "feline", "walker", "rope", "ghost", "money", "king", "queen", "cat", "master", "flyer", "hat", "shoes", "blizzard", "tornado", "avalanche", "shaker", "heart", "foot", "faerie", "hand", "sword", "knife", "mum", "kid", "jedi", "runner", "wing", "wizard", "summoner", "demon", "lad", "chick", "playa", "maker", "taker", "fang", "tooth", "thorn", "mime", "fighter", "dancer", "fairy", "drinker", "explosion"];
 	
 	if(Math.random() < 0.95) //two names
@@ -1859,14 +1912,14 @@ function generateUsername()
 		
 		if(Math.random() < 0.8)
 		{
-			var username = the + first[part1] + mid + second[part2] + num;
-			return username;
+			var uname = the + first[part1] + mid + second[part2] + num;
+			return uname;
 		}
 		else
 		{
 			part2 = Math.floor(Math.random() * first.length);
-			var username = the + first[part1] + mid + first[part2] + num;
-			return username;
+			var uname = the + first[part1] + mid + first[part2] + num;
+			return uname;
 		}
 	}
 	else
@@ -1876,16 +1929,16 @@ function generateUsername()
 			var name = Math.floor(Math.random() * first.length);
 			var num = generateUsernum(1);
 			
-			var username = first[name] + num;
-			return username;
+			var uname = first[name] + num;
+			return uname;
 		}
 		else
 		{
 			var name = Math.floor(Math.random() * second.length);
 			var num = generateUsernum(1);
 			
-			var username = second[name] + num;
-			return username;
+			var uname = second[name] + num;
+			return uname;
 		}
 	}
 }
