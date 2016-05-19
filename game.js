@@ -217,6 +217,7 @@ function btnFlip_Click()
 
 function createFakes()
 {
+	//jump the tower
 	var fp01 = new FakePost();
 	fp01.user = "DragonLancer";
 	fp01.headline = "...#Toppleblox...";
@@ -227,7 +228,7 @@ function createFakes()
 	fp01.replay = r01;
 	fp01.viewcount = 2403488;
 	fp01.likecount = 618492;
-	fp01.likes = ["redqueen42", "sodadrinker01", "lancebreaker", "ponyprincess6", "apple_girl41", "mommasboy16", "cupcakedancer", "minewoman013", "fairyprincess09", "bitbuster99", "megaman2", "electric_unicorn", "dragonheart62", "foxface131", "leatherlady55", "meat_ghost", "batgirl20", "crazyninja14", "faerie_dancer", "catlady38"];
+	fp01.likes = ["redqueen42", "sodadrinker01", "lancebreaker", "ponyprincess6", "apple_girl41", "dragonboy16", "cupcakedancer", "minewoman013", "fairyprincess09", "bitbuster99", "megaman2", "electric_unicorn", "dragonheart62", "foxface131", "leatherlady55", "meat_ghost", "batgirl20", "crazyninja14", "faerie_dancer", "catlady38"];
 	fp01.timestamp = 1453551182292;
 	Fakes.push(fp01);
 	
@@ -246,6 +247,7 @@ function createFakes()
 	Fakes.push(fp02);
 	
 	//thebluefairy
+	//"1;175:-8000,395:550,395:490,395:430,455:550,455:490,455:430,455:370,515:550,515:490,515:430,515:370,515:310,575:550,575:490,575:430,575:370,635:550,635:490,635:430;1463594082111;0.31469674751311183;86;27;bighat,ribbon_breaker18,theflowersummoner74,lover561,oceanwing,thealienair92,veggieperson62,stickbad49,tiger_feline75,crazysamurai045,tiara_heart77,furkarate45,lettuceknight,boxwatcher9,ponyhand079,xeno_pegasus39,monsterlover01,squirrelhappy,bug104,green_thorn36~3;510:-3000,435:-8000;1463632072105;0.17156430036730758;13;2;pishaker53,tigerman38~5;392:-3000;1463632072105;0.17156430036730758;41;7;protonpirate99,super_dodger21,thesadkilla86,biglady087,pegasus_princess1337,meattooth001,thepiemoney83~2;199:593,199:593,199:593,199:593,199:593,199:593,199:593,199:593,199:593,199:593,199:593,199:593,199:590,199:590,199:590,199:590,199:590,199:590,199:590,199:590,199:590,199:590,199:590,199:590,199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:584,199:584,199:584,199:584,199:584,199:584,199:584,199:584,199:584,199:584,199:584,199:584,199:581,199:581,199:581,199:581,199:581,199:581,199:581,199:581,199:581,199:581,199:581,199:581,199:578,199:578,199:578,199:578,199:578,199:578,199:578,199:578,199:578,199:578,199:578,199:578,199:575,199:575,199:575,199:575,199:575,199:575,199:575,199:575,199:575,199:575,199:575,199:575,237:36;1463634163944;0.99;0;0;"
 }
 
 var Fakes = [];
