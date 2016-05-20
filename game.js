@@ -226,28 +226,88 @@ function createFakes()
 	r01.level = 1;
 	r01.boxes = [new Point(175, -8000), new Point(395, 550), new Point(395, 490), new Point(395, 430), new Point(455, 550), new Point(455, 550), new Point(455, 490), new Point(455, 430), new Point(455, 370), new Point(515, 550), new Point(515, 490), new Point(515, 430), new Point(515, 370), new Point(515, 310), new Point(575, 550), new Point(575, 490), new Point(575, 430), new Point(575, 370), new Point(635, 550), new Point(635, 490), new Point(635, 430)];
 	fp01.replay = r01;
-	fp01.viewcount = 2403488;
-	fp01.likecount = 618492;
+	fp01.viewcount = 3403365;
+	fp01.likecount = 1018492;
 	fp01.likes = ["redqueen42", "sodadrinker01", "lancebreaker", "ponyprincess6", "apple_girl41", "dragonboy16", "cupcakedancer", "minewoman013", "fairyprincess09", "bitbuster99", "megaman2", "electric_unicorn", "dragonheart62", "foxface131", "leatherlady55", "meat_ghost", "batgirl20", "crazyninja14", "faerie_dancer", "catlady38"];
 	fp01.timestamp = 1453551182292;
 	Fakes.push(fp01);
 	
+	//over the left wall
 	var fp02 = new FakePost();
 	fp02.user = "DragonLancer";
-	fpo2.headline = "...#Toppleblox...";
+	fp02.headline = "...#Toppleblox...";
 	fp02.text = "Look what I did in level 2 of #Toppleblox:";
 	var r02 = new Replay();
 	r02.level = 2;
-	r02.boxes = [new Point(170, -800), new Point(700, 510), new Point(700, 490)];
+	r02.boxes = [new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587),, new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(242, -26)];
 	fp02.replay = r02;
-	fp02.viewcount = 1403488;
-	fp02.likecount = 288492;
+	fp02.viewcount = 2803488;
+	fp02.likecount = 1487492;
 	fp02.likes = ["badwalker61", "marble_girl016", "cornguy63", "dog_jedi", "antman74", "fenixmaker076", "nuclear_knife46", "elephantman038", "matter_stealer10", "rat_eater17", "minecraft142", "wickedlad20", "poisonkid03", "knight1337", "electric_lady", "laserphantom16", "atom_creep82", "techrat", "green_blizzard73", "wolfdude60"];
 	fp02.timestamp = 1453851312452;
 	Fakes.push(fp02);
 	
-	//thebluefairy
-	//"1;175:-8000,395:550,395:490,395:430,455:550,455:490,455:430,455:370,515:550,515:490,515:430,515:370,515:310,575:550,575:490,575:430,575:370,635:550,635:490,635:430;1463594082111;0.31469674751311183;86;27;bighat,ribbon_breaker18,theflowersummoner74,lover561,oceanwing,thealienair92,veggieperson62,stickbad49,tiger_feline75,crazysamurai045,tiara_heart77,furkarate45,lettuceknight,boxwatcher9,ponyhand079,xeno_pegasus39,monsterlover01,squirrelhappy,bug104,green_thorn36~3;510:-3000,435:-8000;1463632072105;0.17156430036730758;13;2;pishaker53,tigerman38~5;392:-3000;1463632072105;0.17156430036730758;41;7;protonpirate99,super_dodger21,thesadkilla86,biglady087,pegasus_princess1337,meattooth001,thepiemoney83~2;199:593,199:593,199:593,199:593,199:593,199:593,199:593,199:593,199:593,199:593,199:593,199:593,199:590,199:590,199:590,199:590,199:590,199:590,199:590,199:590,199:590,199:590,199:590,199:590,199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:584,199:584,199:584,199:584,199:584,199:584,199:584,199:584,199:584,199:584,199:584,199:584,199:581,199:581,199:581,199:581,199:581,199:581,199:581,199:581,199:581,199:581,199:581,199:581,199:578,199:578,199:578,199:578,199:578,199:578,199:578,199:578,199:578,199:578,199:578,199:578,199:575,199:575,199:575,199:575,199:575,199:575,199:575,199:575,199:575,199:575,199:575,199:575,237:36;1463634163944;0.99;0;0;"
+	//double tap
+	var fp03 = new FakePost();
+	fp03.user = "DragonLancer";
+	fp03.headline = "...#Toppleblox...";
+	fp03.text = "Look what I did in level 3 of #Toppleblox:";
+	var r03 = new Replay();
+	r03.level = 3;
+	r03.boxes = [new Point(510, -3000), new Point(435, -8000)];
+	fp03.replay = r03;
+	fp03.viewcount = 1674926;
+	fp03.likecount = 513047;
+	fp03.likes = ["minecraft147", "wolffang73", "madmaniac32", "clover1", "diamond_demon", "antlady20", "pegasus_princess1337", "crownclown38", "nightmonster25", "pieater314", "thebluefairy", "dogcat21", "sonic_dodger05", "crazycoconut", "pony_lunatic59", "oathghost16", "dandelionranger64", "angry_tooth35", "supersubmarine8", "protonpirate99"];
+	fp03.timestamp = 1453186312604;
+	Fakes.push(fp03);
+	
+	//speed bounce
+	var fp04 = new FakePost();
+	fp04.user = "DragonLancer";
+	fp04.headline = "...#Toppleblox...";
+	fp04.text = "Look what I did in level 4 of #Toppleblox:";
+	var r04 = new Replay();
+	r04.level = 4;
+	r04.boxes = [new Point(150, -6000), new Point(130, -8000)];
+	fp04.replay = r04;
+	fp04.viewcount = 2006842;
+	fp04.likecount = 684473;
+	fp04.likes = ["airjedi24", "flowerlizard32", "tax_ninja3", "phoenixalien7", "dancefaerie34", "sleepysword04", "ravenqueen86", "foxface44", "tealover92", "snowbuster42", "dragon_hunter", "alicornflower15", "quantum_lord075", "coffeebrain", "plush_sword74", "piratemagic95", "milkmaniac65", "lightfoot64", "cashbanana", "enginehead43"];
+	fp04.timestamp = 1456051182292;
+	Fakes.push(fp04);
+	
+	//crazy spin
+	var fp05 = new FakePost();
+	fp05.user = "DragonLancer";
+	fp05.headline = "...#Toppleblox...";
+	fp05.text = "Look what I did in level 5 of #Toppleblox:";
+	var r05 = new Replay();
+	r05.level = 5;
+	r05.boxes = [new Point(392, -3000)];
+	fp05.replay = r05;
+	fp05.viewcount = 2316520;
+	fp05.likecount = 757694;
+	fp05.likes = ["puppy_chef91", "rainbow_knife", "pixelpear86", "crystalsmasher37", "beeface34", "balletqueen3", "cakestar60", "thunderbreaker086", "window_wizard", "dragonperson05", "rubydancer53", "boatshaker21", "sharkkitty", "soniclunatic14", "ring_cat16", "thecroquetmom", "marblelightning92", "piratelord033", "turnip_knight", "rubyprincess53"];
+	fp05.timestamp = 1455251182292;
+	Fakes.push(fp05);
+	
+	//back and forth
+	var fp06 = new FakePost();
+	fp06.user = "DragonLancer";
+	fp06.headline = "...#Toppleblox...";
+	fp06.text = "Look what I did in level 6 of #Toppleblox:";
+	var r06 = new Replay();
+	r06.level = 6;
+	r06.boxes = [new Point(520, -3000), new Point(350, 550), new Point(290, 550), new Point(260, -12000)];
+	fp06.replay = r06;
+	fp06.viewcount = 2160833;
+	fp06.likecount = 805783;
+	fp06.likes = ["thelionhunter", "capebuster47", "karateflyer060", "crow_ninja38", "balletprincess46", "club_dash", "rosesteel45", "light_kitty82", "tiara16", "lizardcorn44", "atombomb033", "piwizard42", "madbreaker05", "lizardwoman84", "snakefixer32", "snakebreaker37", "lizardwizard1337", "triumphknight82", "quick_eagle77", "poisonmoney93"];
+	fp06.timestamp = 1455302842163;
+	Fakes.push(fp06);
+	
+	//"1;175:-8000,395:550,395:490,395:430,455:550,455:490,455:430,455:370,515:550,515:490,515:430,515:370,515:310,575:550,575:490,575:430,575:370,635:550,635:490,635:430;1463594082111;0.31469674751311183;0;0;~2;199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:583,199:583,199:583,199:583,199:583,199:583,199:583,199:583,199:583,199:583,199:583,199:583,199:579,199:579,199:579,199:579,199:579,199:579,199:579,199:579,199:579,199:579,199:579,199:579,242:-26;1463668446016;0.99;0;0;~3;510:-3000,435:-8000;1463632072105;0.17156430036730758;0;0;~4;150:-6000,130:-8000;1463692447324;0.5;0;0;~5;392:-3000;1463632072105;0.17156430036730758;0;0;~6;520:-3000,350:550,290:550,260:-12000;1463622072105;0.47156430036730757;0;0;"
 }
 
 var Fakes = [];
@@ -888,7 +948,7 @@ function LoadPost()
 	}
 	else
 	{
-		viewsummary.innerHTML = "" + Posts[curPost].viewcount + " people have looked at this. " + Posts[curPost].likecount + " liked what they saw.";
+		viewsummary.innerHTML = "" + commaFormat(Posts[curPost].viewcount) + " people have looked at this. " + commaFormat(Posts[curPost].likecount) + " liked what they saw.";
 	}
 	pc.appendChild(viewsummary);
 	
@@ -910,6 +970,38 @@ function LoadPost()
 		post.appendChild(more);
 	}
 	
+}
+
+function commaFormat(num)
+{
+	var str = "";
+	var looped = false;
+	for(var i = 0; num > 1000; i++)
+	{
+		looped = true;
+		var group = num % 1000;
+		num -= group;
+		num /= 1000;
+		if(i > 0)
+		{
+			str = group + "," + str;
+		}
+		else
+		{
+			str = "" + group;
+		}
+	}
+	
+	if(looped)
+	{
+		str = num + "," + str;
+	}
+	else
+	{
+		str = num;
+	}
+	
+	return str;
 }
 
 function TogglePostDeleteConfirm()
@@ -1893,7 +1985,7 @@ function addUsername()
 
 function generateUsername()
 {
-	var first = ["radio", "dark", "ninja", "death", "shadow", "diamond", "crystal", "bad", "soda", "pop", "good", "fox", "wolf", "rainbow", "butterfly", "cat", "bee", "speed", "leather", "marble", "granite", "wicked", "coffee", "tea", "sushi", "ring", "sonic", "super", "crazy", "electric", "unicorn", "pegasus", "mega", "ultra", "lettuce", "banana", "coconut", "cyclone", "steel", "algebra", "fountain", "cake", "pie", "bug", "rose", "circle", "square", "triangle", "atom", "dandelion", "rabid", "mud", "belt", "white", "poison", "dance", "croquet", "needle", "lace", "ribbon", "puppy", "clover", "sleepy", "thunder", "lightning", "bright", "orange", "meat", "veggie", "oath", "asparagus", "quake", "pi", "liver", "dragon", "shark", "cape", "tau", "ant", "pirate", "glass", "ruby", "laser", "tiara", "widow", "big", "dry", "egg", "lantern", "milk", "engine", "distant", "triumph", "plush", "alicorn", "apple", "wheat", "pear", "pearl", "linux", "night", "quick", "box", "turnip", "black", "squash", "pixel", "elephant", "squid", "whale", "fish", "eagle", "ninja", "ice", "snow", "magic", "fairy", "cupcake", "owl", "math", "nuclear", "lizard", "corn", "phoenix", "disaster", "karate", "fenix", "ballet", "anvil", "stick", "pony", "quantum", "boat", "sad", "mint", "happy", "dragon", "raven", "crow", "fedora", "bubble", "window", "mad", "mummy", "angry", "robin", "bat", "princess", "squirrel", "blood", "red", "blue", "green", "pink", "tax", "prince", "grass", "lead", "cash", "snake", "leaf", "pixel", "wing", "fight", "club", "crown", "dog", "frog", "bird", "money", "clown", "jet", "knight", "flower", "cobra", "cat", "water", "air", "tech", "bit", "star", "light", "photon", "sun", "moon", "venom", "earth", "river", "ocean", "lake", "dirt", "fur", "feline", "tiger", "lion", "anti", "matter", "possum", "thorn", "brain", "pixie", "alien", "xeno", "mine", "cloud", "proton", "limousine", "ox", "yak", "submarine", "monster"];
+	var first = ["radio", "dark", "ninja", "death", "shadow", "diamond", "crystal", "bad", "soda", "pop", "good", "arrow", "fox", "wolf", "castle", "rainbow", "butterfly", "cat", "bee", "speed", "leather", "marble", "granite", "wicked", "coffee", "tea", "sushi", "ring", "sonic", "super", "crazy", "electric", "unicorn", "pegasus", "mega", "ultra", "lettuce", "banana", "coconut", "cyclone", "steel", "algebra", "fountain", "cake", "pie", "bug", "rose", "circle", "square", "triangle", "atom", "dandelion", "rabid", "mud", "belt", "white", "poison", "dance", "croquet", "needle", "lace", "ribbon", "puppy", "clover", "sleepy", "thunder", "lightning", "bright", "orange", "meat", "veggie", "oath", "asparagus", "quake", "pi", "liver", "dragon", "shark", "cape", "tau", "ant", "pirate", "glass", "ruby", "laser", "tiara", "widow", "big", "dry", "egg", "lantern", "milk", "engine", "distant", "triumph", "plush", "alicorn", "apple", "wheat", "pear", "pearl", "linux", "night", "quick", "box", "turnip", "black", "squash", "pixel", "elephant", "squid", "whale", "fish", "eagle", "ninja", "ice", "snow", "magic", "fairy", "cupcake", "owl", "math", "nuclear", "lizard", "corn", "phoenix", "disaster", "karate", "fenix", "ballet", "anvil", "stick", "pony", "quantum", "boat", "sad", "mint", "happy", "dragon", "raven", "crow", "fedora", "bubble", "window", "mad", "mummy", "angry", "robin", "bat", "princess", "squirrel", "blood", "red", "blue", "green", "pink", "tax", "prince", "grass", "lead", "cash", "snake", "leaf", "pixel", "wing", "fight", "club", "crown", "dog", "frog", "bird", "money", "clown", "jet", "knight", "flower", "cobra", "cat", "water", "air", "tech", "bit", "star", "light", "photon", "sun", "moon", "venom", "earth", "river", "ocean", "lake", "dirt", "fur", "feline", "tiger", "lion", "anti", "matter", "possum", "thorn", "brain", "pixie", "alien", "xeno", "mine", "cloud", "proton", "limousine", "ox", "yak", "submarine", "monster"];
 	var second = ["bomber", "boy", "girl", "gurl", "flood", "head", "cadillac", "samurai", "thief", "grrl", "driver", "face", "breaker", "kitty", "hacker", "chef", "haxxor", "rider", "buster", "singer", "lunatic", "catcher", "hunter", "stinger", "shaker", "dodger", "watcher", "smasher", "dancer", "dash", "fixer", "cheater", "pirate", "lord", "queen", "player", "reaper", "man", "mom", "oil", "breaker", "lady", "knight", "cat", "statue", "killer", "ninja", "killa", "wife", "phantom", "ranger", "stalker", "guy", "person", "man", "girl", "woman", "dude", "craft", "monster", "dragon", "woman", "bomb", "stealer", "creep", "eater", "maniac", "lover", "clown", "guy", "feline", "walker", "rope", "ghost", "money", "king", "queen", "cat", "master", "flyer", "hat", "shoes", "blizzard", "tornado", "avalanche", "shaker", "heart", "foot", "faerie", "hand", "sword", "knife", "mum", "kid", "jedi", "runner", "wing", "wizard", "summoner", "demon", "lad", "chick", "playa", "maker", "taker", "fang", "tooth", "thorn", "mime", "fighter", "dancer", "fairy", "drinker", "explosion"];
 	
 	if(Math.random() < 0.95) //two names
