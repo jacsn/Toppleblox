@@ -4,6 +4,7 @@ var SCREEN_HEIGHT = 640;
 var MAX_LIKES = 20;
 
 var K_ENTER = 13;
+var K_ESC = 27;
 
 var Menus = new function()
 {

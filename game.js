@@ -79,7 +79,6 @@ var btnLevel6 = new ImgButton("", 692, 405, 280, 175, btnLevel6_Click, Level6Ima
 
 function btnBegin_Click()
 {
-	//TODO:fix this please
 	if(CheckGame())
 	{
 		LoadGame();
@@ -220,26 +219,26 @@ function createFakes()
 	//jump the tower
 	var fp01 = new FakePost();
 	fp01.user = "DragonLancer";
-	fp01.headline = "...#Toppleblox...";
-	fp01.text = "Look what I did in level 1 of #Toppleblox:";
+	fp01.headline = "...level 1 of #Toppleblox...";
+	fp01.text = "<p>Look what I did in level 1 of #Toppleblox:</p>";
 	var r01 = new Replay();
 	r01.level = 1;
-	r01.boxes = [new Point(175, -8000), new Point(395, 550), new Point(395, 490), new Point(395, 430), new Point(455, 550), new Point(455, 550), new Point(455, 490), new Point(455, 430), new Point(455, 370), new Point(515, 550), new Point(515, 490), new Point(515, 430), new Point(515, 370), new Point(515, 310), new Point(575, 550), new Point(575, 490), new Point(575, 430), new Point(575, 370), new Point(635, 550), new Point(635, 490), new Point(635, 430)];
+	r01.boxes = [new Point(175, -8000), new Point(395, 550), new Point(395, 490), new Point(395, 430), new Point(455, 550), new Point(455, 490), new Point(455, 430), new Point(455, 370), new Point(515, 550), new Point(515, 490), new Point(515, 430), new Point(515, 370), new Point(515, 310), new Point(575, 550), new Point(575, 490), new Point(575, 430), new Point(575, 370), new Point(635, 550), new Point(635, 490), new Point(635, 430)];
 	fp01.replay = r01;
 	fp01.viewcount = 3403365;
 	fp01.likecount = 1018492;
-	fp01.likes = ["redqueen42", "sodadrinker01", "lancebreaker", "ponyprincess6", "apple_girl41", "dragonboy16", "cupcakedancer", "minewoman013", "fairyprincess09", "bitbuster99", "megaman2", "electric_unicorn", "dragonheart62", "foxface131", "leatherlady55", "meat_ghost", "batgirl20", "crazyninja14", "faerie_dancer", "catlady38"];
+	fp01.likes = ["redqueen42", "sodadrinker01", "lancebreaker", "ponyprincess6", "apple_girl41", "dragonboy16", "cupcakedancer", "minewoman013", "fairyprincess09", "bitbuster99", "megaman2", "electric_unicorn", "dragonheart62", "foxface131", "leatherhead55", "meat_ghost", "batgirl20", "crazyninja14", "faerie_dancer", "catlady38"];
 	fp01.timestamp = 1453551182292;
 	Fakes.push(fp01);
 	
 	//over the left wall
 	var fp02 = new FakePost();
 	fp02.user = "DragonLancer";
-	fp02.headline = "...#Toppleblox...";
-	fp02.text = "Look what I did in level 2 of #Toppleblox:";
+	fp02.headline = "...level 2 of #Toppleblox...";
+	fp02.text = "<p>Look what I did in level 2 of #Toppleblox:</p>";
 	var r02 = new Replay();
 	r02.level = 2;
-	r02.boxes = [new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587),, new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(242, -26)];
+	r02.boxes = [new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(242, -26)];
 	fp02.replay = r02;
 	fp02.viewcount = 2803488;
 	fp02.likecount = 1487492;
@@ -250,8 +249,8 @@ function createFakes()
 	//double tap
 	var fp03 = new FakePost();
 	fp03.user = "DragonLancer";
-	fp03.headline = "...#Toppleblox...";
-	fp03.text = "Look what I did in level 3 of #Toppleblox:";
+	fp03.headline = "...level 3 of #Toppleblox...";
+	fp03.text = "<p>Look what I did in level 3 of #Toppleblox:</p>";
 	var r03 = new Replay();
 	r03.level = 3;
 	r03.boxes = [new Point(510, -3000), new Point(435, -8000)];
@@ -265,8 +264,8 @@ function createFakes()
 	//speed bounce
 	var fp04 = new FakePost();
 	fp04.user = "DragonLancer";
-	fp04.headline = "...#Toppleblox...";
-	fp04.text = "Look what I did in level 4 of #Toppleblox:";
+	fp04.headline = "...level 4 of #Toppleblox...";
+	fp04.text = "<p>Look what I did in level 4 of #Toppleblox:</p>";
 	var r04 = new Replay();
 	r04.level = 4;
 	r04.boxes = [new Point(150, -6000), new Point(130, -8000)];
@@ -280,8 +279,8 @@ function createFakes()
 	//crazy spin
 	var fp05 = new FakePost();
 	fp05.user = "DragonLancer";
-	fp05.headline = "...#Toppleblox...";
-	fp05.text = "Look what I did in level 5 of #Toppleblox:";
+	fp05.headline = "...level 5 of #Toppleblox...";
+	fp05.text = "<p>Look what I did in level 5 of #Toppleblox:</p>";
 	var r05 = new Replay();
 	r05.level = 5;
 	r05.boxes = [new Point(392, -3000)];
@@ -295,8 +294,8 @@ function createFakes()
 	//back and forth
 	var fp06 = new FakePost();
 	fp06.user = "DragonLancer";
-	fp06.headline = "...#Toppleblox...";
-	fp06.text = "Look what I did in level 6 of #Toppleblox:";
+	fp06.headline = "...level 6 of #Toppleblox...";
+	fp06.text = "<p>Look what I did in level 6 of #Toppleblox:</p>";
 	var r06 = new Replay();
 	r06.level = 6;
 	r06.boxes = [new Point(520, -3000), new Point(350, 550), new Point(290, 550), new Point(260, -12000)];
@@ -312,6 +311,7 @@ function createFakes()
 
 var Fakes = [];
 var curFake = -1;
+createFakes();
 
 
 
@@ -890,6 +890,7 @@ function LoadPost()
 {
 	window.scrollTo(0, 0);
 	clearSocialContent();
+	curFake = -1;
 	var r = Posts[curPost].replay;
 	singlepost = true;
 	Replaying = false;
@@ -934,7 +935,6 @@ function LoadPost()
 	
 	var db = document.createElement("button");
 	db.id = "btnDelete";
-	db.innerHTML = "<img src='btnx.svg' />";
 	ph.insertBefore(db, ph.childNodes[0]);
 	db.addEventListener("click", TogglePostDeleteConfirm);
 	
@@ -966,10 +966,108 @@ function LoadPost()
 		var post = document.getElementById("post");
 		var more = document.createElement("p");
 		more.className = "more";
-		more.innerHTML = "And " + (Posts[curPost].likecount - MAX_LIKES) + " more...";
+		more.innerHTML = "And " + commaFormat(Posts[curPost].likecount - MAX_LIKES) + " more...";
 		post.appendChild(more);
 	}
+}
+
+function LoadFakePost(clearFakes)
+{
+	var cf = (typeof(clearFakes) === "undefined") ? true : clearFakes;
+	window.scrollTo(0, 0);
+	clearSocialContent(cf);
+	var r = Fakes[curFake].replay;
+	singlepost = true;
+	Replaying = false;
+	replayfinished = false;
 	
+	var pc = document.getElementById("postcontent");
+	pc.innerHTML = Fakes[curFake].text;
+	
+	if(r !== null)
+	{
+		var rc = document.createElement("canvas");
+		rc.style.marginLeft = "20px";
+		rc.style.border = "1px solid black";
+		rc.id = "replaycanvas";
+		pc.appendChild(rc);
+		
+		var mybounds = Matter.Bounds.create(Vertices.fromPath("0 0 1024 0 1024 640 0 640"));
+		replayengine = Engine.create({enableSleeping:true});
+		
+		replayrender = Render.create({
+		canvas: rc,
+		engine: replayengine,
+		bounds: mybounds,
+		options: {
+			width:440,
+			height:275,
+			hasBounds:true,
+			wireframes:false,
+			background:"#9af",
+			showSleeping:false
+		}
+		});
+		
+		LoadReplayForPost(true);
+		
+		rc.addEventListener("click", ToggleFakeReplay);
+	}
+	
+	//post header
+	var ph = document.createElement("div");
+	ph.id = "postcaption";
+	ph.className = "postinfo";
+	var datetime = new Date(Fakes[curFake].timestamp);
+	ph.innerHTML = Fakes[curFake].user + " - " + datetime.toLocaleString();
+	pc.insertBefore(ph, pc.childNodes[0]);
+	
+	//create like/unlike button
+	if(Fakes[curFake].liked)
+	{
+		var db = document.createElement("button");
+		db.id = "btnUnlike";
+		ph.insertBefore(db, ph.childNodes[0]);
+		db.addEventListener("click", ToggleLikeStatus);
+	}
+	else
+	{
+		var db = document.createElement("button");
+		db.id = "btnLike";
+		ph.insertBefore(db, ph.childNodes[0]);
+		db.addEventListener("click", ToggleLikeStatus);
+	}
+	
+	//post footer
+	var viewsummary = document.createElement("p");
+	viewsummary.className = "summary";
+	viewsummary.innerHTML = "" + commaFormat(Fakes[curFake].viewcount) + " people have looked at this. " + commaFormat(Fakes[curFake].likecount) + " liked what they saw.";
+	pc.appendChild(viewsummary);
+	
+	var list = Fakes[curFake].likes;
+	var ul = document.getElementById("userlist");
+	for(var i = (Fakes[curFake].liked) ? 1 : 0; i < list.length; i++)
+	{
+		var li = document.createElement("li");
+		li.innerHTML = list[i] + " likes this";
+		ul.insertBefore(li, ul.childNodes[0]);
+	}
+	
+	if(Fakes[curFake].liked)
+	{
+		var li = document.createElement("li");
+		li.innerHTML = username + " likes this";
+		ul.insertBefore(li, ul.childNodes[0]);
+	}
+	
+	if(Fakes[curFake].likecount > MAX_LIKES)
+	{
+		var post = document.getElementById("post");
+		var more = document.createElement("p");
+		more.className = "more";
+		more.innerHTML = "And " + commaFormat(Fakes[curFake].likecount - MAX_LIKES) + " more...";
+		post.appendChild(more);
+	}
 }
 
 function commaFormat(num)
@@ -982,6 +1080,16 @@ function commaFormat(num)
 		var group = num % 1000;
 		num -= group;
 		num /= 1000;
+		
+		if(group < 10)
+		{
+			group = "00" + group;
+		}
+		else if(group < 100)
+		{
+			group = "0" + group;
+		}
+		
 		if(i > 0)
 		{
 			str = group + "," + str;
@@ -1002,6 +1110,21 @@ function commaFormat(num)
 	}
 	
 	return str;
+}
+
+function ToggleLikeStatus()
+{
+	var like = Fakes[curFake].liked;
+	Fakes[curFake].liked = !Fakes[curFake].liked;
+	if(like)
+	{
+		Fakes[curFake].likecount--;
+	}
+	else
+	{
+		Fakes[curFake].likecount++;
+	}
+	LoadThisFakePost(curFake, false);
 }
 
 function TogglePostDeleteConfirm()
@@ -1150,9 +1273,19 @@ function updateViews(index)
 	}
 }
 
-function LoadReplayForPost()
+function LoadReplayForPost(isfake)
 {
-	var r = Posts[curPost].replay;
+	var fake = (typeof(isfake) === "undefined") ? false : isfake;
+	var r = null;
+	if(fake)
+	{
+		r = Fakes[curFake].replay;
+	}
+	else
+	{
+		r = Posts[curPost].replay;
+	}
+	
 	if(r.level == 1)
 	{
 		reball = Bodies.circle(200, 549, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
@@ -1249,6 +1382,16 @@ function ToggleReplay()
 	Replaying = !Replaying;
 }
 
+function ToggleFakeReplay()
+{
+	if(!Replaying && replayfinished)
+	{
+		replayfinished = false;
+		LoadReplayForPost(true);
+	}
+	Replaying = !Replaying;
+}
+
 function Toppleblox()
 {
 	if(document.body.className == "toppleblox")
@@ -1315,6 +1458,7 @@ function LoadAllPosts()
 {
 	window.scrollTo(0, 0);
 	singlepost = false;
+	curFake = -1;
 	
 	//clear out the main content area
 	clearSocialContent();
@@ -1358,9 +1502,75 @@ function LoadAllPosts()
 	}
 }
 
+function LoadSomeFakePosts()
+{
+	//select three posts for display (TODO: improve this once we have text posts)
+	var one = -1;
+	var two = -1;
+	var three = -1;
+	
+	while(one < 0 || one == curFake)
+	{
+		one = Math.floor(Math.random() * Fakes.length);
+	}
+	
+	while(two == one || two < 0 || two == curFake)
+	{
+		two = Math.floor(Math.random() * Fakes.length);
+	}
+	
+	while(three == one || three == two || three < 0 || three == curFake)
+	{
+		three = Math.floor(Math.random() * Fakes.length);
+	}
+	
+	for(var i = 0; i < 3; i++)
+	{
+		var fake = null;
+		var index = -1;
+		if(i == 0)
+		{
+			fake = Fakes[one];
+			index = one;
+		}
+		else if(i == 1)
+		{
+			fake = Fakes[two];
+			index = two;
+		}
+		else
+		{
+			fake = Fakes[three];
+			index = three;
+		}
+		
+		if(fake.replay !== null)
+		{
+			if(fake.thumbnail === null)
+			{
+				fake.thumbnail = GenerateThumbnail(fake.replay);
+			}
+		}
+		
+		var slist = document.getElementById("suggestlist");
+		var sli = document.createElement("li");
+		var date = new Date(fake.timestamp);
+		var time = date.toLocaleString().replace(", ", "<br />");
+		sli.innerHTML = "<a id='viewother" + index + "' href='viewother?id=" + index + "' onclick='return false;'><div class='thumbnail'><img src='" + fake.thumbnail.src + "' /></div><div class='posttext'>" + fake.headline + "</div><span class='timestamp'>" + time + "</span>";
+		slist.appendChild(sli);
+		var a = document.getElementById("viewother" + index);
+		a.addEventListener("click", viewotherCallbackHandler(index));
+	}
+}
+
 function viewpostCallbackHandler(index)
 {
 	return function(event){LoadThisPost(index);};
+}
+
+function viewotherCallbackHandler(index)
+{
+	return function(event){LoadThisFakePost(index);};
 }
 
 function LoadThisPost(i)
@@ -1369,10 +1579,23 @@ function LoadThisPost(i)
 	LoadPost();
 }
 
-function clearSocialContent()
+function LoadThisFakePost(i, clearFakes)
 {
+	var cf = (typeof(clearFakes) === "undefined") ? true : clearFakes;
+	curFake = i;
+	LoadFakePost(cf);
+}
+
+function clearSocialContent(clearFakes)
+{
+	var cf = (typeof(clearFakes) === "undefined") ? true : clearFakes;
 	//clears out all current content on the LookAtMe portion of the site, so that new content can be loaded in its place
 	document.getElementById("post").innerHTML = "<div id='postcontent'></div><ul id='userlist'></ul><ul id='postlist'></ul>";
+	if(cf)
+	{
+		document.getElementById("suggestbox").innerHTML = "<p>You might also like:</p><ul id='suggestlist'></ul>";
+		LoadSomeFakePosts();
+	}
 }
 
 function GenerateThumbnail(r)
@@ -1784,6 +2007,14 @@ window.addEventListener("keydown", function (e) {
 			document.getElementById("btnUsername").click();
 		}
 	}
+	else if(e.which == K_ESC)
+	{
+		e.preventDefault();
+		if(Toppleblox() && !MenuShowing)
+		{
+			ChangeMenu(Menus.LevelSelect);
+		}
+	}
 });
 
 window.addEventListener("mousemove", function (event) {
@@ -1985,8 +2216,8 @@ function addUsername()
 
 function generateUsername()
 {
-	var first = ["radio", "dark", "ninja", "death", "shadow", "diamond", "crystal", "bad", "soda", "pop", "good", "arrow", "fox", "wolf", "castle", "rainbow", "butterfly", "cat", "bee", "speed", "leather", "marble", "granite", "wicked", "coffee", "tea", "sushi", "ring", "sonic", "super", "crazy", "electric", "unicorn", "pegasus", "mega", "ultra", "lettuce", "banana", "coconut", "cyclone", "steel", "algebra", "fountain", "cake", "pie", "bug", "rose", "circle", "square", "triangle", "atom", "dandelion", "rabid", "mud", "belt", "white", "poison", "dance", "croquet", "needle", "lace", "ribbon", "puppy", "clover", "sleepy", "thunder", "lightning", "bright", "orange", "meat", "veggie", "oath", "asparagus", "quake", "pi", "liver", "dragon", "shark", "cape", "tau", "ant", "pirate", "glass", "ruby", "laser", "tiara", "widow", "big", "dry", "egg", "lantern", "milk", "engine", "distant", "triumph", "plush", "alicorn", "apple", "wheat", "pear", "pearl", "linux", "night", "quick", "box", "turnip", "black", "squash", "pixel", "elephant", "squid", "whale", "fish", "eagle", "ninja", "ice", "snow", "magic", "fairy", "cupcake", "owl", "math", "nuclear", "lizard", "corn", "phoenix", "disaster", "karate", "fenix", "ballet", "anvil", "stick", "pony", "quantum", "boat", "sad", "mint", "happy", "dragon", "raven", "crow", "fedora", "bubble", "window", "mad", "mummy", "angry", "robin", "bat", "princess", "squirrel", "blood", "red", "blue", "green", "pink", "tax", "prince", "grass", "lead", "cash", "snake", "leaf", "pixel", "wing", "fight", "club", "crown", "dog", "frog", "bird", "money", "clown", "jet", "knight", "flower", "cobra", "cat", "water", "air", "tech", "bit", "star", "light", "photon", "sun", "moon", "venom", "earth", "river", "ocean", "lake", "dirt", "fur", "feline", "tiger", "lion", "anti", "matter", "possum", "thorn", "brain", "pixie", "alien", "xeno", "mine", "cloud", "proton", "limousine", "ox", "yak", "submarine", "monster"];
-	var second = ["bomber", "boy", "girl", "gurl", "flood", "head", "cadillac", "samurai", "thief", "grrl", "driver", "face", "breaker", "kitty", "hacker", "chef", "haxxor", "rider", "buster", "singer", "lunatic", "catcher", "hunter", "stinger", "shaker", "dodger", "watcher", "smasher", "dancer", "dash", "fixer", "cheater", "pirate", "lord", "queen", "player", "reaper", "man", "mom", "oil", "breaker", "lady", "knight", "cat", "statue", "killer", "ninja", "killa", "wife", "phantom", "ranger", "stalker", "guy", "person", "man", "girl", "woman", "dude", "craft", "monster", "dragon", "woman", "bomb", "stealer", "creep", "eater", "maniac", "lover", "clown", "guy", "feline", "walker", "rope", "ghost", "money", "king", "queen", "cat", "master", "flyer", "hat", "shoes", "blizzard", "tornado", "avalanche", "shaker", "heart", "foot", "faerie", "hand", "sword", "knife", "mum", "kid", "jedi", "runner", "wing", "wizard", "summoner", "demon", "lad", "chick", "playa", "maker", "taker", "fang", "tooth", "thorn", "mime", "fighter", "dancer", "fairy", "drinker", "explosion"];
+	var first = ["radio", "dark", "ninja", "death", "shadow", "diamond", "crystal", "bad", "soda", "pop", "good", "arrow", "fox", "wolf", "dungeon", "castle", "rainbow", "butterfly", "cat", "bee", "speed", "leather", "marble", "granite", "wicked", "coffee", "tea", "sushi", "ring", "sonic", "super", "crazy", "electric", "unicorn", "pegasus", "mega", "ultra", "lettuce", "banana", "coconut", "cyclone", "steel", "algebra", "fountain", "cake", "pie", "bug", "rose", "circle", "square", "triangle", "atom", "dandelion", "rabid", "mud", "belt", "white", "poison", "dance", "croquet", "needle", "lace", "ribbon", "puppy", "clover", "sleepy", "thunder", "lightning", "bright", "orange", "meat", "veggie", "oath", "asparagus", "quake", "pi", "liver", "dragon", "shark", "cape", "tau", "ant", "pirate", "glass", "ruby", "laser", "tiara", "widow", "big", "dry", "egg", "lantern", "milk", "engine", "distant", "triumph", "plush", "alicorn", "apple", "wheat", "pear", "pearl", "linux", "night", "quick", "box", "turnip", "black", "squash", "pixel", "elephant", "squid", "whale", "fish", "eagle", "ninja", "ice", "snow", "magic", "fairy", "cupcake", "owl", "math", "nuclear", "lizard", "corn", "phoenix", "disaster", "karate", "fenix", "ballet", "anvil", "stick", "pony", "quantum", "boat", "sad", "mint", "happy", "dragon", "raven", "crow", "fedora", "bubble", "window", "mad", "mummy", "angry", "robin", "bat", "princess", "squirrel", "blood", "red", "blue", "green", "pink", "tax", "prince", "grass", "lead", "cash", "snake", "leaf", "pixel", "wing", "fight", "club", "crown", "dog", "frog", "bird", "money", "clown", "jet", "knight", "flower", "cobra", "cat", "water", "air", "tech", "bit", "star", "light", "photon", "sun", "moon", "venom", "earth", "river", "ocean", "lake", "dirt", "fur", "feline", "tiger", "lion", "anti", "matter", "possum", "thorn", "brain", "pixie", "alien", "xeno", "mine", "cloud", "proton", "limousine", "ox", "yak", "submarine", "monster"];
+	var second = ["bomber", "boy", "girl", "gurl", "flood", "head", "cadillac", "samurai", "thief", "grrl", "diver", "driver", "face", "gal", "breaker", "diva", "kitty", "hacker", "chef", "haxxor", "rider", "buster", "singer", "lunatic", "catcher", "hunter", "stinger", "shaker", "dodger", "watcher", "smasher", "dancer", "dash", "fixer", "cheater", "pirate", "lord", "queen", "player", "reaper", "man", "mom", "oil", "breaker", "lady", "knight", "cat", "statue", "killer", "ninja", "killa", "wife", "phantom", "ranger", "stalker", "guy", "person", "man", "girl", "woman", "dude", "craft", "monster", "dragon", "woman", "bomb", "stealer", "creep", "eater", "maniac", "lover", "clown", "guy", "feline", "walker", "rope", "ghost", "money", "king", "queen", "cat", "master", "flyer", "hat", "shoes", "blizzard", "tornado", "avalanche", "shaker", "heart", "foot", "faerie", "hand", "sword", "knife", "mum", "kid", "jedi", "runner", "wing", "wizard", "summoner", "demon", "lad", "chick", "playa", "maker", "taker", "fang", "tooth", "thorn", "mime", "fighter", "dancer", "fairy", "drinker", "explosion"];
 	
 	if(Math.random() < 0.95) //two names
 	{

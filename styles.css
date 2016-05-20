@@ -62,7 +62,7 @@
 		padding:0px;
 		padding-top:10px;
 		padding-left:33.34%;
-		width:66.66%;
+		width:100%;
 	}
 
 	#maincontent
@@ -80,6 +80,8 @@
 	{
 		margin:0 auto;
 		max-width:800px;
+		min-width:484px;
+		padding:0px;
 		padding-bottom:10px;
 	}
 
@@ -200,21 +202,37 @@ div#error
 	margin:0px;
 	padding:0px;
 	position:relative;
+	background-image:url(btnx.svg);
 }
 
-#postcaption button#btnDelete img
+#postcaption button#btnLike
 {
+	display:block;
+	width:24px;
+	height:24px;
+	float:right;
 	margin:0px;
 	padding:0px;
-	position:absolute;
-	top:0px;
-	left:0px;
+	position:relative;
+	background-image:url(btnlike.svg);
+}
+
+#postcaption button#btnUnlike
+{
+	display:block;
+	width:24px;
+	height:24px;
+	float:right;
+	margin:0px;
+	padding:0px;
+	position:relative;
+	background-image:url(btnunlike.svg);
 }
 
 body.lookatme
 {
 	background:#f6f9fc;
-	padding:40px 50px 20px;
+	padding:40px 10px 20px;
 	margin-top:10px;
 }
 
@@ -348,7 +366,34 @@ p.more
 	margin:0px;
 	padding:0px;
 	border-top:1px solid #c1c8cd;
-	height:60px;
+	min-height:60px;
+	position:relative;
+	text-decoration:none;
+	color:#000;
+}
+
+#suggestlist
+{
+	list-style-type:none;
+	margin:0px;
+	padding:0px;
+	max-width:100%;
+}
+
+#suggestlist li:after
+{
+	content:"";
+	display:block;
+	clear:both;
+}
+
+#suggestlist li a
+{
+	display:block;
+	margin:0px;
+	padding:0px;
+	border-top:1px solid #c1c8cd;
+	min-height:60px;
 	position:relative;
 	text-decoration:none;
 	color:#000;
