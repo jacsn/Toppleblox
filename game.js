@@ -1142,7 +1142,7 @@ function TogglePostDeleteConfirm()
 	if(ph.className == "postinfo")
 	{
 		ph.className = "confirm";
-		ph.innerHTML = "Are you sure you want to delete this post?";
+		ph.innerHTML = "<span class='confirmation'>Are you sure you want to delete this post?</span>";
 		var cb = document.createElement("button");
 		cb.innerHTML = "Cancel";
 		var db = document.createElement("button");

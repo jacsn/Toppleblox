@@ -345,6 +345,11 @@ p.more
 	font-size:large;
 }
 
+#postcaption .confirmation
+{
+	font-size:16px;
+}
+
 #postlist
 {
 	list-style-type:none;
