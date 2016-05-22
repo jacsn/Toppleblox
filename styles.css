@@ -380,6 +380,16 @@ p.more
 	max-width:100%;
 }
 
+#suggestlist .posttext
+{
+	font-size:12px;
+}
+
+#suggestlist .timestamp
+{
+	font-size:12px;
+}
+
 #suggestlist li:after
 {
 	content:"";

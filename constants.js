@@ -79,6 +79,11 @@ DialogImage.ready = false;
 DialogImage.onload = function(){this.ready = true;};
 DialogImage.src = "dialog.png";
 
+var XButtonImage = new Image();
+XButtonImage.ready = false;
+XButtonImage.onload = function(){this.ready = true;};
+XButtonImage.src = "xbutton.png";
+
 var OutlineImage = new Image();
 OutlineImage.ready = false;
 OutlineImage.onload = function(){this.ready = true;};

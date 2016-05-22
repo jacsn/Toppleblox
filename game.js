@@ -62,6 +62,7 @@ var btnBegin = new Button("Begin", SCREEN_WIDTH / 2 - 120, 430, 240, 80, btnBegi
 var btnDone = new Button("Done", SCREEN_WIDTH / 2 - 120, 410, 240, 80, btnDone_Click, ButtonImage);
 var btnDoneShared = new Button("Done", SCREEN_WIDTH / 2 - 120, 350, 240, 80, btnDone_Click, ButtonImage);
 var btnShare = new Button("Share", SCREEN_WIDTH / 2 - 120, 310, 240, 80, btnShare_Click, ButtonImage);
+var btnClose = new ImgButton("", SCREEN_WIDTH / 2 + 160, SCREEN_HEIGHT / 2 - 190, 30, 30, btnClose_Click, XButtonImage);
 var btnLookAtMe = new ImgButton("", SCREEN_WIDTH - 260, 20, 240, 80, btnLookAtMe_Click, LookAtMeButtonImage);
 var btnGo = new Button("GO", SCREEN_WIDTH - 160, SCREEN_HEIGHT - 140, 140, 120, btnGo_Click);
 var btnBoxTool = new ImgButton("", SCREEN_WIDTH - 160, 20, 140, 140, btnBoxTool_Click, BoxToolButtonImage);
@@ -168,6 +169,12 @@ function btnShare_Click()
 	undostack = [];
 	EditTool = Tools.Box;
 	SaveReplay();
+}
+
+function btnClose_Click()
+{
+	ChangeMenu(Menus.None);
+	LoadLevel();
 }
 
 function btnBoxTool_Click()
@@ -372,7 +379,7 @@ var preloader = setInterval(preloadloop, 10);
 var gameloop;
 function preloadloop()
 {
-	if(ButtonImage.ready && LookAtMeButtonImage.ready && DialogImage.ready && OutlineImage.ready && ToolboxImage.ready && BoxToolButtonImage.ready && EraseToolButtonImage.ready && CheckMarkImage.ready && UndoButtonImage.ready && RedoButtonImage.ready && ClearButtonImage.ready && FlipButtonImage.ready && PlayButtonImage.ready && ReplayButtonImage.ready && Level1Image.ready && Level2Image.ready && Level3Image.ready && Level4Image.ready && Level5Image.ready && Level6Image.ready) //load assets
+	if(ButtonImage.ready && LookAtMeButtonImage.ready && DialogImage.ready && XButtonImage.ready && OutlineImage.ready && ToolboxImage.ready && BoxToolButtonImage.ready && EraseToolButtonImage.ready && CheckMarkImage.ready && UndoButtonImage.ready && RedoButtonImage.ready && ClearButtonImage.ready && FlipButtonImage.ready && PlayButtonImage.ready && ReplayButtonImage.ready && Level1Image.ready && Level2Image.ready && Level3Image.ready && Level4Image.ready && Level5Image.ready && Level6Image.ready) //load assets
 	{
 		clearInterval(preloader);
 		
@@ -510,6 +517,7 @@ function ChangeMenu(menu)
 	{
 		Controls.push(btnShare);
 		Controls.push(btnDone);
+		Controls.push(btnClose);
 	}
 	else if(menu == Menus.VictoryShared)
 	{
@@ -1155,7 +1163,6 @@ function TogglePostDeleteConfirm()
 		
 		var db = document.createElement("button");
 		db.id = "btnDelete";
-		db.innerHTML = "<img src='btnx.svg' />";
 		ph.insertBefore(db, ph.childNodes[0]);
 		db.addEventListener("click", TogglePostDeleteConfirm);
 	}
