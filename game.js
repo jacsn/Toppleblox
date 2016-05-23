@@ -240,7 +240,7 @@ function createFakes()
 	
 	//over the left wall
 	var fp02 = new FakePost();
-	fp02.user = "DragonLancer";
+	fp02.user = "Zutara4Life";
 	fp02.headline = "...level 2 of #Toppleblox...";
 	fp02.text = "<p>Look what I did in level 2 of #Toppleblox:</p>";
 	var r02 = new Replay();
@@ -313,7 +313,145 @@ function createFakes()
 	fp06.timestamp = 1455302842163;
 	Fakes.push(fp06);
 	
-	//"1;175:-8000,395:550,395:490,395:430,455:550,455:490,455:430,455:370,515:550,515:490,515:430,515:370,515:310,575:550,575:490,575:430,575:370,635:550,635:490,635:430;1463594082111;0.31469674751311183;0;0;~2;199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:587,199:583,199:583,199:583,199:583,199:583,199:583,199:583,199:583,199:583,199:583,199:583,199:583,199:579,199:579,199:579,199:579,199:579,199:579,199:579,199:579,199:579,199:579,199:579,199:579,242:-26;1463668446016;0.99;0;0;~3;510:-3000,435:-8000;1463632072105;0.17156430036730758;0;0;~4;150:-6000,130:-8000;1463692447324;0.5;0;0;~5;392:-3000;1463632072105;0.17156430036730758;0;0;~6;520:-3000,350:550,290:550,260:-12000;1463622072105;0.47156430036730757;0;0;"
+	//start MuRi4Ever
+	var fp07 = new FakePost();
+	fp07.user = "MuRiQueen";
+	fp07.headline = "...level 4 of #Toppleblox...";
+	fp07.text = "<p>Look what I did in level 4 of #Toppleblox:</p>";
+	var r07 = new Replay();
+	r07.level = 4;
+	r07.boxes = [new Point(152, 265), new Point(152, 265), new Point(152, 265), new Point(152, 265), new Point(152, 265), new Point(152, 265), new Point(152, 265), new Point(152, 265), new Point(152, 265), new Point(152, 265), new Point(410, 551), new Point(411, 492)];
+	fp07.replay = r07;
+	fp07.viewcount = 2833462;
+	fp07.likecount = 898673;
+	fp07.likes = ["mint_feline60", "thepearldiver19", "theboxghost", "sharkknife48", "thorn_queen005", "sonicninja1337", "blue_poison61", "quakedog18", "deatheater3", "blizzard73", "unicornlord54", "atomstatue", "batstalker024", "mudman45", "matterkitty58", "laser999", "fishsummoner", "pixiecatcher32", "cupcakefaerie96", "sushirope4"];
+	fp07.timestamp = 1452302332124;
+	Fakes.push(fp07);
+	
+	var fp08 = new FakePost();
+	fp08.user = "Zutara4Life";
+	fp08.headline = "...level 3 of #Toppleblox...";
+	fp08.text = "<p>Look what I did in level 3 of #Toppleblox:</p>";
+	var r08 = new Replay();
+	r08.level = 3;
+	r08.boxes = [new Point(556, -9), new Point(307, 246), new Point(298, 182)];
+	fp08.replay = r08;
+	fp08.viewcount = 1586892;
+	fp08.likecount = 470935;
+	fp08.likes = ["frog_fixer82", "starwalker02", "mintninja96", "dustman", "tigerwoman78", "ponydancer30", "snowgurl15", "jetlover44", "cloudman12", "coconuthead", "meatmonster", "square_dancer", "diamondfang27", "rabid_tiger29", "glass_lake", "squirrelfight", "knightman05", "monster443", "super_face048", "fixer468"];
+	fp08.timestamp = 1453462332948;
+	Fakes.push(fp08);
+	
+	var fp09 = new FakePost();
+	fp09.user = "Zutara4Life";
+	fp09.headline = "...level 5 of #Toppleblox...";
+	fp09.text = "<p>Look what I did in level 5 of #Toppleblox:</p>";
+	var r09 = new Replay();
+	r09.level = 5;
+	r09.boxes = [new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(91, 565), new Point(93, 502), new Point(93, 442), new Point(91, 382), new Point(89, 321)];
+	fp09.replay = r09;
+	fp09.viewcount = 1349632;
+	fp09.likecount = 560827;
+	fp09.likes = ["pearninja053", "rabidbomber20", "ringman028", "enginemoney070", "redquick84", "fishqueen45", "raven_killer080", "disaster_face48", "snake_bug", "rubyhacker029", "algebra_dragon001", "thejetman46", "radiodancer98", "madwizard019", "bloodtech95", "pirate262", "catlantern081", "red_clown10", "venomheart08", "ice_lord31"];
+	fp09.timestamp = 1452762335376;
+	Fakes.push(fp09);
+	
+	var fp10 = new FakePost();
+	fp10.user = "MuRiQueen";
+	fp10.headline = "...level 3 of #Toppleblox...";
+	fp10.text = "<p>Look what I did in level 3 of #Toppleblox:</p>";
+	var r10 = new Replay();
+	r10.level = 3;
+	r10.boxes = [new Point(509, 222), new Point(509, 222), new Point(509, 222), new Point(509, 222), new Point(509, 222), new Point(509, 222), new Point(509, 222), new Point(509, 222), new Point(509, 222), new Point(509, 222)];
+	fp10.replay = r10;
+	fp10.viewcount = 2003465;
+	fp10.likecount = 671512;
+	fp10.likes = ["marinette35", "star_smasher", "ribbonwoman79", "stickmime62", "hatkid16", "princetooth", "unicornchef21", "jet_head04", "lace_tornado11", "cape_fang47", "squirrellady68", "dogwater59", "pirateprincess005", "beltrider05", "the_bird_thief44", "poisonking", "rainbowtaker03", "mummy533", "snow_fairy", "ribbon_rider019"];
+	fp10.timestamp = 1454762654876;
+	Fakes.push(fp10);
+	
+	var fp11 = new FakePost();
+	fp11.user = "MuRiQueen";
+	fp11.headline = "...level 1 of #Toppleblox...";
+	fp11.text = "<p>Look what I did in level 1 of #Toppleblox:</p>";
+	var r11 = new Replay();
+	r11.level = 1;
+	r11.boxes = [new Point(198, 518), new Point(198, 518), new Point(198, 518), new Point(198, 518), new Point(198, 518), new Point(198, 518), new Point(198, 518), new Point(198, 518), new Point(198, 518), new Point(198, 518), new Point(198, 518), new Point(198, 518)];
+	fp11.replay = r11;
+	fp11.viewcount = 2406021;
+	fp11.likecount = 590486;
+	fp11.likes = ["thornstick21", "eatman98", "white_sword15", "marblelad17", "river_mom70", "radio26", "lizard_master080", "ladybug70", "pearlstalker58", "xenothief005", "protonkitty084", "sonic_ring", "granitethief29", "pirateboy16", "alienstinger1337", "lightmaniac18", "mathgirl", "cat868", "snakeelephant84", "coffeecloud06"];
+	fp11.timestamp = 1453986884949;
+	Fakes.push(fp11);
+	
+	var fp12 = new FakePost();
+	fp12.user = "MuRiQueen";
+	fp12.headline = "...level 6 of #Toppleblox...";
+	fp12.text = "<p>Look what I did in level 6 of #Toppleblox:</p>";
+	var r12 = new Replay();
+	r12.level = 6;
+	r12.boxes = [new Point(511, 581), new Point(511, 581), new Point(511, 581), new Point(511, 581), new Point(511, 581), new Point(511, 581), new Point(511, 581), new Point(511, 581), new Point(511, 581), new Point(511, 581), new Point(511, 503), new Point(511, 503), new Point(511, 503), new Point(511, 503), new Point(511, 503), new Point(511, 581), new Point(511, 581), new Point(511, 581), new Point(511, 581), new Point(511, 581), new Point(511, 581), new Point(511, 581)];
+	fp12.replay = r12;
+	fp12.viewcount = 1674020;
+	fp12.likecount = 786944;
+	fp12.likes = ["ravenbreaker37", "theradiostar", "drywall49", "super824", "quantumcraft", "apple_dragon83", "darkmoney", "blue_oil037", "red_fighter45", "owl_bug57", "moonshaker81", "squid399", "icesnake8", "lacebreaker49", "angryguy018", "moonrider5", "whalehead88", "granite_bomber25", "cape_creep073", "wheatwoman099"];
+	fp12.timestamp = 1455024680229;
+	Fakes.push(fp12);
+	
+	var fp13 = new FakePost();
+	fp13.user = "MuRiQueen";
+	fp13.headline = "...level 2 of #Toppleblox...";
+	fp13.text = "<p>Look what I did in level 2 of #Toppleblox:</p>";
+	var r13 = new Replay();
+	r13.level = 2;
+	r13.boxes = [new Point(198, 579), new Point(198, 579), new Point(198, 579), new Point(198, 579), new Point(198, 579), new Point(198, 579), new Point(198, 579), new Point(198, 579), new Point(198, 579), new Point(198, 579), new Point(198, 579), new Point(198, 579), new Point(198, 579), new Point(198, 579), new Point(198, 579), new Point(198, 579), new Point(198, 579), new Point(198, 579), new Point(198, 505), new Point(198, 505), new Point(198, 505), new Point(198, 505), new Point(198, 505), new Point(331, 548), new Point(330, 491), new Point(395, 551)];
+	fp13.replay = r13;
+	fp13.viewcount = 2384698;
+	fp13.likecount = 720446;
+	fp13.likes = ["theboxghost", "appledash483", "lace_killa78", "ravenqueen65", "dandelioncatcher08", "milkdance008", "bluegirl87", "flower_pie88", "bug_rider", "waterbuster45", "moon_elephant092", "venomwoman058", "roseatom53", "snakesmasher79", "the_alien_chef96", "prince_boat33", "lightningdrinker27", "furcat", "circlecatcher89", "mummycraft99"];
+	fp13.timestamp = 1456000244103;
+	Fakes.push(fp13);
+	
+	//Me:
+	//"6;514:590,514:590,514:590,514:590,514:590,514:590,514:590,514:590,514:590,514:590,302:551,230:491;1463794539401;0.30139545737256435;0;0;
+	//~3;519:285,519:285,519:285,519:285,519:285,519:285,90:549,91:490;1463795311879;0.4226028655147226;0;0;
+	//fp07
+	//~5;400:163,400:163,400:163,400:163,400:163,400:163,400:163,400:163,400:163,400:163,400:163,400:163,400:163,400:163,400:163,400:163;1463845863728;0.39574480940786116;0;0;
+	//fp08
+	//~6;511:580,511:580,511:580,511:580,511:580,555:114,503:-105,319:550,320:490,322:432;1463850525324;0.2597440594379829;0;0;
+	//~4;150:324,150:324,150:324,150:324,150:324,150:324,150:324,150:324,150:324,150:324,195:-105;1463851682383;0.5377226421103374;0;0;
+	//~4;149:327,149:327,149:327,149:327,149:327,149:327,149:327,149:327,149:327,149:327,149:327,149:327,149:327,149:327,149:327,149:327,149:327,149:327,149:327,149:327,187:-105;1463851914589;0.8278481032846232;0;0;
+	//~3;522:290,522:290,522:290,522:290,522:290,522:290,522:290,522:290,522:290,522:290,522:290,522:290;1463852027887;0.5683518408181928;0;0;
+	//fp09
+	//fp10
+	//fp11
+	//~5;398:88,398:88,398:88,398:88,398:88,398:88,398:88,398:88,398:88,901:591,901:591,901:591,901:591,901:591,901:591,901:591,901:591,901:591,901:591;1463855400576;0.39219983759963206;0;0;
+	//~6;697:555,697:555,697:555,697:555,697:555,697:555,697:555,697:555,697:555,697:555,355:553,355:553,355:553,355:553,355:553,355:553,355:553,355:553,355:553,355:553,514:-20000;1463855607927;0.3382573212068768;0;0;
+	//~5;417:109,417:109,417:109,417:109,417:109,417:109,417:109,417:109,417:109,417:109,417:109;1463869785744;0.5063989458850374;0;0;
+	//~3;509:203,509:203,509:203,509:203,509:203,509:203,509:203,509:203,509:203,509:203,509:203,509:203,509:203,836:546;1463872535097;0.3602012235133286;0;0;
+	//~1;194:512,194:512,194:512,194:512,194:512,194:512,194:512,194:512,194:512,194:512;1463872725125;0.25089554126967484;0;0;
+	//~1;200:585,200:585,200:585,200:585,200:585,200:585,200:585,200:585,200:585,200:585,200:585,200:585,200:585,200:585,200:585,200:585,200:585,200:585,200:585,200:585,200:585,200:585,200:585,200:585,200:585,252:-105,200:582,200:582,200:582,200:582,200:582,200:582,200:582,200:582,200:582,200:582,200:582,200:582,200:582,200:582,200:582,200:582,200:582,200:582,200:582,200:582,233:-34;1463872843028;0.99;0;0;
+	//~5;422:171,405:170,405:170,405:170,405:170,405:170,405:170,405:170,405:170,405:170,405:170;1463873134179;0.9295021773215002;0;0;
+	//~6;516:582,516:582,516:582,516:582,516:582,516:582,516:582,516:582,516:582,516:582,345:549,344:490,349:432,355:373;1463884291942;0.32831473155223345;0;0;
+	//~6;513:592,513:592,513:592,513:592,513:592,513:592,513:592,513:592,513:592,513:592,511:505,511:505,511:505,511:505,511:505,511:505,513:592,513:592,513:592,513:592,513:592,513:592,289:549,290:489,290:431;1463888272976;0.49905025971213574;0;0;
+	//fp12
+	//~2;201:582,201:582,201:582,201:582,201:582,201:582,201:582,201:582,201:582,201:582,201:582,201:582;1463892300574;0.339332307790873;0;0;
+	//fp13
+	//~3;511:281,511:281,511:281,511:281,511:281,511:281,511:201,511:201,511:201,511:201,511:201,511:201,511:201,511:201,511:201,511:281,511:281,511:281,511:281,511:281,511:201,511:201,511:201;1463892702273;0.5281862093091759;0;0;
+	//~5;389:164,389:164,389:164,389:164,389:164,389:164,389:164,389:164,389:164;1463932793585;0.5171413101565362;0;0;
+	//~4;146:328,146:328,146:328,146:328,146:328,146:328,146:328,146:328,146:328,146:328,177:-105;1463932888363;0.9715107627998858;0;0;
+	//~3;514:220,514:220,514:220,514:220,514:220,514:220,514:220,514:220,514:220,514:220;1463932953027;0.29776473969231043;0;0;"
+	
+	//Libby:
+	//"3;939:554,939:554,939:554,939:554,939:554,939:554,939:554,939:554,939:554,939:554,939:554,939:554,939:554,939:554,939:554,939:554,939:554,939:554,939:554,939:554,461:6,461:8,461:8,461:8,461:8,461:8,461:8,461:8,461:8,461:8,461:8,461:8,461:8;1463844621905;0.22667119485623885;0;0;
+	//~5;381:145,381:145,381:145,381:145,381:145,381:145,381:145,381:145,381:145,381:145,381:145,381:145,381:145,837:574,837:574,837:574,837:574,837:574,837:574,837:574,837:574,837:574,837:574,837:574,837:574;1463844850868;0.3861536689035775;0;0;
+	//~6;539:548,539:548,539:548,539:548,539:548,539:548,539:548,539:548,539:548,539:548,539:548,539:548,539:548,539:548,539:548,539:548,539:548,539:548,539:548,539:548,539:548,539:548,539:548;1463845774952;0.4931578121989306;0;0;
+	//~3;514:221,514:221,514:221,514:221,514:221,514:221,817:548,817:548,817:548,817:548,817:548,817:548,817:548,817:548,817:548,817:548,817:548,483:252,483:252,483:252,483:252,483:252,483:252,483:252,483:252;1463845860862;0.4230658917786604;0;0;
+	//~2;168:535,168:535,168:535,168:535,168:535,168:535,168:535,168:535,168:535,168:535,168:535,168:535,168:535,168:535,168:535,168:535,168:535,168:535,168:535,168:535;1463845918377;0.5739772341545155;0;0;
+	//~4;146:311,146:311,146:311,146:311,146:311,146:311,146:311,119:279,119:279,119:279,119:279,119:279,119:279,111:273,111:273,111:273,111:273,111:273,111:273,111:273,111:273,111:273,111:273,111:273;1463846015552;0.5223490193347697;0;0;
+	//~4;147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,147:315,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,195:552,196:553,196:553,196:553,196:553,196:553,196:553,196:553,196:553,196:553,196:553,196:553,196:553,196:553,196:553,196:553,196:553,196:553,196:553,196:553,196:553,196:553,196:553,196:553,196:553,196:553,196:553,196:553;1463846705764;0.99;0;0;
+	//~6;509:575,509:575,509:575,509:575,509:575,509:575,509:575,509:575,509:575,509:575,509:575,509:575,509:575,509:575,347:5,347:5,347:5,347:5,347:5,347:5,347:5,347:5,347:5,347:5,347:5,347:5,107:476,107:476,107:476,107:476,107:476,107:476,107:476,107:476,107:476;1463847197921;0.3945798270276989;0;0;
+	//~4;115:306,115:306,115:306,115:306,115:306,115:306,115:306,115:306,115:306,545:492,545:492;1463848227475;0.27861286036873967;0;0;"
 }
 
 var Fakes = [];
@@ -2224,7 +2362,7 @@ function addUsername()
 function generateUsername()
 {
 	var first = ["radio", "dark", "ninja", "death", "shadow", "diamond", "crystal", "bad", "soda", "pop", "good", "arrow", "fox", "wolf", "dungeon", "castle", "rainbow", "butterfly", "cat", "bee", "speed", "leather", "marble", "granite", "wicked", "coffee", "tea", "sushi", "ring", "sonic", "super", "crazy", "electric", "unicorn", "pegasus", "mega", "ultra", "lettuce", "banana", "coconut", "cyclone", "steel", "algebra", "fountain", "cake", "pie", "bug", "rose", "circle", "square", "triangle", "atom", "dandelion", "rabid", "mud", "belt", "white", "poison", "dance", "croquet", "needle", "lace", "ribbon", "puppy", "clover", "sleepy", "thunder", "lightning", "bright", "orange", "meat", "veggie", "oath", "asparagus", "quake", "pi", "liver", "dragon", "shark", "cape", "tau", "ant", "pirate", "glass", "ruby", "laser", "tiara", "widow", "big", "dry", "egg", "lantern", "milk", "engine", "distant", "triumph", "plush", "alicorn", "apple", "wheat", "pear", "pearl", "linux", "night", "quick", "box", "turnip", "black", "squash", "pixel", "elephant", "squid", "whale", "fish", "eagle", "ninja", "ice", "snow", "magic", "fairy", "cupcake", "owl", "math", "nuclear", "lizard", "corn", "phoenix", "disaster", "karate", "fenix", "ballet", "anvil", "stick", "pony", "quantum", "boat", "sad", "mint", "happy", "dragon", "raven", "crow", "fedora", "bubble", "window", "mad", "mummy", "angry", "robin", "bat", "princess", "squirrel", "blood", "red", "blue", "green", "pink", "tax", "prince", "grass", "lead", "cash", "snake", "leaf", "pixel", "wing", "fight", "club", "crown", "dog", "frog", "bird", "money", "clown", "jet", "knight", "flower", "cobra", "cat", "water", "air", "tech", "bit", "star", "light", "photon", "sun", "moon", "venom", "earth", "river", "ocean", "lake", "dirt", "fur", "feline", "tiger", "lion", "anti", "matter", "possum", "thorn", "brain", "pixie", "alien", "xeno", "mine", "cloud", "proton", "limousine", "ox", "yak", "submarine", "monster"];
-	var second = ["bomber", "boy", "girl", "gurl", "flood", "head", "cadillac", "samurai", "thief", "grrl", "diver", "driver", "face", "gal", "breaker", "diva", "kitty", "hacker", "chef", "haxxor", "rider", "buster", "singer", "lunatic", "catcher", "hunter", "stinger", "shaker", "dodger", "watcher", "smasher", "dancer", "dash", "fixer", "cheater", "pirate", "lord", "queen", "player", "reaper", "man", "mom", "oil", "breaker", "lady", "knight", "cat", "statue", "killer", "ninja", "killa", "wife", "phantom", "ranger", "stalker", "guy", "person", "man", "girl", "woman", "dude", "craft", "monster", "dragon", "woman", "bomb", "stealer", "creep", "eater", "maniac", "lover", "clown", "guy", "feline", "walker", "rope", "ghost", "money", "king", "queen", "cat", "master", "flyer", "hat", "shoes", "blizzard", "tornado", "avalanche", "shaker", "heart", "foot", "faerie", "hand", "sword", "knife", "mum", "kid", "jedi", "runner", "wing", "wizard", "summoner", "demon", "lad", "chick", "playa", "maker", "taker", "fang", "tooth", "thorn", "mime", "fighter", "dancer", "fairy", "drinker", "explosion"];
+	var second = ["bomber", "boy", "girl", "gurl", "flood", "head", "cadillac", "samurai", "thief", "grrl", "diver", "driver", "face", "gal", "breaker", "diva", "kitty", "hacker", "chef", "haxxor", "rider", "buster", "singer", "lunatic", "catcher", "hunter", "stinger", "shaker", "dodger", "watcher", "smasher", "dancer", "dash", "fixer", "cheater", "pirate", "lord", "queen", "player", "reaper", "man", "mom", "oil", "breaker", "lady", "knight", "cat", "statue", "killer", "ninja", "killa", "wife", "phantom", "ranger", "stalker", "guy", "person", "man", "girl", "woman", "dude", "craft", "monster", "dragon", "woman", "bomb", "stealer", "creep", "eater", "maniac", "lover", "clown", "guy", "feline", "walker", "rope", "ghost", "money", "king", "queen", "cat", "master", "flyer", "hat", "shoes", "blizzard", "tornado", "avalanche", "shaker", "heart", "fanatic", "foot", "faerie", "hand", "sword", "knife", "mum", "kid", "jedi", "runner", "wing", "wizard", "fan", "summoner", "demon", "lad", "chick", "playa", "maker", "taker", "fang", "tooth", "thorn", "mime", "fighter", "dancer", "fairy", "drinker", "explosion"];
 	
 	if(Math.random() < 0.95) //two names
 	{
