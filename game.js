@@ -245,11 +245,13 @@ function createFakes()
 	fp02.text = "<p>Look what I did in level 2 of #Toppleblox:</p>";
 	var r02 = new Replay();
 	r02.level = 2;
-	r02.boxes = [new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(242, -26)];
+	r02.boxes = [new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(195, 226), new Point(483, 553), new Point(543, 552), new Point(605, 553), new Point(881, 598), new Point(892, 585), new Point(902, 578)];
+	//this was okay, but the above was absurd
+	//r02.boxes = [new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(242, -26)];
 	fp02.replay = r02;
 	fp02.viewcount = 2803488;
 	fp02.likecount = 787492;
-	fp02.likes = ["badwalker61", "marble_girl016", "cornguy63", "dog_jedi", "antman74", "fenixmaker076", "nuclear_knife46", "elephantman038", "matter_stealer10", "rat_eater17", "minecraft142", "wickedlad20", "poisonkid03", "knight1337", "electric_lady", "laserphantom16", "atom_creep82", "techrat", "green_blizzard73", "wolfdude60"];
+	fp02.likes = ["frogfractions2", "marble_girl016", "cornguy63", "dog_jedi", "antman74", "badwalker61", "nuclear_knife46", "elephantman038", "matter_stealer10", "rat_eater17", "minecraft142", "wickedlad20", "poisonkid03", "knight1337", "electric_lady", "laserphantom16", "atom_creep82", "techrat", "green_blizzard73", "wolfdude60"];
 	fp02.timestamp = 1453851312452;
 	Fakes.push(fp02);
 	
@@ -315,7 +317,7 @@ function createFakes()
 	
 	//start MuRi4Ever
 	var fp07 = new FakePost();
-	fp07.user = "MuRiQueen";
+	fp07.user = "MuRiLove";
 	fp07.headline = "...level 4 of #Toppleblox...";
 	fp07.text = "<p>Look what I did in level 4 of #Toppleblox:</p>";
 	var r07 = new Replay();
@@ -348,16 +350,18 @@ function createFakes()
 	fp09.text = "<p>Look what I did in level 5 of #Toppleblox:</p>";
 	var r09 = new Replay();
 	r09.level = 5;
-	r09.boxes = [new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(91, 565), new Point(93, 502), new Point(93, 442), new Point(91, 382), new Point(89, 321)];
+	r09.boxes = [new Point(407, 167), new Point(407, 167), new Point(407, 167), new Point(407, 167), new Point(407, 167), new Point(407, 167), new Point(407, 167), new Point(407, 167), new Point(431, -69), new Point(340, 569), new Point(340, 509)];
+	//this was cool, but the above was cooler
+	//r09.boxes = [new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(405, 172), new Point(91, 565), new Point(93, 502), new Point(93, 442), new Point(91, 382), new Point(89, 321)];
 	fp09.replay = r09;
-	fp09.viewcount = 1349632;
-	fp09.likecount = 560827;
+	fp09.viewcount = 2649632;
+	fp09.likecount = 1065807;
 	fp09.likes = ["pearninja053", "rabidbomber20", "ringman028", "enginemoney070", "redquick84", "fishqueen45", "raven_killer080", "disaster_face48", "snake_bug", "rubyhacker029", "algebra_dragon001", "thejetman46", "radiodancer98", "madwizard019", "bloodtech95", "pirate262", "catlantern081", "red_clown10", "venomheart08", "ice_lord31"];
 	fp09.timestamp = 1452762335376;
 	Fakes.push(fp09);
 	
 	var fp10 = new FakePost();
-	fp10.user = "MuRiQueen";
+	fp10.user = "MuRiLove";
 	fp10.headline = "...level 3 of #Toppleblox...";
 	fp10.text = "<p>Look what I did in level 3 of #Toppleblox:</p>";
 	var r10 = new Replay();
@@ -371,7 +375,7 @@ function createFakes()
 	Fakes.push(fp10);
 	
 	var fp11 = new FakePost();
-	fp11.user = "MuRiQueen";
+	fp11.user = "MuRiLove";
 	fp11.headline = "...level 1 of #Toppleblox...";
 	fp11.text = "<p>Look what I did in level 1 of #Toppleblox:</p>";
 	var r11 = new Replay();
@@ -385,7 +389,7 @@ function createFakes()
 	Fakes.push(fp11);
 	
 	var fp12 = new FakePost();
-	fp12.user = "MuRiQueen";
+	fp12.user = "MuRiLove";
 	fp12.headline = "...level 6 of #Toppleblox...";
 	fp12.text = "<p>Look what I did in level 6 of #Toppleblox:</p>";
 	var r12 = new Replay();
@@ -399,7 +403,7 @@ function createFakes()
 	Fakes.push(fp12);
 	
 	var fp13 = new FakePost();
-	fp13.user = "MuRiQueen";
+	fp13.user = "MuRiLove";
 	fp13.headline = "...level 2 of #Toppleblox...";
 	fp13.text = "<p>Look what I did in level 2 of #Toppleblox:</p>";
 	var r13 = new Replay();
@@ -414,11 +418,13 @@ function createFakes()
 	
 	var fp14 = new FakePost();
 	fp14.user = "Zutara4Life";
-	fp14.headline = "...level 5 of #Toppleblox...";
-	fp14.text = "<p>Look what I did in level 5 of #Toppleblox:</p>";
+	fp14.headline = "...level 1 of #Toppleblox...";
+	fp14.text = "<p>Look what I did in level 1 of #Toppleblox:</p>";
 	var r14 = new Replay();
-	r14.level = 5;
-	r14.boxes = [new Point(389, 164), new Point(389, 164), new Point(389, 164), new Point(389, 164), new Point(389, 164), new Point(389, 164), new Point(389, 164), new Point(389, 164), new Point(389, 164)];
+	r14.level = 1;
+	r14.boxes = [new Point(198, 510), new Point(198, 510), new Point(198, 510), new Point(198, 510), new Point(198, 510), new Point(198, 510), new Point(198, 510), new Point(198, 510), new Point(266, 136), new Point(266, 76), new Point(267, 195), new Point(267, 255), new Point(267, 316)];
+	//formerly a level 5, but the above was cooler
+	//r14.boxes = [new Point(389, 164), new Point(389, 164), new Point(389, 164), new Point(389, 164), new Point(389, 164), new Point(389, 164), new Point(389, 164), new Point(389, 164), new Point(389, 164)];
 	fp14.replay = r14;
 	fp14.viewcount = 1486973;
 	fp14.likecount = 628545;
@@ -427,7 +433,7 @@ function createFakes()
 	Fakes.push(fp14);
 	
 	var fp15 = new FakePost();
-	fp15.user = "MuRiQueen";
+	fp15.user = "MuRiLove";
 	fp15.headline = "The Recipe for Success... at #Toppleblox...";
 	fp15.text = "<h3>The Recipe for Success... at #Toppleblox</h3><p>Some of you have asked me how I got so popular posting #Toppleblox replays, and I thought I should try to answer you.<br /><br />Most of my success comes from \"giving the people what they want.\" So what do the people like to see in #Toppleblox? Here's what I've found:</p><ol><li>Speed - make that ball move fast!</li><li>Chaos - get lots of blocks moving around</li><li>Nonsense - everyone loves you when you abuse the physics</li></ol><p>These are my best guesses, but you're the ones who keep liking my replays! If you think your replay is interesting, I bet others will, too. Thanks to all of you for your support!</p>";
 	fp15.viewcount = 1640586;
@@ -445,9 +451,6 @@ function createFakes()
 	fp16.likes = ["axecop", "cyclonemaster39", "the_crystal_girl82", "quakemonster087", "theorangebox07", "catlady44", "poisonpuppy09", "ant_steel16", "capefrog40", "lightningjedi18", "puppy_lad72", "crowsnow82", "ninjamonster78", "anti_ox63", "sonicwizard23", "knight_oil", "engine_king47", "ravenlady25", "milkshaker20", "anvilknife43"];
 	fp16.timestamp = 1449765000000;
 	Fakes.push(fp16);
-	
-	//keeping this here because it is awesome
-	//~5;407:167,407:167,407:167,407:167,407:167,407:167,407:167,407:167,431:-69,340:569,340:509;1464067609172;0.5129709295264719;0;0;
 }
 
 var Fakes = [];
@@ -491,10 +494,9 @@ var ball = Bodies.circle(200, 549, 30, {render:{fillStyle:"#f00", strokeStyle:"0
 var reball = null;
 var ground = Bodies.rectangle(400, 610, 1024, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
 var wall = Bodies.rectangle(0, SCREEN_HEIGHT / 2 - 60, 100, SCREEN_HEIGHT, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
-var stopblock = Bodies.rectangle(880, 570, 30, 40, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
 
 // add all of the bodies to the world
-World.add(engine.world, [ball, ground, wall]);//, stopblock]);
+World.add(engine.world, [ball, ground, wall]);
 
 // run the engine
 //Engine.run(engine);
@@ -678,13 +680,17 @@ function SubmitUsername()
 	if(uname == "")
 	{
 		username = "Username";
-		document.getElementById("usernameform").remove();
+		document.body.removeChild(document.getElementById("usernameform"));
 		ChangeMenu(Menus.LevelSelect);
+	}
+	else if(uname == "DragonLancer" || uname == "MuRiLove" || uname == "Zutara4Life" || uname == "LookAtMeTips")
+	{
+		document.getElementById("error").innerHTML = "<p>That username is already taken.</p>";
 	}
 	else if(/^[a-zA-Z0-9_]+$/.test(uname))
 	{
 		username = uname;
-		document.getElementById("usernameform").remove();
+		document.body.removeChild(document.getElementById("usernameform"));
 		ChangeMenu(Menus.LevelSelect);
 	}
 	else
@@ -1562,9 +1568,33 @@ function ToggleSite()
 		document.title = "LookAtMe";
 		document.body.className = "lookatme";
 		document.getElementById("toppleblox").style.display = "none";
-		document.getElementById("lookatme").style.display = "inline";
 		
-		resizeUsername();
+		
+		if(GameOver())
+		{
+			document.getElementById("lookatme").style.display = "none";
+			
+			var closing = document.getElementById("closingtime");
+			closing.style.display = "inline";
+			var goodbye = document.getElementById("goodbye");
+			goodbye.innerHTML = "<h2>We Sold Out!</h2><p>The LookAtMe website is closing its doors, but our algorithms and most of our staff are being relocated to Facebook, Inc. We thank you for your patronage!</p>";
+			
+			var goback = document.createElement("button");
+			goback.id = "goback";
+			goback.innerHTML = "Back";
+			goback.addEventListener("click", ToggleSite);
+			
+			var center = document.createElement("center");
+			center.appendChild(goback);
+			
+			goodbye.appendChild(center);
+		}
+		else
+		{
+			document.getElementById("closingtime").style.display = "none";
+			document.getElementById("lookatme").style.display = "inline";
+			resizeUsername();
+		}
 	}
 	else
 	{
@@ -1572,6 +1602,7 @@ function ToggleSite()
 		document.body.className = "toppleblox";
 		document.getElementById("lookatme").style.display = "none";
 		document.getElementById("toppleblox").style.display = "inline";
+		document.getElementById("closingtime").style.display = "none";
 		replayfinished = false;
 	}
 	
@@ -1579,23 +1610,67 @@ function ToggleSite()
 	return false; //used to prevent buttons
 }
 
+function GameOver()
+{
+	//establish whether the player is an awesome hacker
+	var hacker = false;
+	if(typeof(Storage) !== "undefined")
+	{
+		var hval = localStorage.getItem("I_AM_AN_AWESOME_HACKER");
+		if(hval === null)
+		{
+			hacker = false;
+		}
+		else if(hval == "true")
+		{
+			hacker = true;
+		}
+		else
+		{
+			hacker = false;
+		}
+	}
+	else
+	{
+		hacker = false;
+	}
+	
+	var mostviews = 0;
+	for(var i = 0; i < Posts.length; i++)
+	{
+		mostviews = Math.max(mostviews, Posts[i].viewcount);
+	}
+	
+	if(mostviews > 10000 && !hacker)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 function resizeUsername()
 {
 	if(!Toppleblox())
 	{
-		var un = document.getElementById("username");
-		var width = un.offsetWidth - 100;
-		
-		var size = 26;
-		screen.font = size + "px Arial, sans-serif";
-		while(screen.measureText(username).width > width)
+		if(!GameOver())
 		{
-			size--;
+			var un = document.getElementById("username");
+			var width = un.offsetWidth - 100;
+			
+			var size = 26;
 			screen.font = size + "px Arial, sans-serif";
+			while(screen.measureText(username).width > width)
+			{
+				size--;
+				screen.font = size + "px Arial, sans-serif";
+			}
+			
+			un.style.fontSize = size + "px";
+			un.innerHTML = username;
 		}
-		
-		un.style.fontSize = size + "px";
-		un.innerHTML = username;
 	}
 }
 

@@ -253,6 +253,18 @@ body.toppleblox
 	z-index:10000;
 }
 
+#topbye
+{
+	width:100vw;
+	height:40px;
+	display:block;
+	position:fixed;
+	top:0px;
+	left:0px;
+	background:#000;
+	z-index:10000;
+}
+
 h1
 {
 	display:block;
@@ -269,6 +281,44 @@ h1
 }
 
 #wrapper:after
+{
+	content:"";
+	display:table;
+	clear:both;
+}
+
+#goodbye
+{
+	margin:0 auto;
+	max-width:1000px;
+	min-width:320px;
+	text-align:center;
+	border:1px solid #c1c8cd;
+	border-radius:10px;
+	background:#fff;
+	padding:20px;
+}
+
+#goodbye h2
+{
+	font-size:26px;
+	font-weight:bold;
+}
+
+#goodbye p
+{
+	font-size:20px;
+}
+
+#goodbye button
+{
+	display:block;
+	width:120px;
+	height:40px;
+	font-size:large;
+}
+
+#goodbye:after
 {
 	content:"";
 	display:table;
