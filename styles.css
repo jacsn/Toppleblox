@@ -321,9 +321,23 @@ h1
 
 #postcontent p
 {
-	font-size:larger;
+	font-size:large;
 	padding:20px;
 	margin:0px;
+}
+
+#postcontent h3
+{
+	font-size:large;
+	font-weight:bold;
+	padding:20px;
+	margin:0px;
+}
+
+#postcontent li
+{
+	font-size:large;
+	padding-right:20px;
 }
 
 #postcontent p.summary
@@ -419,7 +433,7 @@ div.thumbnail
 	display:block;
 	width:80px;
 	height:50px;
-	margin:5px 10px 5px 10px;
+	margin:5px 0px 5px 10px;
 	background-color:#9af;
 	border:1px solid black;
 	float:left;
@@ -429,7 +443,7 @@ div.thumbnail
 {
 	float:left;
 	line-height:60px;
-	margin:0px;
+	margin:0px 0px 0px 10px;
 	padding:0px;
 }
 

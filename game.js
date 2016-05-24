@@ -248,7 +248,7 @@ function createFakes()
 	r02.boxes = [new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 587), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 583), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(199, 579), new Point(242, -26)];
 	fp02.replay = r02;
 	fp02.viewcount = 2803488;
-	fp02.likecount = 1487492;
+	fp02.likecount = 787492;
 	fp02.likes = ["badwalker61", "marble_girl016", "cornguy63", "dog_jedi", "antman74", "fenixmaker076", "nuclear_knife46", "elephantman038", "matter_stealer10", "rat_eater17", "minecraft142", "wickedlad20", "poisonkid03", "knight1337", "electric_lady", "laserphantom16", "atom_creep82", "techrat", "green_blizzard73", "wolfdude60"];
 	fp02.timestamp = 1453851312452;
 	Fakes.push(fp02);
@@ -362,7 +362,7 @@ function createFakes()
 	fp10.text = "<p>Look what I did in level 3 of #Toppleblox:</p>";
 	var r10 = new Replay();
 	r10.level = 3;
-	r10.boxes = [new Point(509, 222), new Point(509, 222), new Point(509, 222), new Point(509, 222), new Point(509, 222), new Point(509, 222), new Point(509, 222), new Point(509, 222), new Point(509, 222), new Point(509, 222)];
+	r10.boxes = [new Point(514, 220), new Point(514, 220), new Point(514, 220), new Point(514, 220), new Point(514, 220), new Point(514, 220), new Point(514, 220), new Point(514, 220), new Point(514, 220), new Point(514, 220)];
 	fp10.replay = r10;
 	fp10.viewcount = 2003465;
 	fp10.likecount = 671512;
@@ -425,6 +425,26 @@ function createFakes()
 	fp14.likes = ["batgirl", "thetiarahacker36", "dirtfang77", "anvilthorn035", "river_guy18", "happywoman26", "darkstinger1", "windowfixer61", "dragonwife33", "croquetdude36", "superking92", "squarefighter56", "orangedude39", "earthquake93", "crazydisaster64", "thunderdragon60", "fenixtriangle27", "theasparagusninja89", "alicorn03", "pinkpie021"];
 	fp14.timestamp = 1456483246842;
 	Fakes.push(fp14);
+	
+	var fp15 = new FakePost();
+	fp15.user = "MuRiQueen";
+	fp15.headline = "The Recipe for Success... at #Toppleblox...";
+	fp15.text = "<h3>The Recipe for Success... at #Toppleblox</h3><p>Some of you have asked me how I got so popular posting #Toppleblox replays, and I thought I should try to answer you.<br /><br />Most of my success comes from \"giving the people what they want.\" So what do the people like to see in #Toppleblox? Here's what I've found:</p><ol><li>Speed - make that ball move fast!</li><li>Chaos - get lots of blocks moving around</li><li>Nonsense - everyone loves you when you abuse the physics</li></ol><p>These are my best guesses, but you're the ones who keep liking my replays! If you think your replay is interesting, I bet others will, too. Thanks to all of you for your support!</p>";
+	fp15.viewcount = 1640586;
+	fp15.likecount = 284030;
+	fp15.likes = ["angrypony45", "glassbreaker81", "owlboy16", "electriclad64", "phoenix_dancer", "happyfeet28", "submarine_shoes74", "lizardcircle99", "blackice43", "cakemom064", "heart142", "ninjathorn66", "lighttau08", "grassbat76", "starhacker1337", "deathman77", "lightningcat04", "flower086", "happy_maniac085", "nuclearclover11"];
+	fp15.timestamp = 1456865037288;
+	Fakes.push(fp15);
+	
+	var fp16 = new FakePost();
+	fp16.user = "LookAtMeTips";
+	fp16.headline = "Managing Your LookAtMe Account...";
+	fp16.text = "<h3>Managing Your LookAtMe Account</h3><p>This post will cover best practices for developing, maintaining, and growing your audience with LookAtMe. New users are advised to consider the following:</p><ul><li>Be patient. When creating a new post, wait an hour or so for the views to come in.</li><li>Keep the content coming. Posts will continue to get views for the first 24 hours, but most people move on to newer content quickly.</li><li>Note engagement levels. Pay attention to how well-liked your posts are, and try to maximize your engagement percentage (likes divided by views).</li><li>Be willing to let go. If you've waited for a post to get a significant number of views, but it still has very few likes, delete it. Maintaining a high level of quality helps to grow your audience.</li><li>Be realistic. In relation to the previous point, not everyone who views a post is going to like it. A 20% engagement percentage is respectable.</li><li>Learn from success. If one of your posts has a high engagement percentage, figure out what you did right and do it again.</li></ul><p>By following these practices, you can increase your chances of developing and maintaining a large audience. Best of luck!</p>";
+	fp16.viewcount = 4826545;
+	fp16.likecount = 965153;
+	fp16.likes = ["axecop", "cyclonemaster39", "the_crystal_girl82", "quakemonster087", "theorangebox07", "catlady44", "poisonpuppy09", "ant_steel16", "capefrog40", "lightningjedi18", "puppy_lad72", "crowsnow82", "ninjamonster78", "anti_ox63", "sonicwizard23", "knight_oil", "engine_king47", "ravenlady25", "milkshaker20", "anvilknife43"];
+	fp16.timestamp = 1449765000000;
+	Fakes.push(fp16);
 	
 	//Me:
 	//"6;514:590,514:590,514:590,514:590,514:590,514:590,514:590,514:590,514:590,514:590,302:551,230:491;1463794539401;0.30139545737256435;0;0;
@@ -1030,7 +1050,7 @@ function SaveReplay()
 	//evaluate replay "quality" based on some pretty vague metrics
 	var tsrating = (balltopspeed > 15) ? balltopspeed / 25 : balltopspeed / 50;
 	var gsrating = (anytopspeed == balltopspeed) ? balltopspeed / 20 : anytopspeed / 300;
-	var hitrating = ballcollisions.length / 30;
+	var hitrating = Math.min((ballcollisions.length / 30), 1); //I capped this at 1 so you can't abuse the ratings by placing 60 blocks
 	
 	var discard = Math.min(tsrating, gsrating, hitrating);
 	var avgrating = (tsrating + gsrating + hitrating - discard) / 2;
@@ -1172,6 +1192,10 @@ function LoadFakePost(clearFakes)
 		LoadReplayForPost(true);
 		
 		rc.addEventListener("click", ToggleFakeReplay);
+	}
+	else
+	{
+		replayrender = null;
 	}
 	
 	//post header
@@ -1709,16 +1733,27 @@ function LoadSomeFakePosts()
 			{
 				fake.thumbnail = GenerateThumbnail(fake.replay);
 			}
+			
+			var slist = document.getElementById("suggestlist");
+			var sli = document.createElement("li");
+			var date = new Date(fake.timestamp);
+			var time = date.toLocaleString().replace(", ", "<br />");
+			sli.innerHTML = "<a id='viewother" + index + "' href='viewother?id=" + index + "' onclick='return false;'><div class='thumbnail'><img src='" + fake.thumbnail.src + "' /></div><div class='posttext'>" + fake.headline + "</div><span class='timestamp'>" + time + "</span>";
+			slist.appendChild(sli);
+			var a = document.getElementById("viewother" + index);
+			a.addEventListener("click", viewotherCallbackHandler(index));
 		}
-		
-		var slist = document.getElementById("suggestlist");
-		var sli = document.createElement("li");
-		var date = new Date(fake.timestamp);
-		var time = date.toLocaleString().replace(", ", "<br />");
-		sli.innerHTML = "<a id='viewother" + index + "' href='viewother?id=" + index + "' onclick='return false;'><div class='thumbnail'><img src='" + fake.thumbnail.src + "' /></div><div class='posttext'>" + fake.headline + "</div><span class='timestamp'>" + time + "</span>";
-		slist.appendChild(sli);
-		var a = document.getElementById("viewother" + index);
-		a.addEventListener("click", viewotherCallbackHandler(index));
+		else
+		{
+			var slist = document.getElementById("suggestlist");
+			var sli = document.createElement("li");
+			var date = new Date(fake.timestamp);
+			var time = date.toLocaleString().replace(", ", "<br />");
+			sli.innerHTML = "<a id='viewother" + index + "' href='viewother?id=" + index + "' onclick='return false;'><div class='posttext'>" + fake.headline + "</div><span class='timestamp'>" + time + "</span>";
+			slist.appendChild(sli);
+			var a = document.getElementById("viewother" + index);
+			a.addEventListener("click", viewotherCallbackHandler(index));
+		}
 	}
 }
 
@@ -2036,7 +2071,21 @@ function SaveGame()
 			}
 		}
 		
-		localStorage.setItem("LOOKATME_USERNAME", username);
+		//handle username mess
+		var unamestr = username + "~";
+		for(var i = 0; i < Fakes.length; i++)
+		{
+			if(Fakes[i].liked)
+			{
+				unamestr += "1";
+			}
+			else
+			{
+				unamestr += "0";
+			}
+		}
+		
+		localStorage.setItem("LOOKATME_USERNAME", unamestr);
 		localStorage.setItem("TOPPLEBLOX_PROGRESS", savestring);
 	}
 }
@@ -2046,10 +2095,27 @@ function LoadGame()
 {
 	if(typeof(Storage) !== "undefined")
 	{
-		username = localStorage.getItem("LOOKATME_USERNAME");
-		if(username === null)
+		var unamestr = localStorage.getItem("LOOKATME_USERNAME");
+		if(unamestr === null)
 		{
 			username = "Username";
+		}
+		else
+		{
+			var unarray = unamestr.split("~");
+			username = unarray[0];
+			
+			if(unarray.length > 1)
+			{
+				var likedarray = unarray[1].split("");
+				for(var i = 0; i < likedarray.length; i++)
+				{
+					if(likedarray[i] == "1")
+					{
+						Fakes[i].liked = true;
+					}
+				}
+			}
 		}
 		
 		var savestring = localStorage.getItem("TOPPLEBLOX_PROGRESS");
