@@ -4,7 +4,6 @@ var SCREEN_HEIGHT = 640;
 var MAX_LIKES = 20;
 
 var K_ENTER = 13;
-var K_ESC = 27;
 
 var Menus = new function()
 {
@@ -13,7 +12,8 @@ var Menus = new function()
 	this.LevelSelect = 2;
 	this.Victory = 3;
 	this.VictoryShared = 4;
-	this.None = 5;
+	this.Quit = 5;
+	this.None = 6;
 }
 
 var Tools = new function()

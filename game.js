@@ -71,6 +71,11 @@ var btnUndo = new ImgButton("", SCREEN_WIDTH - 160, 340, 60, 60, Undo, UndoButto
 var btnRedo = new ImgButton("", SCREEN_WIDTH - 80, 340, 60, 60, Redo, RedoButtonImage);
 var btnClear = new ImgButton("", SCREEN_WIDTH - 160, 420, 140, 60, btnClear_Click, ClearButtonImage);
 var btnFlip = new ImgButton("", SCREEN_WIDTH - 202, 15, 30, 50, btnFlip_Click, FlipButtonImage);
+var btnQuit = new ImgButton("", SCREEN_WIDTH - 202, SCREEN_HEIGHT - 65, 30, 50, btnQuit_Click, FlipButtonImage);
+
+var btnConfirm = new Button("Quit", SCREEN_WIDTH / 2 - 120, 410, 240, 80, btnConfirm_Click, ButtonImage);
+var btnCancel = new Button("Cancel", SCREEN_WIDTH / 2 - 120, 310, 240, 80, btnClose_Click, ButtonImage);
+
 var btnLevel1 = new ImgButton("", 52, 185, 280, 175, btnLevel1_Click, Level1Image);
 var btnLevel2 = new ImgButton("", 372, 185, 280, 175, btnLevel2_Click, Level2Image);
 var btnLevel3 = new ImgButton("", 692, 185, 280, 175, btnLevel3_Click, Level3Image);
@@ -208,6 +213,7 @@ function btnFlip_Click()
 		btnClear.x = 20;
 		btnGo.x = 20;
 		btnFlip.x = 168;
+		btnQuit.x = 168;
 	}
 	else
 	{
@@ -218,7 +224,18 @@ function btnFlip_Click()
 		btnClear.x = SCREEN_WIDTH - 160;
 		btnGo.x = SCREEN_WIDTH - 160;
 		btnFlip.x = SCREEN_WIDTH - 202;
+		btnQuit.x = SCREEN_WIDTH - 202;
 	}
+}
+
+function btnQuit_Click()
+{
+	ChangeMenu(Menus.Quit);
+}
+
+function btnConfirm_Click()
+{
+	ChangeMenu(Menus.LevelSelect);
 }
 
 function createFakes()
@@ -356,7 +373,7 @@ function createFakes()
 	fp09.replay = r09;
 	fp09.viewcount = 2649632;
 	fp09.likecount = 1065807;
-	fp09.likes = ["pearninja053", "rabidbomber20", "ringman028", "enginemoney070", "redquick84", "fishqueen45", "raven_killer080", "disaster_face48", "snake_bug", "rubyhacker029", "algebra_dragon001", "thejetman46", "radiodancer98", "madwizard019", "bloodtech95", "pirate262", "catlantern081", "red_clown10", "venomheart08", "ice_lord31"];
+	fp09.likes = ["jetsetradio", "pearninja053", "ringman028", "enginemoney070", "redquick84", "fishqueen45", "raven_killer080", "disaster_face48", "snake_bug", "rubyhacker029", "algebra_dragon001", "thejetman46", "radiodancer98", "madwizard019", "bloodtech95", "pirate262", "catlantern081", "red_clown10", "venomheart08", "ice_lord31"];
 	fp09.timestamp = 1452762335376;
 	Fakes.push(fp09);
 	
@@ -659,6 +676,11 @@ function ChangeMenu(menu)
 	{
 		Controls.push(btnDoneShared);
 	}
+	else if(menu == Menus.Quit)
+	{
+		Controls.push(btnCancel);
+		Controls.push(btnConfirm);
+	}
 	else if(menu == Menus.None)
 	{
 		MenuShowing = false;
@@ -783,6 +805,16 @@ function drawMenu()
 	else if(MenuID == Menus.LevelSelect)
 	{
 		FillWrapText("Select a Level", 60, "center", SCREEN_WIDTH, SCREEN_WIDTH / 2, 110);
+	}
+	else if(MenuID == Menus.Quit)
+	{
+		Render.world(render);
+		drawOutlines();
+		screen.fillStyle = "rgba(255, 255, 255, 0.5)";
+		screen.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+		screen.drawImage(DialogImage, SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT / 2 - 200);
+		
+		FillWrapText("Are you sure?", 50, "center", 400, SCREEN_WIDTH / 2, 220);
 	}
 	else if(MenuID == Menus.Victory)
 	{
@@ -1000,6 +1032,7 @@ function LoadLevel()
 	Controls.push(btnRedo);
 	Controls.push(btnClear);
 	Controls.push(btnFlip);
+	Controls.push(btnQuit);
 }
 
 function SaveReplay()
@@ -2267,14 +2300,6 @@ window.addEventListener("keydown", function (e) {
 		if(MenuShowing && MenuID == Menus.Signup)
 		{
 			document.getElementById("btnUsername").click();
-		}
-	}
-	else if(e.which == K_ESC)
-	{
-		e.preventDefault();
-		if(Toppleblox() && !MenuShowing)
-		{
-			ChangeMenu(Menus.LevelSelect);
 		}
 	}
 });
