@@ -2330,6 +2330,30 @@ window.addEventListener("mousemove", function (event) {
 	}
 });
 
+window.addEventListener("touchmove", function (event) {
+	var x = event.pageX - canvas.offsetLeft + document.body.scrollLeft;
+	var y = event.pageY - canvas.offsetTop + document.body.scrollTop;
+	LastX = x;
+	LastY = y;
+	
+	if(Toppleblox())
+	{
+		if(!MenuShowing && EditMode)
+		{
+			if(MouseDown && EditTool == Tools.Erase)
+			{
+				EraseBoxes(x, y);
+			}
+		}
+	
+		//pick controls
+		for(var c = 0; c < Controls.length; c++)
+		{
+			Controls[c].pick(x, y, EventType.MOVE, MouseDown, MouseDownX, MouseDownY);
+		}
+	}
+});
+
 window.addEventListener("mousedown", function (event)
 {
     keys[event.button] = true;
@@ -2372,6 +2396,46 @@ window.addEventListener("mousedown", function (event)
 	}
 });
 
+window.addEventListener("touchstart", function (event)
+{
+    keys[event.button] = true;
+	var x = event.pageX - canvas.offsetLeft + document.body.scrollLeft;
+	var y = event.pageY - canvas.offsetTop + document.body.scrollTop;
+	
+	MouseDown = true;
+	MouseDownX = x;
+	MouseDownY = y;
+	
+	if(Toppleblox())
+	{
+		if(!MenuShowing && EditMode)
+		{
+			if(EditTool == Tools.Erase)
+			{
+				erasehack = boxes.slice(0);
+				EraseBoxes(x, y);
+			}
+			else if(EditTool == Tools.Box)
+			{
+				if((btnGo.x > 20 && x < SCREEN_WIDTH - 200) || (btnGo.x < 50 && x > 200))
+				{
+					validboxoutline = true;
+				}
+				else
+				{
+					validboxoutline = false;
+				}
+			}
+		}
+	
+		//pick controls
+		for(var c = 0; c < Controls.length; c++)
+		{
+			Controls[c].pick(x, y, EventType.DOWN, MouseDown, MouseDownX, MouseDownY);
+		}
+	}
+});
+
 window.addEventListener("mouseup", function (event)
 {
 	keys[event.button] = false;
@@ -2379,6 +2443,50 @@ window.addEventListener("mouseup", function (event)
 	var top = (window.pageYOffset || document.body.scrollTop)  - (document.body.clientTop || 0);
 	var x = event.clientX - canvas.offsetLeft + left;
 	var y = event.clientY - canvas.offsetTop + top;
+	
+	MouseDown = false;
+	
+	if(Toppleblox())
+	{
+		if(!MenuShowing && EditMode)
+		{
+			if(EditTool == Tools.Box)
+			{
+				if(validboxoutline)
+				{
+					undostack.push(boxes.slice(0));
+					redostack = [];
+					boxes.push(new Point(x, y));
+				}
+			}
+			else if(EditTool == Tools.Erase)
+			{
+				if(erasehack.length != boxes.length)
+				{
+					undostack.push(erasehack.slice(0));
+					redostack = [];
+				}
+				EraseBoxes(x, y);
+			}
+		}
+		else if(!MenuShowing && !EditMode)
+		{
+			LoadLevel();
+		}
+	
+		//pick controls
+		for(var c = 0; c < Controls.length; c++)
+		{
+			Controls[c].pick(x, y, EventType.UP, MouseDown, MouseDownX, MouseDownY);
+		}
+	}
+});
+
+window.addEventListener("touchend", function (event)
+{
+	keys[event.button] = false;
+	var x = event.pageX - canvas.offsetLeft + document.body.scrollLeft;
+	var y = event.pageY - canvas.offsetTop + document.body.scrollTop;
 	
 	MouseDown = false;
 	
