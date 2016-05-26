@@ -348,7 +348,7 @@ function createFakes()
 	fp07.replay = r07;
 	fp07.viewcount = 2833462;
 	fp07.likecount = 898673;
-	fp07.likes = ["mint_feline60", "thepearldiver19", "theboxghost", "sharkknife48", "thorn_queen005", "sonicninja1337", "blue_poison61", "quakedog18", "deatheater3", "blizzard73", "unicornlord54", "atomstatue", "batstalker024", "mudman45", "matterkitty58", "laser999", "fishsummoner", "pixiecatcher32", "cupcakefaerie96", "sushirope4"];
+	fp07.likes = ["likey_mclikeface", "thepearldiver19", "theboxghost", "sharkknife48", "thorn_queen005", "sonicninja1337", "blue_poison61", "quakedog18", "deatheater3", "blizzard73", "unicornlord54", "atomstatue", "batstalker024", "mudman45", "matterkitty58", "laser999", "fishsummoner", "pixiecatcher32", "cupcakefaerie96", "sushirope4"];
 	fp07.timestamp = 1452302332124;
 	Fakes.push(fp07);
 	
