@@ -60,10 +60,6 @@ var Replay = function()
 	this.boxes = [];
 }
 
-
-
-
-
 //images
 var ButtonImage = new Image();
 ButtonImage.ready = false;
@@ -124,6 +120,11 @@ var ClearButtonImage = new Image();
 ClearButtonImage.ready = false;
 ClearButtonImage.onload = function(){this.ready = true;};
 ClearButtonImage.src = "clearbutton.png";
+
+var GoButtonImage = new Image();
+GoButtonImage.ready = false;
+GoButtonImage.onload = function(){this.ready = true;};
+GoButtonImage.src = "gobutton.png";
 
 var FlipButtonImage = new Image();
 FlipButtonImage.ready = false;

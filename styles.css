@@ -193,6 +193,16 @@ div#error
 	margin:0 5px;
 }
 
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none)
+{
+	#postcaption button
+	{
+		border:1px solid black;
+		background-position-x:1px;
+		background-position-y:1px;
+	}
+}
+
 #postcaption button#btnDelete
 {
 	display:block;
@@ -275,7 +285,7 @@ h1
 	padding:0 0 0 100%;
 	margin:0px;
 	overflow:hidden;
-	background-image:url(logo.svg);
+	background-image:url(logo.png);
 	background-position:0px 0px;
 	background-repeat:no-repeat;
 }
@@ -566,13 +576,7 @@ div.thumbnail
 	border-bottom:1px solid black;
 	border-radius:0 0 5px 5px;
 }
-/*
-#usertools a:hover
-{
-	background-color:#99f;
-	transition:200ms linear;
-}
-*/
+
 #usertools li a:before {
   content: "";
   position: absolute;
