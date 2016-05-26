@@ -8,12 +8,13 @@ var K_ENTER = 13;
 var Menus = new function()
 {
 	this.Main = 0;
-	this.Signup = 1;
-	this.LevelSelect = 2;
-	this.Victory = 3;
-	this.VictoryShared = 4;
-	this.Quit = 5;
-	this.None = 6;
+	this.MainSim = 1;
+	this.Signup = 2;
+	this.LevelSelect = 3;
+	this.Victory = 4;
+	this.VictoryShared = 5;
+	this.Quit = 6;
+	this.None = 7;
 }
 
 var Tools = new function()

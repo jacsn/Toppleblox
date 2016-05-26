@@ -58,7 +58,7 @@ var anytopspeed = 0;
 
 
 
-var btnBegin = new Button("Begin", SCREEN_WIDTH / 2 - 120, 430, 240, 80, btnBegin_Click, ButtonImage);
+var btnBegin = new Button("Begin", SCREEN_WIDTH / 2 - 120, 310, 240, 80, btnBegin_Click, ButtonImage);
 var btnDone = new Button("Done", SCREEN_WIDTH / 2 - 120, 410, 240, 80, btnDone_Click, ButtonImage);
 var btnDoneShared = new Button("Done", SCREEN_WIDTH / 2 - 120, 350, 240, 80, btnDone_Click, ButtonImage);
 var btnShare = new Button("Share", SCREEN_WIDTH / 2 - 120, 310, 240, 80, btnShare_Click, ButtonImage);
@@ -84,6 +84,11 @@ var btnLevel5 = new ImgButton("", 372, 405, 280, 175, btnLevel5_Click, Level5Ima
 var btnLevel6 = new ImgButton("", 692, 405, 280, 175, btnLevel6_Click, Level6Image);
 
 function btnBegin_Click()
+{
+	ChangeMenu(Menus.MainSim);
+}
+
+function StartGame()
 {
 	if(CheckGame())
 	{
@@ -507,13 +512,12 @@ var replayrender = null;
 
 // create two boxes and a ground
 //var boxA = Bodies.rectangle(b.x, b.y, 60, 60, {render:{fillStyle:"#666", strokeStyle:"#000"}, chamfer:{radius:10}, friction:0.08, frictionAir:0, frictionStatic:0.3, restitution:0.2});
-var ball = Bodies.circle(200, 549, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
+var ball = Bodies.circle(SCREEN_WIDTH / 2, 560, 30, {render:{fillStyle:"#f00", strokeStyle:"000"}, friction:0.01, frictionAir:0, frictionStatic:0.2, restitution:0.3});
 var reball = null;
-var ground = Bodies.rectangle(400, 610, 1024, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
-var wall = Bodies.rectangle(0, SCREEN_HEIGHT / 2 - 60, 100, SCREEN_HEIGHT, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
+var ground = Bodies.rectangle(SCREEN_WIDTH / 2, 620, 300, 60, {isStatic:true, render:{fillStyle:"#999", strokeStyle:"#000"}});
 
 // add all of the bodies to the world
-World.add(engine.world, [ball, ground, wall]);
+World.add(engine.world, [ball, ground]);
 
 // run the engine
 //Engine.run(engine);
@@ -554,6 +558,10 @@ function preloadloop()
 			if(!MenuShowing && !EditMode)
 			{
 				updateGame();
+			}
+			else if(MenuShowing && MenuID == Menus.MainSim)
+			{
+				updateMainSim();
 			}
 			drawScreen();
 		};
@@ -618,6 +626,19 @@ function ChangeMenu(menu)
 	if(menu == Menus.Main)
 	{
 		Controls.push(btnBegin);
+	}
+	else if(menu == Menus.MainSim)
+	{
+		if(LastX < SCREEN_WIDTH / 2)
+		{
+			boxes = [new Point(SCREEN_WIDTH / 2 - 40, 350)];
+			AddBoxes();
+		}
+		else
+		{
+			boxes = [new Point(SCREEN_WIDTH / 2 + 40, 350)];
+			AddBoxes();
+		}
 	}
 	else if(menu == Menus.Signup)
 	{
@@ -800,7 +821,12 @@ function drawMenu()
 {
 	if(MenuID == Menus.Main)
 	{
+		Render.world(render);
 		FillWrapText("Toppleblox", 80, "center", SCREEN_WIDTH, SCREEN_WIDTH / 2, 180);
+	}
+	else if(MenuID == Menus.MainSim)
+	{
+		Render.world(render);
 	}
 	else if(MenuID == Menus.LevelSelect)
 	{
@@ -868,6 +894,46 @@ function drawToolbox()
 		else
 		{
 			screen.drawImage(ToolboxImage, -200, 0);
+		}
+	}
+}
+
+function updateMainSim()
+{
+	Engine.update(engine, 16.666);
+	
+	var pos = ball.position;
+	if(pos.y > SCREEN_HEIGHT + 50)
+	{
+		StartGame();
+	}
+	else
+	{
+		var sleepcount = 0;
+		var bodies = Matter.Composite.allBodies(engine.world);
+		for(var i = 0; i < bodies.length; i++)
+		{
+			if(bodies[i].isSleeping)
+			{
+				sleepcount++;
+			}
+			else if(bodies[i].position.y > SCREEN_HEIGHT + 50)
+			{
+				sleepcount++;
+			}
+			
+			//track ball speed
+			if(bodies[i].label == "ball")
+			{
+				balltopspeed = Math.max(balltopspeed, bodies[i].speed);
+			}
+			
+			anytopspeed = Math.max(anytopspeed, bodies[i].speed);
+		}
+		
+		if(sleepcount == bodies.length)
+		{
+			StartGame();
 		}
 	}
 }
